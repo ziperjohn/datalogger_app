@@ -1,0 +1,34 @@
+
+Project:
+  ☐ Bluetooth communication
+  ☐ Saving data to files
+  ☐ Loading data from files
+  ☐ Set starting data to all widget
+  ☐ Date range picker
+  ☐ Charts
+
+Completed Screens:
+  ☐ Home screen
+  ☐ Settings screen
+
+Completed widgets:
+  ☐ Chart widged
+  ☐ Last updates widget
+  ☐ Max. temperature widget
+  ☐ Min. temperature widget
+  ☐ Device widget
+
+Todos:
+  ☐ Change all widgets to stless widget
+  ☐ Change date formating (in settings.dart)
+  ✔ Change file and folder organization @critical @started(20-03-13 21:54) @done(20-03-13 23:14) @lasted(1h20m25s)
+  ☐ Finish getMaxTemp function
+  ☐ Finish getMinTemp function
+  ☐ Delete temperature series and convert project to temperature
+
+Errors: 
+  ☐ No set date in settings screen (use default value) @critical 
+
+
+  
+  

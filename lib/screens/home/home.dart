@@ -1,11 +1,9 @@
-import 'package:datalogger/widgets/widget_device.dart';
-import 'package:datalogger/widgets/widget_graph.dart';
-import 'package:datalogger/widgets/widget_max_temp.dart';
-import 'package:datalogger/widgets/widget_min_temp.dart';
-import 'package:datalogger/widgets/widget_updates.dart';
+import 'package:datalogger/models/temperature_series.dart';
+import 'package:datalogger/screens/home/widgets/widget_temperature_chart.dart';
+import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:datalogger/shared/constants.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class Home extends StatefulWidget {
   @override
@@ -15,6 +13,29 @@ class Home extends StatefulWidget {
 String date = "";
 
 class _HomeState extends State<Home> {
+  final List<TemperatureSeries> data = [
+    TemperatureSeries(
+      year: '2015',
+      temp: 29.0,
+      barColor: charts.ColorUtil.fromDartColor(Colors.green),
+    ),
+    TemperatureSeries(
+      year: '2016',
+      temp: 28.3,
+      barColor: charts.ColorUtil.fromDartColor(Colors.blue),
+    ),
+    TemperatureSeries(
+      year: '2017',
+      temp: 27.5,
+      barColor: charts.ColorUtil.fromDartColor(Colors.orange),
+    ),
+    TemperatureSeries(
+      year: '2018',
+      temp: 28.8,
+      barColor: charts.ColorUtil.fromDartColor(Colors.amber),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,13 +79,17 @@ class _HomeState extends State<Home> {
               StaggeredTile.count(2, 2),
               StaggeredTile.count(2, 2),
             ],
-            // TODO u widgetu nastavit default hodnotu a pak az prepsat na datum atd.
             children: <Widget>[
-              graphWidget(date),
-              updatesWidget(),
-              maxTemperatureWidget(date),
-              minTemperatureWidget(date),
-              deviceWidget(),
+              Container(
+                child: TemperatureChart(
+                  data: data,
+                  date: date,
+                ),
+              ),
+              Container(),
+              Container(),
+              Container(),
+              Container(),
             ],
           ),
         ),
