@@ -11,7 +11,7 @@ Widget minTemperatureWidget(String date) {
       children: <Widget>[
         ListTile(
           title: Text(
-            'Min. temperature',
+            'Min. temp.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: myFontSizeMedium,
@@ -29,7 +29,7 @@ Widget minTemperatureWidget(String date) {
             ),
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 10),
         Text(
           '23 °C',
           style: TextStyle(

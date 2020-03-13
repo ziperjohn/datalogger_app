@@ -42,15 +42,15 @@ class _HomeState extends State<Home> {
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
         child: Container(
           decoration: BoxDecoration(
             color: myLightGreyColor,
           ),
           child: StaggeredGridView.count(
             crossAxisCount: 4,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 5,
             staggeredTiles: [
               StaggeredTile.count(4, 4),
               StaggeredTile.count(2, 4),

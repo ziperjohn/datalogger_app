@@ -11,7 +11,7 @@ Widget maxTemperatureWidget(String date) {
       children: <Widget>[
         ListTile(
           title: Text(
-            'Max. temperature',
+            'Max. temp.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: myFontSizeMedium,
@@ -29,7 +29,7 @@ Widget maxTemperatureWidget(String date) {
             ),
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 10),
         Text(
           '58 °C',
           style: TextStyle(
