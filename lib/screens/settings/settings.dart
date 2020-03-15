@@ -8,7 +8,8 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  int selectedRadio;
+  static int selectedRadio;
+  static String dateFormated;
 
   @override
   void initState() {
@@ -20,8 +21,8 @@ class _SettingsState extends State<Settings> {
     setState(() => selectedRadio = val);
   }
 
-  void updateDate(String date) {
-    Navigator.pop(context, date);
+  void updateDate(String dateFormated) {
+    Navigator.pop(context, dateFormated);
   }
 
   @override
@@ -64,13 +65,12 @@ class _SettingsState extends State<Settings> {
                 groupValue: selectedRadio,
                 activeColor: myCyanColor,
                 onChanged: (val) {
-                  print('day');
                   setSelectedRadio(val);
                   showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
-                    firstDate: DateTime(2018),
-                    lastDate: DateTime(2030),
+                    firstDate: DateTime(2020),
+                    lastDate: DateTime.now(),
                     builder: (BuildContext context, Widget child) {
                       return Theme(
                         data: ThemeData.light().copyWith(
@@ -83,11 +83,13 @@ class _SettingsState extends State<Settings> {
                         child: child,
                       );
                     },
-                  ).then((date) {
-                    String dateTime = DateFormat.yMd().format(date).toString();
-                    //print(dateTime);
-                    updateDate(dateTime);
-                  });
+                  ).then(
+                    (dateTime) {
+                      dateFormated =
+                          new DateFormat("dd.MM.yyyy").format(dateTime);
+                      updateDate(dateFormated);
+                    },
+                  );
                 },
               ),
             ),

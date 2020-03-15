@@ -1,33 +1,50 @@
+Todos:
+  ✔ Change all widgets to stless widget @started(20-03-14 18:12) @done(20-03-14 18:29) @lasted(17m52s)
+  ✔ Change date formating (in settings.dart) @started(20-03-14 19:58) @done(20-03-14 21:01) @lasted(1h3m25s)
+  ✔ Change file and folder organization @critical @started(20-03-13 21:54) @done(20-03-13 23:14) @lasted(1h20m25s)
+  ✔ create Time Series Charts @started(20-03-15 09:24) @done(20-03-15 11:36) @lasted(2h12m35s)
+  ☐ Set datepicker to first and last date when are data available
+  ☐ Show detail on chart (date, temp)
+  ☐ Set longer animation on chart
 
-Project:
-  ☐ Bluetooth communication
-  ☐ Saving data to files
-  ☐ Loading data from files
+Errors: 
+  ✔ No set date in settings screen (use default value) @critical @started(20-03-14 18:55) @done(20-03-14 21:25) @lasted(2h30m47s)
+
+Class DataManager:
+  ☐ Rename TemperatureData to DataManager
+  ☐ Create all variables
+  ☐ Create getMinTemp() 
+  ☐ Create getMaxTemp()
+  ☐ Create getLastDate() 
+  ☐ Create getDeviceName()
+  ☐ Create getCharDate()
+  ☐ Create getCharTemp()
+
+Class Settings:
+  ☐ Create getSelectedDate()
+  ☐ Create getSelectedDateRange()
+  ☐ Create connectBLE()
+  ☐ Create disconnectBLE()
+
+Saving and loading data to files:
+  ☐ Creating a file for temp. and date
+  ☐ Loading data from file
+  ☐ Saving data to file
   ☐ Set starting data to all widget
-  ☐ Date range picker
-  ☐ Charts
 
-Completed Screens:
-  ☐ Home screen
-  ☐ Settings screen
-
+Bluetooth communication:
+  ☐ Connecting BLE device
+  ☐ Disconnecting BLE device
+  ☐ Show screen with BLE device in settings
+  
 Completed widgets:
   ☐ Chart widged
   ☐ Last updates widget
   ☐ Max. temperature widget
   ☐ Min. temperature widget
-  ☐ Device widget
+  ☐ Device name widget
 
-Todos:
-  ☐ Change all widgets to stless widget
-  ☐ Change date formating (in settings.dart)
-  ✔ Change file and folder organization @critical @started(20-03-13 21:54) @done(20-03-13 23:14) @lasted(1h20m25s)
-  ☐ Finish getMaxTemp function
-  ☐ Finish getMinTemp function
-  ☐ Delete temperature series and convert project to temperature
 
-Errors: 
-  ☐ No set date in settings screen (use default value) @critical 
 
 
   

@@ -1,24 +1,9 @@
-import 'package:datalogger/models/temperature_series.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
-class TemperatureChart extends StatelessWidget {
-  final List<TemperatureSeries> data;
-  final String date;
-  TemperatureChart({this.data, this.date});
-
+class DeviceName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<charts.Series<TemperatureSeries, String>> series = [
-      charts.Series(
-        id: 'Temperature',
-        data: data,
-        domainFn: (TemperatureSeries series, _) => series.year,
-        measureFn: (TemperatureSeries series, _) => series.temp,
-        colorFn: (TemperatureSeries series, _) => series.barColor,
-      ),
-    ];
     return Card(
       elevation: myElevation,
       shape: RoundedRectangleBorder(
@@ -28,16 +13,16 @@ class TemperatureChart extends StatelessWidget {
         children: <Widget>[
           ListTile(
             title: Text(
-              'Main chart',
+              'Device name',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: myFontSizeBig,
+                fontSize: myFontSizeMedium,
                 fontWeight: FontWeight.bold,
                 color: myOragneColor,
               ),
             ),
             subtitle: Text(
-              date,
+              'Datalogger VUT',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: myFontSizeSmall,
@@ -46,13 +31,15 @@ class TemperatureChart extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 10),
-          Expanded(
-            child: charts.BarChart(
-              series,
-              animate: true,
+          SizedBox(height: 20),
+          Text(
+            '00:11:22:33:FF:EE',
+            style: TextStyle(
+              fontSize: myFontSizeSmall,
+              fontWeight: FontWeight.bold,
+              color: myGreyColor,
             ),
-          )
+          ),
         ],
       ),
     );

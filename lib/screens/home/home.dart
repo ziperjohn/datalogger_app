@@ -1,40 +1,21 @@
-import 'package:datalogger/models/temperature_series.dart';
-import 'package:datalogger/screens/home/widgets/widget_temperature_chart.dart';
+import 'package:datalogger/screens/home/widgets/widget_device_name.dart';
+import 'package:datalogger/screens/home/widgets/widget_last_updates.dart';
+import 'package:datalogger/screens/home/widgets/widget_max_temp.dart';
+import 'package:datalogger/screens/home/widgets/widget_min_temp.dart';
+import 'package:datalogger/screens/home/widgets/widget_temp_chart.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
 
-String date = "";
-
 class _HomeState extends State<Home> {
-  final List<TemperatureSeries> data = [
-    TemperatureSeries(
-      year: '2015',
-      temp: 29.0,
-      barColor: charts.ColorUtil.fromDartColor(Colors.green),
-    ),
-    TemperatureSeries(
-      year: '2016',
-      temp: 28.3,
-      barColor: charts.ColorUtil.fromDartColor(Colors.blue),
-    ),
-    TemperatureSeries(
-      year: '2017',
-      temp: 27.5,
-      barColor: charts.ColorUtil.fromDartColor(Colors.orange),
-    ),
-    TemperatureSeries(
-      year: '2018',
-      temp: 28.8,
-      barColor: charts.ColorUtil.fromDartColor(Colors.amber),
-    ),
-  ];
+  static DateTime dateTime = DateTime.now();
+  static String dateFormated = new DateFormat("dd.MM.yyyy").format(dateTime);
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +30,11 @@ class _HomeState extends State<Home> {
           FlatButton.icon(
             onPressed: () async {
               dynamic result = await Navigator.pushNamed(context, '/settings');
-              setState(() {
-                date = result;
-              });
+              if (result != null) {
+                setState(() {
+                  dateFormated = result;
+                });
+              }
             },
             icon: Icon(
               Icons.settings,
@@ -81,15 +64,24 @@ class _HomeState extends State<Home> {
             ],
             children: <Widget>[
               Container(
-                child: TemperatureChart(
-                  data: data,
-                  date: date,
+                child: TemperatureChart.withSampleData(dateFormated),
+              ),
+              Container(
+                child: LastUpdates(),
+              ),
+              Container(
+                child: MaxTemperature(
+                  date: dateFormated,
                 ),
               ),
-              Container(),
-              Container(),
-              Container(),
-              Container(),
+              Container(
+                child: MinTemperature(
+                  date: dateFormated,
+                ),
+              ),
+              Container(
+                child: DeviceName(),
+              ),
             ],
           ),
         ),
