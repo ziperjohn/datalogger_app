@@ -3,7 +3,7 @@ import 'package:datalogger/theme/theme_constants.dart';
 
 class MinTemperature extends StatelessWidget {
   final String date;
-  final double minTemp;
+  final String minTemp;
 
   MinTemperature({this.date, this.minTemp});
   @override
@@ -13,11 +13,12 @@ class MinTemperature extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
       ),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text(
-              'Min. temp.',
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Min. temperature',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: myFontSizeMedium,
@@ -25,7 +26,8 @@ class MinTemperature extends StatelessWidget {
                 color: myOragneColor,
               ),
             ),
-            subtitle: Text(
+            SizedBox(height: 10),
+            Text(
               date,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -34,18 +36,17 @@ class MinTemperature extends StatelessWidget {
                 color: myGreyColor,
               ),
             ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            '23 °C',
-            style: TextStyle(
-              fontSize: myFontSizeBig,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.5,
-              color: myGreenColor,
+            SizedBox(height: 25),
+            Text(
+              minTemp + ' °C',
+              style: TextStyle(
+                fontSize: myFontSizeBig,
+                fontWeight: FontWeight.bold,
+                color: myGreenColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -9,10 +9,11 @@ class DeviceName extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
       ),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+        child: Column(
+          children: <Widget>[
+            Text(
               'Device name',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -21,7 +22,8 @@ class DeviceName extends StatelessWidget {
                 color: myOragneColor,
               ),
             ),
-            subtitle: Text(
+            SizedBox(height: 10),
+            Text(
               'Datalogger VUT',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -30,17 +32,17 @@ class DeviceName extends StatelessWidget {
                 color: myGreyColor,
               ),
             ),
-          ),
-          SizedBox(height: 20),
-          Text(
-            '00:11:22:33:FF:EE',
-            style: TextStyle(
-              fontSize: myFontSizeSmall,
-              fontWeight: FontWeight.bold,
-              color: myGreyColor,
+            SizedBox(height: 20),
+            Text(
+              '00:11:22:33:FF:EE',
+              style: TextStyle(
+                fontSize: myFontSizeSmall,
+                fontWeight: FontWeight.bold,
+                color: myGreyColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

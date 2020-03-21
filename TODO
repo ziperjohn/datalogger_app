@@ -3,22 +3,24 @@ Todos:
   ✔ Change date formating (in settings.dart) @started(20-03-14 19:58) @done(20-03-14 21:01) @lasted(1h3m25s)
   ✔ Change file and folder organization @critical @started(20-03-13 21:54) @done(20-03-13 23:14) @lasted(1h20m25s)
   ✔ create Time Series Charts @started(20-03-15 09:24) @done(20-03-15 11:36) @lasted(2h12m35s)
+  ✔ Do ListView in class LatestUpdates @done(20-03-20 22:09)
+  ✔ Rename class LastUpdates to LatestUpdates, file too @done(20-03-20 22:09)
+  ✔ Set on home screen padding top @done(20-03-21 19:48)
   ☐ Set datepicker to first and last date when are data available
   ☐ Show detail on chart (date, temp)
   ☐ Set longer animation on chart
-
+  ☐ Set on home screen physics: BouncingScrollPhysics
+  
 Errors: 
   ✔ No set date in settings screen (use default value) @critical @started(20-03-14 18:55) @done(20-03-14 21:25) @lasted(2h30m47s)
 
-Class DataManager:
-  ☐ Rename TemperatureData to DataManager
-  ☐ Create all variables
-  ☐ Create getMinTemp() 
-  ☐ Create getMaxTemp()
-  ☐ Create getLastDate() 
-  ☐ Create getDeviceName()
-  ☐ Create getCharDate()
-  ☐ Create getCharTemp()
+Class Temperature:
+  ☐ Clear this class
+ 
+Class TemperaturesServices:
+  ☐ Do if statement loadTemps with last date or picked date
+  ☐ Save and pass List of temps for chart widget
+  ✔ Save and pass List of dates for latest updates widget @done(20-03-20 22:10)
 
 Class Settings:
   ☐ Create getSelectedDate()
@@ -27,7 +29,9 @@ Class Settings:
   ☐ Create disconnectBLE()
 
 Saving and loading data to files:
-  ☐ Creating a file for temp. and date
+  ✔ Create a StorageManager class @done(20-03-16 16:33)
+  ✔ Create a JSON file for temp. and date @done(20-03-17 15:29)
+  ✔ Create Data Services and copy json functions there @done(20-03-18 21:51)
   ☐ Loading data from file
   ☐ Saving data to file
   ☐ Set starting data to all widget
@@ -39,7 +43,7 @@ Bluetooth communication:
   
 Completed widgets:
   ☐ Chart widged
-  ☐ Last updates widget
+  ☐ latest updates widget
   ☐ Max. temperature widget
   ☐ Min. temperature widget
   ☐ Device name widget

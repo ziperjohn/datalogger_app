@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class MaxTemperature extends StatelessWidget {
   final String date;
-  final double maxTemp;
+  final String maxTemp;
 
   MaxTemperature({this.date, this.maxTemp});
 
@@ -14,11 +14,12 @@ class MaxTemperature extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
       ),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text(
-              'Max. temp.',
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Max. temperature',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: myFontSizeMedium,
@@ -26,7 +27,8 @@ class MaxTemperature extends StatelessWidget {
                 color: myOragneColor,
               ),
             ),
-            subtitle: Text(
+            SizedBox(height: 10),
+            Text(
               date,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -35,18 +37,18 @@ class MaxTemperature extends StatelessWidget {
                 color: myGreyColor,
               ),
             ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            '58 °C',
-            style: TextStyle(
-              fontSize: myFontSizeBig,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.5,
-              color: myRedColor,
+            SizedBox(height: 25),
+            Text(
+              maxTemp + ' °C',
+              // 'ahoj',
+              style: TextStyle(
+                fontSize: myFontSizeBig,
+                fontWeight: FontWeight.bold,
+                color: myRedColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

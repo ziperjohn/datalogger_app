@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'package:datalogger/services/temperatures_services.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -9,16 +9,23 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  void startLoader() async {
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/home');
+  void setupData() async {
+    TemperaturesServices instance = TemperaturesServices();
+
+    await instance.loadTemps();
+
+    Navigator.pushReplacementNamed(context, '/home', arguments: {
+      'date': instance.date,
+      'maxTemp': instance.maxTemp,
+      'minTemp': instance.minTemp,
+      'latestUpdates': instance.latestUpdates
     });
   }
 
   @override
   void initState() {
     super.initState();
-    startLoader();
+    setupData();
   }
 
   @override
