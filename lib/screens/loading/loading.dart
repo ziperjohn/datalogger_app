@@ -1,4 +1,4 @@
-import 'package:datalogger/services/temperatures_services.dart';
+import 'package:datalogger/data/storage.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,9 +10,10 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void setupData() async {
-    TemperaturesServices instance = TemperaturesServices();
+    Storage instance = Storage();
 
-    await instance.loadTemps();
+    //await instance.saveData();
+    await instance.loadData();
 
     Navigator.pushReplacementNamed(context, '/home', arguments: {
       'date': instance.date,

@@ -10,6 +10,7 @@ Todos:
   ☐ Show detail on chart (date, temp)
   ☐ Set longer animation on chart
   ☐ Set on home screen physics: BouncingScrollPhysics
+  ☐ In latest updates show latest date on top of widget
   
 Errors: 
   ✔ No set date in settings screen (use default value) @critical @started(20-03-14 18:55) @done(20-03-14 21:25) @lasted(2h30m47s)
@@ -32,8 +33,8 @@ Saving and loading data to files:
   ✔ Create a StorageManager class @done(20-03-16 16:33)
   ✔ Create a JSON file for temp. and date @done(20-03-17 15:29)
   ✔ Create Data Services and copy json functions there @done(20-03-18 21:51)
-  ☐ Loading data from file
-  ☐ Saving data to file
+  ✔ Loading data from file @done(20-03-22 16:23)
+  ✔ Saving data to file @started(20-03-22 14:45) @done(20-03-22 16:24) @lasted(1h39m12s)
   ☐ Set starting data to all widget
 
 Bluetooth communication:
