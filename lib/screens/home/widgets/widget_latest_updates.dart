@@ -28,7 +28,6 @@ class LatestUpdates extends StatelessWidget {
               SizedBox(height: 10),
               Expanded(
                 child: ListView.separated(
-                  reverse: true,
                   physics: BouncingScrollPhysics(),
                   itemCount: latestUpdates.length,
                   itemBuilder: (BuildContext context, int index) {

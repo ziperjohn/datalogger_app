@@ -1,4 +1,4 @@
-import 'package:datalogger/data/storage.dart';
+import 'package:datalogger/services/storage.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,7 +19,8 @@ class _LoadingState extends State<Loading> {
       'date': instance.date,
       'maxTemp': instance.maxTemp,
       'minTemp': instance.minTemp,
-      'latestUpdates': instance.latestUpdates
+      'latestUpdatesReversed': instance.latestUpdatesReversed,
+      'tempsChart': instance.tempsChart
     });
   }
 

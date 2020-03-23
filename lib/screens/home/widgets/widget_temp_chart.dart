@@ -4,49 +4,47 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class TemperatureChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
+  final List<double> temps;
   final String date;
 
-  TemperatureChart(this.seriesList, {this.date});
+  TemperatureChart({this.date, this.temps});
 
-  factory TemperatureChart.withSampleData(String date) {
-    return new TemperatureChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      date: date,
-    );
+  DateTime parseStringToDateTime(String date) {
+    String oldDate = date;
+    var day = int.parse(oldDate.substring(0, 2));
+    var month = int.parse(oldDate.substring(3, 5));
+    var year = int.parse(oldDate.substring(6, 10));
+    DateTime dateTime = DateTime(year, month, day);
+    return dateTime;
   }
 
-  static List<charts.Series<Temperature, DateTime>> _createSampleData() {
-    final data = [
-      new Temperature(charDate: new DateTime(2020, 3, 3), chartTemp: 28.1),
-      new Temperature(charDate: new DateTime(2020, 3, 4), chartTemp: 28.4),
-      new Temperature(charDate: new DateTime(2020, 3, 5), chartTemp: 30.3),
-      new Temperature(charDate: new DateTime(2020, 3, 6), chartTemp: 28.5),
-      new Temperature(charDate: new DateTime(2020, 3, 7), chartTemp: 31.8),
-      new Temperature(charDate: new DateTime(2020, 3, 8), chartTemp: 30.6),
-      new Temperature(charDate: new DateTime(2020, 3, 9), chartTemp: 27.5),
-      new Temperature(charDate: new DateTime(2020, 3, 10), chartTemp: 30.1),
-      new Temperature(charDate: new DateTime(2020, 3, 11), chartTemp: 28.1),
-      new Temperature(charDate: new DateTime(2020, 3, 12), chartTemp: 29.9),
-      new Temperature(charDate: new DateTime(2020, 3, 13), chartTemp: 30.0),
-      new Temperature(charDate: new DateTime(2020, 3, 14), chartTemp: 31.3),
-      new Temperature(charDate: new DateTime(2020, 3, 15), chartTemp: 30.7),
-    ];
-
-    return [
-      new charts.Series<Temperature, DateTime>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.cyan.shadeDefault,
-        domainFn: (Temperature sales, _) => sales.charDate,
-        measureFn: (Temperature sales, _) => sales.chartTemp,
-        data: data,
-      )
-    ];
+  List<Temperature> createChartData(List<double> temps, String date) {
+    DateTime time = parseStringToDateTime(date);
+    List<double> chartTemps = temps;
+    List<Temperature> chartData = List();
+    int hours = 0;
+    for (var i = 0; i < chartTemps.length; i++) {
+      chartData.add(
+        Temperature(
+            charDate: time.add(Duration(hours: hours)),
+            chartTemps: chartTemps[i]),
+      );
+      hours = hours + 2;
+    }
+    return chartData;
   }
 
   @override
   Widget build(BuildContext context) {
+    List<charts.Series<Temperature, DateTime>> series = [
+      charts.Series(
+        id: 'temperatures',
+        data: createChartData(temps, date),
+        domainFn: (Temperature series, _) => series.charDate,
+        measureFn: (Temperature series, _) => series.chartTemps,
+        colorFn: (_, __) => charts.MaterialPalette.cyan.shadeDefault,
+      )
+    ];
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
       child: Card(
@@ -59,7 +57,7 @@ class TemperatureChart extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Text(
-                'Main chart',
+                date.toString(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: myFontSizeBig,
@@ -67,24 +65,39 @@ class TemperatureChart extends StatelessWidget {
                   color: myOragneColor,
                 ),
               ),
-              SizedBox(height: 10),
-              Text(
-                date,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: myFontSizeSmall,
-                  fontWeight: FontWeight.bold,
-                  color: myGreyColor,
-                ),
-              ),
-              SizedBox(height: 10),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: charts.TimeSeriesChart(
-                    seriesList,
-                    animate: true,
-                    dateTimeFactory: const charts.LocalDateTimeFactory(),
+                child: charts.TimeSeriesChart(
+                  series,
+                  animate: true,
+                  animationDuration: Duration(seconds: 1),
+                  // Title
+                  behaviors: [
+                    charts.ChartTitle('Time [h]',
+                        behaviorPosition: charts.BehaviorPosition.bottom,
+                        titleOutsideJustification:
+                            charts.OutsideJustification.middleDrawArea),
+                    new charts.ChartTitle('Temperature [°C]',
+                        behaviorPosition: charts.BehaviorPosition.start,
+                        titleOutsideJustification:
+                            charts.OutsideJustification.middleDrawArea),
+                  ],
+                  // Point
+                  defaultRenderer:
+                      new charts.LineRendererConfig(includePoints: true),
+                  // Main axis
+                  domainAxis: new charts.EndPointsTimeAxisSpec(
+                    tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
+                      hour: new charts.TimeFormatterSpec(
+                          format: '24:00', transitionFormat: '00:00'),
+                    ),
+                  ),
+                  // Secondary axis
+                  primaryMeasureAxis: new charts.NumericAxisSpec(
+                    renderSpec: charts.GridlineRendererSpec(
+                      lineStyle: charts.LineStyleSpec(
+                        dashPattern: [6, 6],
+                      ),
+                    ),
                   ),
                 ),
               ),

@@ -6,26 +6,35 @@ Todos:
   ✔ Do ListView in class LatestUpdates @done(20-03-20 22:09)
   ✔ Rename class LastUpdates to LatestUpdates, file too @done(20-03-20 22:09)
   ✔ Set on home screen padding top @done(20-03-21 19:48)
-  ☐ Set datepicker to first and last date when are data available
-  ☐ Show detail on chart (date, temp)
-  ☐ Set longer animation on chart
   ☐ Set on home screen physics: BouncingScrollPhysics
   ☐ In latest updates show latest date on top of widget
-  
+  ✔ In chart change main chart to date @done(20-03-23 12:15)
+
+
 Errors: 
   ✔ No set date in settings screen (use default value) @critical @started(20-03-14 18:55) @done(20-03-14 21:25) @lasted(2h30m47s)
 
 Class Temperature:
-  ☐ Clear this class
- 
-Class TemperaturesServices:
+  ✔ Clear this class @done(20-03-23 12:20)
+
+Chart wiget:
+  ✔ Set values from file @done(20-03-23 11:38)
+  ✔ Create datetime chart @done(20-03-23 10:20)
+  ✔ Parse String date to datetime @done(20-03-23 12:08)
+  ✔ Change color of chart @done(20-03-23 12:19)
+  ☐ Show detail on chart (date, temp)
+  ✔ Set longer animation on chart @done(20-03-23 12:26)
+  ✔ Add padding on chart @done(20-03-23 23:01)
+  ✔ Change main axis @done(20-03-23 22:56)
+
+Class Storage:
   ☐ Do if statement loadTemps with last date or picked date
   ☐ Save and pass List of temps for chart widget
   ✔ Save and pass List of dates for latest updates widget @done(20-03-20 22:10)
 
 Class Settings:
+  ☐ Set datepicker to first and last date when are data available
   ☐ Create getSelectedDate()
-  ☐ Create getSelectedDateRange()
   ☐ Create connectBLE()
   ☐ Create disconnectBLE()
 
@@ -45,8 +54,8 @@ Bluetooth communication:
 Completed widgets:
   ☐ Chart widged
   ☐ latest updates widget
-  ☐ Max. temperature widget
-  ☐ Min. temperature widget
+  ✔ Max. temperature widget @done(20-03-22 17:11)
+  ✔ Min. temperature widget @done(20-03-22 17:11)
   ☐ Device name widget
 
 

@@ -59,7 +59,7 @@ class _HomeState extends State<Home> {
           mainAxisSpacing: 5,
           crossAxisSpacing: 5,
           staggeredTiles: [
-            StaggeredTile.count(4, 4),
+            StaggeredTile.count(4, 5),
             StaggeredTile.count(2, 4),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 2),
@@ -67,11 +67,14 @@ class _HomeState extends State<Home> {
           ],
           children: <Widget>[
             Container(
-              child: TemperatureChart.withSampleData(data['date']),
+              child: TemperatureChart(
+                temps: data['tempsChart'],
+                date: data['date'],
+              ),
             ),
             Container(
               child: LatestUpdates(
-                latestUpdates: data['latestUpdates'],
+                latestUpdates: data['latestUpdatesReversed'],
               ),
             ),
             Container(

@@ -9,8 +9,9 @@ class Storage {
   String date;
   String maxTemp;
   String minTemp;
+  List<String> latestUpdatesReversed = List();
   List<String> latestUpdates = List();
-  List<double> listTempChart = List();
+  List<double> tempsChart = List();
 
   Future<String> get localPath async {
     final dir = await getApplicationDocumentsDirectory();
@@ -35,7 +36,7 @@ class Storage {
       for (var i = 0;
           i < temperaturesList.temperatures.last.temps.length;
           i++) {
-        listTempChart.add(temperaturesList.temperatures.last.temps[i]);
+        tempsChart.add(temperaturesList.temperatures.last.temps[i]);
       }
 
       // save picked date
@@ -47,9 +48,11 @@ class Storage {
       minTemp = temperaturesList.temperatures.last.temps.first.toString();
 
       // save latest updates
+
       for (var i in temperaturesList.temperatures) {
         latestUpdates.add(i.date);
       }
+      latestUpdatesReversed.addAll(latestUpdates.reversed);
 
       print('Loading data DONE!');
     } catch (e) {
