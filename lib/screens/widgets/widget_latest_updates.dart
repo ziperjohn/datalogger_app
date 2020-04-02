@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class LatestUpdates extends StatelessWidget {
   final List<String> latestUpdates;
-  LatestUpdates({this.latestUpdates});
+  LatestUpdates({@required this.latestUpdates});
 
   @override
   Widget build(BuildContext context) {

@@ -9,18 +9,19 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
+  Storage instance = Storage();
   void setupData() async {
-    Storage instance = Storage();
-
     //await instance.saveData();
     await instance.loadData();
 
-    Navigator.pushReplacementNamed(context, '/home', arguments: {
-      'date': instance.date,
+    Navigator.pushReplacementNamed(context, '/wrapper', arguments: {
       'maxTemp': instance.maxTemp,
       'minTemp': instance.minTemp,
-      'latestUpdatesReversed': instance.latestUpdatesReversed,
-      'tempsChart': instance.tempsChart
+      'tempsChart': instance.tempsChart,
+      'date': instance.date,
+      'firstDateTime': instance.firstDateTime,
+      'lastDateTime': instance.lastDateTime,
+      'latestUpdatesReversed': instance.latestUpdatesReversed
     });
   }
 
@@ -35,7 +36,7 @@ class _LoadingState extends State<Loading> {
     return Scaffold(
       backgroundColor: myOragneColor,
       body: Center(
-        child: SpinKitFadingCube(
+        child: SpinKitWave(
           color: myWhiteColor,
           size: 80,
         ),

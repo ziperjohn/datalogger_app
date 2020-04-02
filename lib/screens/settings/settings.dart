@@ -1,6 +1,5 @@
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -8,22 +7,28 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  static int selectedRadio;
   static String dateFormated;
+  // Map data = {};
+  // @override
+  // void didChangeDependencies() {
+  //   data = ModalRoute.of(context).settings.arguments;
+  //   super.didChangeDependencies();
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    selectedRadio = 0;
-  }
+  //? it may be useful
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   selectedRadio = 0;
+  // }
 
-  setSelectedRadio(int val) {
-    setState(() => selectedRadio = val);
-  }
+  // setSelectedRadio(int val) {
+  //   setState(() => selectedRadio = val);
+  // }
 
-  void updateDate(String dateFormated) {
-    Navigator.pop(context, dateFormated);
-  }
+  // void updateDate(String dateFormated) {
+  //   Navigator.pop(context, dateFormated);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -39,59 +44,32 @@ class _SettingsState extends State<Settings> {
         children: <Widget>[
           Card(
             color: myWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+            margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
             child: ListTile(
-              title: Text('Period view'),
-              subtitle: Text('Select a period'),
-              trailing: Radio(
-                value: 0,
-                groupValue: selectedRadio,
-                activeColor: myCyanColor,
-                onChanged: (val) {
-                  print('period');
-                  setSelectedRadio(val);
-                },
+              leading: Icon(
+                Icons.settings_bluetooth,
+                size: 35,
+                color: myGreyColor,
               ),
+              title: Text('Bluetooth'),
+              subtitle: Text('Device info, find new device...'),
+              onTap: () {
+                Navigator.pushNamed(context, '/bluetooth');
+              },
             ),
           ),
           Card(
             color: myWhiteColor,
-            margin: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+            margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
             child: ListTile(
-              title: Text('Day view'),
-              subtitle: Text('Select a day'),
-              trailing: Radio(
-                value: 1,
-                groupValue: selectedRadio,
-                activeColor: myCyanColor,
-                onChanged: (val) {
-                  setSelectedRadio(val);
-                  showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime.now(),
-                    builder: (BuildContext context, Widget child) {
-                      return Theme(
-                        data: ThemeData.light().copyWith(
-                          primaryColor: myCyanColor,
-                          accentColor: myCyanColor,
-                          colorScheme: ColorScheme.light(primary: myCyanColor),
-                          buttonTheme: ButtonThemeData(
-                              textTheme: ButtonTextTheme.primary),
-                        ),
-                        child: child,
-                      );
-                    },
-                  ).then(
-                    (dateTime) {
-                      dateFormated =
-                          new DateFormat("dd.MM.yyyy").format(dateTime);
-                      updateDate(dateFormated);
-                    },
-                  );
-                },
+              leading: Icon(
+                Icons.storage,
+                size: 35,
+                color: myGreyColor,
               ),
+              title: Text('Storage'),
+              subtitle: Text('Storage info, delete storage...'),
+              onTap: () {},
             ),
           ),
         ],

@@ -1,12 +1,11 @@
-import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:datalogger/theme/theme_constants.dart';
 
-class MaxTemperature extends StatelessWidget {
+class MinTemperature extends StatelessWidget {
   final String date;
-  final String maxTemp;
+  final String minTemp;
 
-  MaxTemperature({this.date, this.maxTemp});
-
+  MinTemperature({@required this.date, @required this.minTemp});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,7 +18,7 @@ class MaxTemperature extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(
-              'Max. temperature',
+              'Min. temperature',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: myFontSizeMedium,
@@ -39,12 +38,11 @@ class MaxTemperature extends StatelessWidget {
             ),
             SizedBox(height: 25),
             Text(
-              maxTemp + ' °C',
-              // 'ahoj',
+              minTemp + ' °C',
               style: TextStyle(
                 fontSize: myFontSizeBig,
                 fontWeight: FontWeight.bold,
-                color: myRedColor,
+                color: myGreenColor,
               ),
             ),
           ],

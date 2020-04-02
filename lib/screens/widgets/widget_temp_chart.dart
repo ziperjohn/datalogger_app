@@ -7,8 +7,9 @@ class TemperatureChart extends StatelessWidget {
   final List<double> temps;
   final String date;
 
-  TemperatureChart({this.date, this.temps});
+  TemperatureChart({@required this.date, @required this.temps});
 
+  // TODO Delete this method and pass variable String date like DateTime
   DateTime parseStringToDateTime(String date) {
     String oldDate = date;
     var day = int.parse(oldDate.substring(0, 2));
@@ -45,6 +46,7 @@ class TemperatureChart extends StatelessWidget {
         colorFn: (_, __) => charts.MaterialPalette.cyan.shadeDefault,
       )
     ];
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
       child: Card(
@@ -65,6 +67,7 @@ class TemperatureChart extends StatelessWidget {
                   color: myOragneColor,
                 ),
               ),
+              // TODO Show detail on chart (date, temp)
               Expanded(
                 child: charts.TimeSeriesChart(
                   series,
@@ -88,7 +91,7 @@ class TemperatureChart extends StatelessWidget {
                   domainAxis: new charts.EndPointsTimeAxisSpec(
                     tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
                       hour: new charts.TimeFormatterSpec(
-                          format: '24:00', transitionFormat: '00:00'),
+                          format: '23:59', transitionFormat: '00:00'),
                     ),
                   ),
                   // Secondary axis

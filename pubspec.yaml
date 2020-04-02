@@ -25,7 +25,7 @@ dependencies:
   flutter_spinkit: ^4.1.2
   intl: ^0.16.1
   charts_flutter: ^0.9.0
-  
+  flutter_blue: ^0.6.3+1
 
 dev_dependencies:
   flutter_test:
