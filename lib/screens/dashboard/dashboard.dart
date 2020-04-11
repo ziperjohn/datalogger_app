@@ -1,10 +1,10 @@
-import 'package:datalogger/screens/widgets/widget_date_picker.dart';
-
-import 'package:datalogger/screens/widgets/widget_device_name.dart';
-import 'package:datalogger/screens/widgets/widget_latest_updates.dart';
-import 'package:datalogger/screens/widgets/widget_max_temp.dart';
-import 'package:datalogger/screens/widgets/widget_min_temp.dart';
-import 'package:datalogger/screens/widgets/widget_temp_chart.dart';
+import 'package:datalogger/screens/widgets/date_picker_widget.dart';
+import 'package:datalogger/screens/widgets/date_view_widget.dart';
+import 'package:datalogger/screens/widgets/device_info_widget.dart';
+import 'package:datalogger/screens/widgets/latest_update_widget.dart';
+import 'package:datalogger/screens/widgets/max_temp_widget.dart';
+import 'package:datalogger/screens/widgets/min_temp_widget.dart';
+import 'package:datalogger/screens/widgets/temp_chart_widget.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -26,11 +26,11 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myWhiteColor,
+      backgroundColor: bgColor,
       appBar: AppBar(
         centerTitle: true,
         title: Text('Dashboard'),
-        backgroundColor: myOragneColor,
+        backgroundColor: bgBarColor,
         elevation: myElevation,
       ),
       body: Container(
@@ -40,6 +40,7 @@ class _DashboardState extends State<Dashboard> {
           mainAxisSpacing: 5,
           crossAxisSpacing: 5,
           staggeredTiles: [
+            StaggeredTile.count(4, 1),
             StaggeredTile.count(4, 4),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 2),
@@ -51,9 +52,13 @@ class _DashboardState extends State<Dashboard> {
           ],
           children: <Widget>[
             Container(
-              child: TemperatureChart(
-                temps: data['tempsChart'],
+              child: DateView(
                 date: data['date'],
+              ),
+            ),
+            Container(
+              child: TempsLineChart(
+                temps: data['tempsChart'],
               ),
             ),
             Container(
@@ -83,7 +88,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             Container(
-              child: DeviceName(),
+              child: DeviceInfo(),
             ),
           ],
         ),

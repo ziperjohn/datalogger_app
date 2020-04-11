@@ -9,6 +9,7 @@ class MaxTemperature extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: bgWidgetColor,
       elevation: myElevation,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
@@ -23,7 +24,7 @@ class MaxTemperature extends StatelessWidget {
               style: TextStyle(
                 fontSize: myFontSizeMedium,
                 fontWeight: FontWeight.bold,
-                color: myOragneColor,
+                color: cyanColor,
               ),
             ),
             SizedBox(height: 10),
@@ -33,7 +34,7 @@ class MaxTemperature extends StatelessWidget {
               style: TextStyle(
                 fontSize: myFontSizeSmall,
                 fontWeight: FontWeight.bold,
-                color: myGreyColor,
+                color: whiteColor,
               ),
             ),
             SizedBox(height: 25),
@@ -43,7 +44,7 @@ class MaxTemperature extends StatelessWidget {
               style: TextStyle(
                 fontSize: myFontSizeBig,
                 fontWeight: FontWeight.bold,
-                color: myRedColor,
+                color: redColor,
               ),
             ),
           ],

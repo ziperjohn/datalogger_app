@@ -34,10 +34,10 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myOragneColor,
+      backgroundColor: bgColor,
       body: Center(
-        child: SpinKitWave(
-          color: myWhiteColor,
+        child: SpinKitRing(
+          color: cyanColor,
           size: 80,
         ),
       ),

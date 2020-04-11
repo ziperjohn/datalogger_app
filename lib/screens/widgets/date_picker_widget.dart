@@ -38,6 +38,7 @@ class _DatePickerState extends State<DatePicker> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: bgWidgetColor,
       elevation: myElevation,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
@@ -51,10 +52,11 @@ class _DatePickerState extends State<DatePicker> {
             lastDate: widget.lastDateTime,
             builder: (BuildContext context, Widget child) {
               return Theme(
-                data: ThemeData.light().copyWith(
-                  primaryColor: myCyanColor,
-                  accentColor: myCyanColor,
-                  colorScheme: ColorScheme.light(primary: myCyanColor),
+                data: ThemeData.dark().copyWith(
+                  primaryColor: cyanColor,
+                  accentColor: cyanColor,
+                  colorScheme: ColorScheme.light(primary: cyanColor),
+                  dialogBackgroundColor: bgWidgetColor,
                   buttonTheme:
                       ButtonThemeData(textTheme: ButtonTextTheme.primary),
                 ),
@@ -79,7 +81,7 @@ class _DatePickerState extends State<DatePicker> {
                   style: TextStyle(
                     fontSize: myFontSizeMedium,
                     fontWeight: FontWeight.bold,
-                    color: myOragneColor,
+                    color: cyanColor,
                   ),
                 ),
                 SizedBox(height: 10),
@@ -89,14 +91,14 @@ class _DatePickerState extends State<DatePicker> {
                   style: TextStyle(
                     fontSize: myFontSizeSmall,
                     fontWeight: FontWeight.bold,
-                    color: myGreyColor,
+                    color: whiteColor,
                   ),
                 ),
                 SizedBox(height: 25),
                 Icon(
                   Icons.today,
                   size: 45,
-                  color: myGreyColor,
+                  color: silverColor,
                 ),
               ],
             ),

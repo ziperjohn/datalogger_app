@@ -61,12 +61,12 @@ class ScanResultTile extends StatelessWidget {
         title: buildTitle(context),
         leading: Icon(
           Icons.bluetooth,
-          color: myBlackColor,
+          color: bgColor,
         ),
         trailing: RaisedButton(
           child: Text('CONNECT'),
-          color: myCyanColor,
-          textColor: myWhiteColor,
+          color: cyanColor,
+          textColor: whiteColor,
           onPressed: (result.advertisementData.connectable) ? onTap : null,
         ),
       ),

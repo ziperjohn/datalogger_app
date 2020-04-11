@@ -16,7 +16,7 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myLightGreyColor,
+      backgroundColor: bgColor,
       body: StreamBuilder<List<ScanResult>>(
         stream: FlutterBlue.instance.scanResults,
         builder: (context, snapshot) {
@@ -26,21 +26,24 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
-                  color: myWhiteColor,
+                  color: bgWidgetColor,
                   child: ListTile(
                     leading: Icon(
                       Icons.bluetooth,
-                      color: myGreyColor,
+                      color: cyanColor,
                       size: 40,
                     ),
                     title: bildTitle(snapshot.data[index].device.name),
-                    subtitle: Text(snapshot.data[index].device.id.toString()),
+                    subtitle: Text(
+                      snapshot.data[index].device.id.toString(),
+                      style: TextStyle(color: silverColor),
+                    ),
                     trailing: RaisedButton(
                       child: Text(
                         'Connect',
-                        style: TextStyle(color: myWhiteColor),
+                        style: TextStyle(color: whiteColor),
                       ),
-                      color: myGreyColor,
+                      color: greyColor,
                       onPressed: () {
                         // bluetoothServices.connectToDevice();
                         Navigator.pop(context, {
@@ -66,12 +69,12 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
             return FloatingActionButton(
               child: Icon(Icons.stop),
               onPressed: () => bluetoothServices.stopScaning(),
-              backgroundColor: myRedColor,
+              backgroundColor: redColor,
             );
           } else {
             return FloatingActionButton(
               child: Icon(Icons.search),
-              backgroundColor: myGreyColor,
+              backgroundColor: cyanColor,
               onPressed: () => bluetoothServices.scanForDevices(),
             );
           }
@@ -82,17 +85,23 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
 
   Widget bildTitle(String name) {
     if (name.length > 0) {
-      return Text(name);
+      return Text(
+        name,
+        style: TextStyle(color: whiteColor),
+      );
     } else {
-      return Text('No name');
+      return Text(
+        'No name',
+        style: TextStyle(color: whiteColor),
+      );
     }
   }
 
   Widget loader() {
     return Container(
       child: Center(
-        child: SpinKitWave(
-          color: myOragneColor,
+        child: SpinKitRing(
+          color: cyanColor,
           size: 80,
         ),
       ),

@@ -33,42 +33,54 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myLightGreyColor,
+      backgroundColor: bgColor,
       appBar: AppBar(
         centerTitle: true,
         title: Text('Settings'),
-        backgroundColor: myOragneColor,
+        backgroundColor: bgBarColor,
         elevation: myElevation,
       ),
       body: Column(
         children: <Widget>[
           Card(
-            color: myWhiteColor,
+            color: bgWidgetColor,
             margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
             child: ListTile(
               leading: Icon(
                 Icons.settings_bluetooth,
                 size: 35,
-                color: myGreyColor,
+                color: cyanColor,
               ),
-              title: Text('Bluetooth'),
-              subtitle: Text('Device info, find new device...'),
+              title: Text(
+                'Bluetooth',
+                style: TextStyle(color: whiteColor),
+              ),
+              subtitle: Text(
+                'Device info, find new device...',
+                style: TextStyle(color: silverColor),
+              ),
               onTap: () {
                 Navigator.pushNamed(context, '/bluetooth');
               },
             ),
           ),
           Card(
-            color: myWhiteColor,
+            color: bgWidgetColor,
             margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
             child: ListTile(
               leading: Icon(
                 Icons.storage,
                 size: 35,
-                color: myGreyColor,
+                color: cyanColor,
               ),
-              title: Text('Storage'),
-              subtitle: Text('Storage info, delete storage...'),
+              title: Text(
+                'Storage',
+                style: TextStyle(color: whiteColor),
+              ),
+              subtitle: Text(
+                'Storage info, delete storage...',
+                style: TextStyle(color: silverColor),
+              ),
               onTap: () {},
             ),
           ),

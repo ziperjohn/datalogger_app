@@ -13,11 +13,11 @@ class _FindNewDeviceScreenState extends State<FindNewDeviceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myLightGreyColor,
+      backgroundColor: bgColor,
       appBar: AppBar(
         centerTitle: true,
         title: Text('Find new device'),
-        backgroundColor: myOragneColor,
+        backgroundColor: bgBarColor,
         elevation: myElevation,
       ),
       body: StreamBuilder<BluetoothState>(

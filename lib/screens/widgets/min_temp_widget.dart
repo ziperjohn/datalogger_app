@@ -1,10 +1,15 @@
-import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:datalogger/theme/theme_constants.dart';
 
-class DeviceName extends StatelessWidget {
+class MinTemperature extends StatelessWidget {
+  final String date;
+  final String minTemp;
+
+  MinTemperature({@required this.date, @required this.minTemp});
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: bgWidgetColor,
       elevation: myElevation,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
@@ -14,31 +19,31 @@ class DeviceName extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Text(
-              'Device name',
+              'Min. temperature',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: myFontSizeMedium,
                 fontWeight: FontWeight.bold,
-                color: myOragneColor,
+                color: cyanColor,
               ),
             ),
             SizedBox(height: 10),
             Text(
-              'Datalogger VUT',
+              date,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: myFontSizeSmall,
                 fontWeight: FontWeight.bold,
-                color: myGreyColor,
+                color: whiteColor,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 25),
             Text(
-              '00:11:22:33:FF:EE',
+              minTemp + ' °C',
               style: TextStyle(
-                fontSize: myFontSizeSmall,
+                fontSize: myFontSizeBig,
                 fontWeight: FontWeight.bold,
-                color: myGreyColor,
+                color: greenColor,
               ),
             ),
           ],
