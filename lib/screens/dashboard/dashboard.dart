@@ -4,7 +4,7 @@ import 'package:datalogger/screens/widgets/device_info_widget.dart';
 import 'package:datalogger/screens/widgets/latest_update_widget.dart';
 import 'package:datalogger/screens/widgets/max_temp_widget.dart';
 import 'package:datalogger/screens/widgets/min_temp_widget.dart';
-import 'package:datalogger/screens/widgets/temp_chart_widget.dart';
+import 'package:datalogger/screens/widgets/temps_line_chart_widget.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
