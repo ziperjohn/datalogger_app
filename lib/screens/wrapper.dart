@@ -47,9 +47,9 @@ class _WrapperState extends State<Wrapper> {
       // ),
       body: _tabs[_selectedPage],
       bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: myGreyColor,
-        backgroundColor: myWhiteColor,
-        selectedItemColor: myOragneColor,
+        unselectedItemColor: silverColor,
+        backgroundColor: bgWidgetColor,
+        selectedItemColor: cyanColor,
         currentIndex: _selectedPage,
         items: [
           BottomNavigationBarItem(

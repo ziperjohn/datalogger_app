@@ -10,16 +10,17 @@ class _ChartsState extends State<Charts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myLightGreyColor,
+      backgroundColor: bgColor,
       appBar: AppBar(
         centerTitle: true,
         title: Text('Charts'),
-        backgroundColor: myOragneColor,
+        backgroundColor: bgBarColor,
         elevation: myElevation,
       ),
       body: Center(
-        child: Container(
-          child: Text('Charts'),
+        child: Text(
+          'Charts',
+          style: TextStyle(color: whiteColor),
         ),
       ),
     );

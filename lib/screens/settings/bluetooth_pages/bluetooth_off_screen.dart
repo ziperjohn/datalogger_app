@@ -5,6 +5,7 @@ class BluetoothOffScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: bgColor,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -12,13 +13,13 @@ class BluetoothOffScreen extends StatelessWidget {
             Icon(
               Icons.bluetooth_disabled,
               size: 250,
-              color: myBlackColor,
+              color: cyanColor,
             ),
             Text(
               'Bluetooth is disable',
               style: TextStyle(
                 fontSize: myFontSizeMedium,
-                color: myGreyColor,
+                color: whiteColor,
               ),
             ),
             SizedBox(height: 10),
@@ -26,7 +27,7 @@ class BluetoothOffScreen extends StatelessWidget {
               'Please turn on bluetooth in settings',
               style: TextStyle(
                 fontSize: myFontSizeMedium,
-                color: myGreyColor,
+                color: silverColor,
               ),
             ),
           ],

@@ -13,24 +13,28 @@ class _BluetoothScreenState extends State<BluetoothScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myLightGreyColor,
+      backgroundColor: bgColor,
       appBar: AppBar(
         centerTitle: true,
         title: Text('Bluetooth'),
-        backgroundColor: myOragneColor,
+        backgroundColor: bgBarColor,
         elevation: myElevation,
       ),
       body: Column(
         children: <Widget>[
           Card(
-            color: myWhiteColor,
+            color: bgWidgetColor,
             margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
             child: ListTile(
               leading: setIcon(),
-              title: Text(data['name'] ?? 'Not connected'),
+              title: Text(data['name'] ?? 'Not connected',
+                  style: TextStyle(color: whiteColor)),
               // TODO Set status dynamically
-              subtitle: Text('''Status: not connected
-Device addres: ${data['id'] ?? ''}'''),
+              subtitle: Text(
+                '''Status: not connected
+Device addres: ${data['id'] ?? ''}''',
+                style: TextStyle(color: silverColor),
+              ),
               isThreeLine: true,
             ),
           ),
@@ -44,15 +48,18 @@ Device addres: ${data['id'] ?? ''}'''),
 
   Widget findNewDeviceCard() {
     return Card(
-      color: myWhiteColor,
+      color: bgWidgetColor,
       margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
       child: ListTile(
         leading: Icon(
           Icons.add_circle,
           size: 30,
-          color: myGreyColor,
+          color: cyanColor,
         ),
-        title: Text('Find new device'),
+        title: Text(
+          'Find new device',
+          style: TextStyle(color: whiteColor),
+        ),
         onTap: () async {
           dynamic result = await Navigator.pushNamed(context, '/findNewDevice');
           try {
@@ -73,15 +80,18 @@ Device addres: ${data['id'] ?? ''}'''),
   Widget disconnectDeviceCard() {
     if (data.isNotEmpty) {
       return Card(
-        color: myWhiteColor,
+        color: bgWidgetColor,
         margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
         child: ListTile(
           leading: Icon(
             Icons.remove_circle,
             size: 30,
-            color: myGreyColor,
+            color: cyanColor,
           ),
-          title: Text('Disconnect device'),
+          title: Text(
+            'Disconnect device',
+            style: TextStyle(color: whiteColor),
+          ),
           // TODO Create a method for disconnect device
           onTap: () {
             data.clear();
@@ -97,15 +107,18 @@ Device addres: ${data['id'] ?? ''}'''),
   Widget downloadDataCard() {
     if (data.isNotEmpty) {
       return Card(
-        color: myWhiteColor,
+        color: bgWidgetColor,
         margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
         child: ListTile(
           leading: Icon(
             Icons.file_download,
             size: 30,
-            color: myGreyColor,
+            color: cyanColor,
           ),
-          title: Text('Download data from device'),
+          title: Text(
+            'Download data from device',
+            style: TextStyle(color: whiteColor),
+          ),
           // TODO Create a method for download data from device
           onTap: () {},
         ),
@@ -119,13 +132,13 @@ Device addres: ${data['id'] ?? ''}'''),
     if (data.isNotEmpty) {
       return Icon(
         Icons.bluetooth_connected,
-        color: myGreyColor,
+        color: cyanColor,
         size: 60,
       );
     } else {
       return Icon(
         Icons.bluetooth_disabled,
-        color: myGreyColor,
+        color: cyanColor,
         size: 60,
       );
     }

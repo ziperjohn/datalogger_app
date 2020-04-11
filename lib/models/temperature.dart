@@ -1,10 +1,8 @@
 class Temperature {
-  final DateTime charDate;
-  final double chartTemps;
   final String date;
   final List<double> temps;
 
-  Temperature({this.charDate, this.chartTemps, this.date, this.temps});
+  Temperature({this.date, this.temps});
 
   factory Temperature.fromJson(Map<String, dynamic> json) {
     var tempsFromJson = json['temps'];
