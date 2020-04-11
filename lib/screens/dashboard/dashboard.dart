@@ -1,4 +1,5 @@
 import 'package:datalogger/screens/widgets/widget_date_picker.dart';
+
 import 'package:datalogger/screens/widgets/widget_device_name.dart';
 import 'package:datalogger/screens/widgets/widget_latest_updates.dart';
 import 'package:datalogger/screens/widgets/widget_max_temp.dart';
@@ -25,7 +26,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myLightGreyColor,
+      backgroundColor: myWhiteColor,
       appBar: AppBar(
         centerTitle: true,
         title: Text('Dashboard'),
@@ -39,7 +40,7 @@ class _DashboardState extends State<Dashboard> {
           mainAxisSpacing: 5,
           crossAxisSpacing: 5,
           staggeredTiles: [
-            StaggeredTile.count(4, 5),
+            StaggeredTile.count(4, 4),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 4),
