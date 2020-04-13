@@ -58,14 +58,14 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             Container(
-              // child: TempsLineChart(
-              //   temps: data['tempsChart'],
-              // ),
-              child: TempsBarChart(
-                maxTemps: data['maxTemps'],
-                minTemps: data['minTemps'],
-                dates: data['fiveDates'],
+              child: TempsLineChart(
+                temps: data['tempsChart'],
               ),
+              // child: TempsBarChart(
+              //   maxTemps: data['maxTemps'],
+              //   minTemps: data['minTemps'],
+              //   dates: data['fiveDates'],
+              // ),
             ),
             Container(
               child: MinTemperature(
