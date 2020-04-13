@@ -1,6 +1,5 @@
 import 'package:datalogger/models/temperature.dart';
 import 'package:datalogger/screens/settings/settings.dart';
-
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
@@ -12,10 +11,14 @@ class Storage {
   DateTime firstDateTime;
   DateTime lastDateTime;
   String date;
+  // TODO delete this String max min temp and pass in List double
   String maxTemp;
   String minTemp;
   List<String> latestUpdatesReversed = List();
   List<double> tempsChart = List();
+  List<double> maxTemps = List();
+  List<double> minTemps = List();
+  List<String> fiveDates = List();
 
   Settings settings = Settings();
 
@@ -37,6 +40,8 @@ class Storage {
       final jsonResponse = json.decode(fileContent);
       temperaturesList = TemperaturesList.fromJson(jsonResponse);
 
+      int index = temperaturesList.temperatures.length - 1;
+
       getTemperatures(temperaturesList.temperatures.last.temps);
       getSelectedDate(temperaturesList.temperatures.last.date);
       getFirstDateTime(temperaturesList.temperatures.first.date);
@@ -44,6 +49,10 @@ class Storage {
       getMaxTemperature(temperaturesList.temperatures.last.temps);
       getMinTemperature(temperaturesList.temperatures.last.temps);
       getLatestUpdates(temperaturesList.temperatures);
+
+      getFiveMaxTemps(temperaturesList.temperatures, index);
+      getFiveMinTemps(temperaturesList.temperatures, index);
+      getFiveDates(temperaturesList.temperatures, index);
 
       print('Loading data DONE!');
     } catch (e) {
@@ -60,6 +69,9 @@ class Storage {
 
       latestUpdatesReversed.clear();
       tempsChart.clear();
+      maxTemps.clear();
+      minTemps.clear();
+      fiveDates.clear();
 
       int index = getIndexOfList(selectedDate);
 
@@ -70,6 +82,9 @@ class Storage {
       getMaxTemperature(temperaturesList.temperatures[index].temps);
       getMinTemperature(temperaturesList.temperatures[index].temps);
       getLatestUpdates(temperaturesList.temperatures);
+      getFiveMaxTemps(temperaturesList.temperatures, index);
+      getFiveMinTemps(temperaturesList.temperatures, index);
+      getFiveDates(temperaturesList.temperatures, index);
 
       print('data changed');
     } catch (e) {
@@ -87,6 +102,53 @@ class Storage {
       }
     }
     return index;
+  }
+
+  void getFiveMaxTemps(List<Temperature> list, int index) {
+    if (index >= 4) {
+      for (var i = index; i > index - 5; i--) {
+        list[i].temps.sort();
+        maxTemps.add(list[i].temps.last);
+      }
+    } else {
+      for (var i = index; i >= 0; i--) {
+        list[i].temps.sort();
+        maxTemps.add(list[i].temps.last);
+      }
+    }
+    print(maxTemps.toString());
+  }
+
+  void getFiveMinTemps(List<Temperature> list, int index) {
+    if (index >= 4) {
+      for (var i = index; i > index - 5; i--) {
+        list[i].temps.sort();
+        minTemps.add(list[i].temps.first);
+      }
+    } else {
+      for (var i = index; i >= 0; i--) {
+        list[i].temps.sort();
+        minTemps.add(list[i].temps.first);
+      }
+    }
+
+    print(minTemps.toString());
+  }
+
+  void getFiveDates(List<Temperature> list, int index) {
+    if (index >= 4) {
+      for (var i = index; i > index - 5; i--) {
+        fiveDates.add(list[i].date);
+      }
+    } else {
+      for (var i = index; i >= 0; i--) {
+        fiveDates.add(list[i].date);
+      }
+    }
+
+    fiveDates = new List.from(fiveDates.reversed);
+
+    print(fiveDates.toString());
   }
 
   void getTemperatures(List<double> list) {

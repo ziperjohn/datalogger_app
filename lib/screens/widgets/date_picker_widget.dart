@@ -31,7 +31,10 @@ class _DatePickerState extends State<DatePicker> {
       'date': storage.date,
       'firstDateTime': storage.firstDateTime,
       'lastDateTime': storage.lastDateTime,
-      'latestUpdatesReversed': storage.latestUpdatesReversed
+      'latestUpdatesReversed': storage.latestUpdatesReversed,
+      'maxTemps': storage.maxTemps,
+      'minTemps': storage.minTemps,
+      'fiveDates': storage.fiveDates
     });
   }
 

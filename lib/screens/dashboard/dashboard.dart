@@ -4,6 +4,7 @@ import 'package:datalogger/screens/widgets/device_info_widget.dart';
 import 'package:datalogger/screens/widgets/latest_update_widget.dart';
 import 'package:datalogger/screens/widgets/max_temp_widget.dart';
 import 'package:datalogger/screens/widgets/min_temp_widget.dart';
+import 'package:datalogger/screens/widgets/temps_bar_chart_widget.dart';
 import 'package:datalogger/screens/widgets/temps_line_chart_widget.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +58,13 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
             Container(
-              child: TempsLineChart(
-                temps: data['tempsChart'],
+              // child: TempsLineChart(
+              //   temps: data['tempsChart'],
+              // ),
+              child: TempsBarChart(
+                maxTemps: data['maxTemps'],
+                minTemps: data['minTemps'],
+                dates: data['fiveDates'],
               ),
             ),
             Container(

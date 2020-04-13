@@ -92,7 +92,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
         enabled: showPoint,
         touchSpotThreshold: 7,
         touchTooltipData: LineTouchTooltipData(
-            tooltipBgColor: whiteColor,
+            tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
             getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
               return touchedBarSpots.map((barSpot) {
