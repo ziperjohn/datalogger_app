@@ -49,7 +49,6 @@ class Storage {
       getMaxTemperature(temperaturesList.temperatures.last.temps);
       getMinTemperature(temperaturesList.temperatures.last.temps);
       getLatestUpdates(temperaturesList.temperatures);
-
       getFiveMaxTemps(temperaturesList.temperatures, index);
       getFiveMinTemps(temperaturesList.temperatures, index);
       getFiveDates(temperaturesList.temperatures, index);
@@ -116,7 +115,6 @@ class Storage {
         maxTemps.add(list[i].temps.last);
       }
     }
-    print(maxTemps.toString());
   }
 
   void getFiveMinTemps(List<Temperature> list, int index) {
@@ -131,8 +129,6 @@ class Storage {
         minTemps.add(list[i].temps.first);
       }
     }
-
-    print(minTemps.toString());
   }
 
   void getFiveDates(List<Temperature> list, int index) {
@@ -145,10 +141,7 @@ class Storage {
         fiveDates.add(list[i].date);
       }
     }
-
     fiveDates = new List.from(fiveDates.reversed);
-
-    print(fiveDates.toString());
   }
 
   void getTemperatures(List<double> list) {

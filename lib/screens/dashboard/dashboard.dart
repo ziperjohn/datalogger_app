@@ -4,23 +4,25 @@ import 'package:datalogger/screens/widgets/device_info_widget.dart';
 import 'package:datalogger/screens/widgets/latest_update_widget.dart';
 import 'package:datalogger/screens/widgets/max_temp_widget.dart';
 import 'package:datalogger/screens/widgets/min_temp_widget.dart';
-import 'package:datalogger/screens/widgets/temps_bar_chart_widget.dart';
 import 'package:datalogger/screens/widgets/temps_line_chart_widget.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Dashboard extends StatefulWidget {
+  final String max;
+  Dashboard({Key key, this.max}) : super(key: key);
   @override
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-  Map data = Map();
+  Map data = {};
 
   @override
   void didChangeDependencies() {
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+
     super.didChangeDependencies();
   }
 
@@ -61,11 +63,6 @@ class _DashboardState extends State<Dashboard> {
               child: TempsLineChart(
                 temps: data['tempsChart'],
               ),
-              // child: TempsBarChart(
-              //   maxTemps: data['maxTemps'],
-              //   minTemps: data['minTemps'],
-              //   dates: data['fiveDates'],
-              // ),
             ),
             Container(
               child: MinTemperature(
@@ -89,6 +86,7 @@ class _DashboardState extends State<Dashboard> {
                 lastDateTime: data['lastDateTime'],
                 firstDateTime: data['firstDateTime'],
                 onDataChange: (Map val) => setState(() {
+                  print(widget.max);
                   data = val;
                 }),
               ),

@@ -10,48 +10,49 @@ class Wrapper extends StatefulWidget {
 }
 
 class _WrapperState extends State<Wrapper> {
-  int _selectedPage = 0;
-  final _tabs = [
-    Dashboard(),
-    Charts(),
-    Settings(),
-  ];
+  final Key keyDashboard = PageStorageKey('dashboard');
+  final Key keyCharts = PageStorageKey('charts');
+  final Key keySettings = PageStorageKey('settings');
 
+  Map data = {};
+
+  int currentTab = 0;
+
+  Dashboard dashboard;
+  Charts chart;
+  Settings settings;
+  List<Widget> pages;
+  Widget currentPage;
+
+  @override
+  void initState() {
+    dashboard = Dashboard(
+      key: keyDashboard,
+    );
+    chart = Charts(
+      key: keyCharts,
+    );
+    settings = Settings(
+      key: keySettings,
+    );
+
+    pages = [dashboard, chart, settings];
+    currentPage = dashboard;
+    super.initState();
+  }
+
+  // TODO Save data here and pass them to all screen
   // TODO Set on wrapper screen physics: BouncingScrollPhysics
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: Text('Datalogger app'),
-      //   backgroundColor: myOragneColor,
-      //   elevation: myElevation,
-      // actions: <Widget>[
-      //   FlatButton.icon(
-      //     onPressed: () async {
-      //       dynamic result = await Navigator.pushNamed(context, '/settings');
-      //       if (result != null) {
-      //         setState(() {
-      //           dateFormated = result;
-      //         });
-      //       }
-      //     },
-      //     icon: Icon(
-      //       Icons.settings,
-      //       color: myWhiteColor,
-      //       size: 25,
-      //     ),
-      //     label: Text(''),
-      //   )
-      // ],
-      // ),
-      body: _tabs[_selectedPage],
+      body: currentPage,
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: silverColor,
         backgroundColor: bgWidgetColor,
         selectedItemColor: cyanColor,
-        currentIndex: _selectedPage,
-        items: [
+        currentIndex: currentTab,
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
             title: Text('Dashboard'),
@@ -66,11 +67,10 @@ class _WrapperState extends State<Wrapper> {
           ),
         ],
         onTap: (int index) {
-          setState(
-            () {
-              _selectedPage = index;
-            },
-          );
+          setState(() {
+            currentTab = index;
+            currentPage = pages[index];
+          });
         },
       ),
     );
