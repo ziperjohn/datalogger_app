@@ -58,7 +58,6 @@ class _DashboardState extends State<Dashboard> {
     return data;
   }
 
-// TODO use shared preferences for all data
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +98,8 @@ class _DashboardState extends State<Dashboard> {
                   Container(
                     child: TempsLineChart(
                       temps: data['tempsChart'],
+                      minTemp: data['minTemp'],
+                      maxTemp: data['maxTemp'],
                     ),
                   ),
                   Container(

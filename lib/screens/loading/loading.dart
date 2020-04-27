@@ -11,7 +11,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   Storage instance = Storage();
   void setupData() async {
-    //await instance.saveData();
+    // await instance.saveData();
     await instance.loadData();
     print('loading method RUN');
     Navigator.pushReplacementNamed(context, '/wrapper', arguments: {

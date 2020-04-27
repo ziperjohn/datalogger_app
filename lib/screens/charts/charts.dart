@@ -27,9 +27,12 @@ class _ChartsState extends State<Charts> {
   getDataFromSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     data['date'] = prefs.getString('date');
+    data['tempsChart'] = prefs.getStringList('tempsChart');
     data['fiveMaxTemps'] = prefs.getStringList('fiveMaxTemps');
     data['fiveMinTemps'] = prefs.getStringList('fiveMinTemps');
     data['fiveDates'] = prefs.getStringList('fiveDates');
+    data['maxTemp'] = prefs.getString('maxTemp');
+    data['minTemp'] = prefs.getString('minTemp');
     return data;
   }
 
@@ -67,6 +70,8 @@ class _ChartsState extends State<Charts> {
                   Container(
                     child: TempsLineChart(
                       temps: data['tempsChart'],
+                      minTemp: data['minTemp'],
+                      maxTemp: data['maxTemp'],
                     ),
                   ),
                   Container(

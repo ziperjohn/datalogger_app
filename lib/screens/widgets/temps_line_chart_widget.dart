@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 
 class TempsLineChart extends StatefulWidget {
   final List<String> temps;
+  final String minTemp;
+  final String maxTemp;
 
-  const TempsLineChart({@required this.temps});
+  const TempsLineChart(
+      {@required this.temps, @required this.minTemp, @required this.maxTemp});
   @override
   _TempsLineChartState createState() => _TempsLineChartState();
 }
@@ -14,6 +17,7 @@ class TempsLineChart extends StatefulWidget {
 class _TempsLineChartState extends State<TempsLineChart> {
   bool showAverage = false;
   bool showPoint = false;
+  double averageTemp;
 
   @override
   Widget build(BuildContext context) {
@@ -198,6 +202,16 @@ class _TempsLineChartState extends State<TempsLineChart> {
                 return '90°C';
               case 100:
                 return '100°C';
+              case 110:
+                return '110°C';
+              case 120:
+                return '120°C';
+              case 130:
+                return '130°C';
+              case 140:
+                return '140°C';
+              case 150:
+                return '150°C';
             }
             return '';
           },
@@ -209,19 +223,19 @@ class _TempsLineChartState extends State<TempsLineChart> {
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
       maxX: 24,
-      minY: 0,
-      maxY: 110,
+      minY: double.parse(widget.minTemp) - 5,
+      maxY: double.parse(widget.maxTemp) + 1,
       lineBarsData: [
         LineChartBarData(
           spots: createMainData(),
           isCurved: false,
           colors: gradientColorsChart,
-          barWidth: 4,
+          barWidth: 0.75,
           isStrokeCapRound: true,
           dotData: FlDotData(
             dotColor: silverColor,
             show: showPoint,
-            dotSize: 3,
+            dotSize: 2,
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -335,6 +349,16 @@ class _TempsLineChartState extends State<TempsLineChart> {
                 return '90°C';
               case 100:
                 return '100°C';
+              case 110:
+                return '110°C';
+              case 120:
+                return '120°C';
+              case 130:
+                return '130°C';
+              case 140:
+                return '140°C';
+              case 150:
+                return '150°C';
             }
             return '';
           },
@@ -346,8 +370,8 @@ class _TempsLineChartState extends State<TempsLineChart> {
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
       maxX: 24,
-      minY: 0,
-      maxY: 110,
+      minY: averageTemp - 10,
+      maxY: averageTemp + 10,
       lineBarsData: [
         LineChartBarData(
           spots: createAverageData(),
@@ -358,7 +382,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
           dotData: FlDotData(
             dotColor: silverColor,
             show: showPoint,
-            dotSize: 3,
+            dotSize: 2,
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -412,6 +436,8 @@ class _TempsLineChartState extends State<TempsLineChart> {
     }
 
     average = sum / widget.temps.length;
+    averageTemp = average;
+
     average = roundDouble(average, 1);
     // create a X axis data
     for (var i = 0; i < widget.temps.length; i++) {

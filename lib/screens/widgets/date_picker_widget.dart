@@ -82,8 +82,11 @@ class _DatePickerState extends State<DatePicker> {
             },
           ).then(
             (selectedDate) {
-              formatedDate = new DateFormat("dd.MM.yyyy").format(selectedDate);
-              updateData(formatedDate);
+              if (selectedDate != null) {
+                formatedDate =
+                    new DateFormat("dd.MM.yyyy").format(selectedDate);
+                updateData(formatedDate);
+              }
             },
           );
         },
