@@ -4,7 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class TempsLineChart extends StatefulWidget {
-  final List<double> temps;
+  final List<String> temps;
 
   const TempsLineChart({@required this.temps});
   @override
@@ -376,7 +376,15 @@ class _TempsLineChartState extends State<TempsLineChart> {
     return ((value * mod).round().toDouble() / mod);
   }
 
+  List<double> parseStringtoDouble() {
+    List<String> listString = List();
+    listString.addAll(widget.temps);
+    List<double> listDouble = listString.map(double.parse).toList();
+    return listDouble;
+  }
+
   List<FlSpot> createMainData() {
+    List<double> temps = parseStringtoDouble();
     List<FlSpot> chartMainData = List(widget.temps.length);
     List<double> xAxis = List(widget.temps.length);
     double pieceOfAxis = 24 / widget.temps.length;
@@ -386,12 +394,13 @@ class _TempsLineChartState extends State<TempsLineChart> {
     }
     //add data to chart
     for (var i = 0; i < widget.temps.length; i++) {
-      chartMainData[i] = FlSpot(xAxis[i], widget.temps[i]);
+      chartMainData[i] = FlSpot(xAxis[i], temps[i]);
     }
     return chartMainData;
   }
 
   List<FlSpot> createAverageData() {
+    List<double> temps = parseStringtoDouble();
     List<FlSpot> chartAverageData = List(widget.temps.length);
     List<double> xAxis = List(widget.temps.length);
     double pieceOfAxis = 24 / widget.temps.length;
@@ -399,7 +408,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
     double sum = 0;
     // sum temperatures
     for (var i = 0; i < widget.temps.length; i++) {
-      sum = sum + widget.temps[i];
+      sum = sum + temps[i];
     }
 
     average = sum / widget.temps.length;

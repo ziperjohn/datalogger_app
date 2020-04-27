@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DatePicker extends StatefulWidget {
-  final DateTime lastDateTime;
-  final DateTime firstDateTime;
+  final String lastDateTime;
+  final String firstDateTime;
   final Function(Map) onDataChange;
 
   DatePicker({
@@ -22,6 +22,20 @@ class _DatePickerState extends State<DatePicker> {
   String formatedDate;
   Storage storage = Storage();
 
+  DateTime getFirstDateTime(String firstDateTimeString) {
+    var day = int.parse(firstDateTimeString.substring(0, 2));
+    var month = int.parse(firstDateTimeString.substring(3, 5));
+    var year = int.parse(firstDateTimeString.substring(6, 10));
+    return DateTime(year, month, day);
+  }
+
+  DateTime getLastDateTime(String lastDateTimeString) {
+    var day = int.parse(lastDateTimeString.substring(0, 2));
+    var month = int.parse(lastDateTimeString.substring(3, 5));
+    var year = int.parse(lastDateTimeString.substring(6, 10));
+    return DateTime(year, month, day);
+  }
+
   Future<void> updateData(formatedDate) async {
     await storage.changeData(formatedDate);
     widget.onDataChange({
@@ -32,8 +46,8 @@ class _DatePickerState extends State<DatePicker> {
       'firstDateTime': storage.firstDateTime,
       'lastDateTime': storage.lastDateTime,
       'latestUpdatesReversed': storage.latestUpdatesReversed,
-      'maxTemps': storage.maxTemps,
-      'minTemps': storage.minTemps,
+      'fiveMaxTemps': storage.maxTemps,
+      'fiveMinTemps': storage.minTemps,
       'fiveDates': storage.fiveDates
     });
   }
@@ -50,9 +64,9 @@ class _DatePickerState extends State<DatePicker> {
         onTap: () {
           showDatePicker(
             context: context,
-            initialDate: widget.lastDateTime,
-            firstDate: widget.firstDateTime,
-            lastDate: widget.lastDateTime,
+            initialDate: getLastDateTime(widget.lastDateTime),
+            firstDate: getFirstDateTime(widget.firstDateTime),
+            lastDate: getLastDateTime(widget.lastDateTime),
             builder: (BuildContext context, Widget child) {
               return Theme(
                 data: ThemeData.dark().copyWith(

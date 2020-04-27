@@ -22,8 +22,8 @@ class _LoadingState extends State<Loading> {
       'firstDateTime': instance.firstDateTime,
       'lastDateTime': instance.lastDateTime,
       'latestUpdatesReversed': instance.latestUpdatesReversed,
-      'maxTemps': instance.maxTemps,
-      'minTemps': instance.minTemps,
+      'fiveMaxTemps': instance.maxTemps,
+      'fiveMinTemps': instance.minTemps,
       'fiveDates': instance.fiveDates
     });
   }

@@ -8,16 +8,15 @@ import 'dart:io';
 
 class Storage {
   TemperaturesList temperaturesList = TemperaturesList();
-  DateTime firstDateTime;
-  DateTime lastDateTime;
+  String firstDateTime;
+  String lastDateTime;
   String date;
-  // TODO delete this String max min temp and pass in List double
   String maxTemp;
   String minTemp;
   List<String> latestUpdatesReversed = List();
-  List<double> tempsChart = List();
-  List<double> maxTemps = List();
-  List<double> minTemps = List();
+  List<String> tempsChart = List();
+  List<String> maxTemps = List();
+  List<String> minTemps = List();
   List<String> fiveDates = List();
 
   Settings settings = Settings();
@@ -29,7 +28,7 @@ class Storage {
 
   Future<File> get localFile async {
     final path = await localPath;
-    print('File path: $path/data_storage.json');
+
     return File('$path/data_storage.json');
   }
 
@@ -52,8 +51,6 @@ class Storage {
       getFiveMaxTemps(temperaturesList.temperatures, index);
       getFiveMinTemps(temperaturesList.temperatures, index);
       getFiveDates(temperaturesList.temperatures, index);
-
-      print('Loading data DONE!');
     } catch (e) {
       print(e.toString());
     }
@@ -84,8 +81,6 @@ class Storage {
       getFiveMaxTemps(temperaturesList.temperatures, index);
       getFiveMinTemps(temperaturesList.temperatures, index);
       getFiveDates(temperaturesList.temperatures, index);
-
-      print('data changed');
     } catch (e) {
       print(e.toString());
     }
@@ -107,12 +102,12 @@ class Storage {
     if (index >= 4) {
       for (var i = index; i > index - 5; i--) {
         list[i].temps.sort();
-        maxTemps.add(list[i].temps.last);
+        maxTemps.add(list[i].temps.last.toString());
       }
     } else {
       for (var i = index; i >= 0; i--) {
         list[i].temps.sort();
-        maxTemps.add(list[i].temps.last);
+        maxTemps.add(list[i].temps.last.toString());
       }
     }
   }
@@ -121,12 +116,12 @@ class Storage {
     if (index >= 4) {
       for (var i = index; i > index - 5; i--) {
         list[i].temps.sort();
-        minTemps.add(list[i].temps.first);
+        minTemps.add(list[i].temps.first.toString());
       }
     } else {
       for (var i = index; i >= 0; i--) {
         list[i].temps.sort();
-        minTemps.add(list[i].temps.first);
+        minTemps.add(list[i].temps.first.toString());
       }
     }
   }
@@ -146,7 +141,7 @@ class Storage {
 
   void getTemperatures(List<double> list) {
     for (var i = 0; i < list.length; i++) {
-      tempsChart.add(list[i]);
+      tempsChart.add(list[i].toString());
     }
   }
 
@@ -173,17 +168,11 @@ class Storage {
   }
 
   void getFirstDateTime(String firstDateTimeString) {
-    var day = int.parse(firstDateTimeString.substring(0, 2));
-    var month = int.parse(firstDateTimeString.substring(3, 5));
-    var year = int.parse(firstDateTimeString.substring(6, 10));
-    firstDateTime = DateTime(year, month, day);
+    firstDateTime = firstDateTimeString;
   }
 
   void getLastDateTime(String lastDateTimeString) {
-    var day = int.parse(lastDateTimeString.substring(0, 2));
-    var month = int.parse(lastDateTimeString.substring(3, 5));
-    var year = int.parse(lastDateTimeString.substring(6, 10));
-    lastDateTime = DateTime(year, month, day);
+    lastDateTime = lastDateTimeString;
   }
 
   // TODO change this method when bluetooth module be ready

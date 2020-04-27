@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:datalogger/theme/theme_constants.dart';
 
 class TempsBarChart extends StatefulWidget {
-  final List<double> maxTemps;
-  final List<double> minTemps;
+  final List<String> maxTemps;
+  final List<String> minTemps;
   final List<String> dates;
 
   const TempsBarChart(
@@ -181,10 +181,27 @@ class _TempsBarChartState extends State<TempsBarChart> {
     );
   }
 
+  List<double> parseMinTempsToDouble() {
+    List<String> listString = List();
+    listString.addAll(widget.minTemps);
+    List<double> listDouble = listString.map(double.parse).toList();
+    return listDouble;
+  }
+
+  List<double> parseMaxTempsToDouble() {
+    List<String> listString = List();
+    listString.addAll(widget.maxTemps);
+    List<double> listDouble = listString.map(double.parse).toList();
+    return listDouble;
+  }
+
   List<BarChartGroupData> createbarChart() {
+    List<double> minTemps = parseMinTempsToDouble();
+    List<double> maxTemps = parseMaxTempsToDouble();
+
     items.clear();
     for (var i = widget.maxTemps.length - 1; i >= 0; i--) {
-      items.add(createGroupData(0, widget.minTemps[i], widget.maxTemps[i]));
+      items.add(createGroupData(0, minTemps[i], maxTemps[i]));
     }
     return items;
   }

@@ -14,8 +14,6 @@ class _WrapperState extends State<Wrapper> {
   final Key keyCharts = PageStorageKey('charts');
   final Key keySettings = PageStorageKey('settings');
 
-  Map data = {};
-
   int currentTab = 0;
 
   Dashboard dashboard;
@@ -41,8 +39,6 @@ class _WrapperState extends State<Wrapper> {
     super.initState();
   }
 
-  // TODO Save data here and pass them to all screennnn
-  // TODO Set on wrapper screen physics: BouncingScrollPhysics
   @override
   Widget build(BuildContext context) {
     return Scaffold(

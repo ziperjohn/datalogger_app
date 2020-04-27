@@ -5,7 +5,8 @@ class MaxTemperature extends StatelessWidget {
   final String date;
   final String maxTemp;
 
-  MaxTemperature({this.date, @required this.maxTemp});
+  MaxTemperature({@required this.date, @required this.maxTemp});
+
   @override
   Widget build(BuildContext context) {
     return Card(
