@@ -1,5 +1,5 @@
 import 'package:datalogger/services/bluetooth_services.dart';
-import 'package:datalogger/theme/theme_constants.dart';
+import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter/material.dart';
 
 class BluetoothScreen extends StatefulWidget {

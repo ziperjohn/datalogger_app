@@ -1,3 +1,4 @@
+import 'package:datalogger/shared/no_data.dart';
 import 'package:datalogger/screens/widgets/date_picker_widget.dart';
 import 'package:datalogger/screens/widgets/date_view_widget.dart';
 import 'package:datalogger/screens/widgets/device_info_widget.dart';
@@ -5,7 +6,7 @@ import 'package:datalogger/screens/widgets/latest_update_widget.dart';
 import 'package:datalogger/screens/widgets/max_temp_widget.dart';
 import 'package:datalogger/screens/widgets/min_temp_widget.dart';
 import 'package:datalogger/screens/widgets/temps_line_chart_widget.dart';
-import 'package:datalogger/theme/theme_constants.dart';
+import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -22,8 +23,16 @@ class _DashboardState extends State<Dashboard> {
   Future sharedPrefDone;
 
   @override
+  void initState() {
+    sharedPrefDone = getDataFromSF();
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
+    addDataToSF();
+
     sharedPrefDone = getDataFromSF();
     super.didChangeDependencies();
   }
@@ -72,70 +81,72 @@ class _DashboardState extends State<Dashboard> {
         future: sharedPrefDone,
         builder: (context, snapshot) {
           if (snapshot.data != null) {
-            return Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: StaggeredGridView.count(
-                crossAxisCount: 4,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                staggeredTiles: [
-                  StaggeredTile.count(4, 1),
-                  StaggeredTile.count(4, 4),
-                  StaggeredTile.count(2, 2),
-                  StaggeredTile.count(2, 2),
-                  StaggeredTile.count(2, 4),
-                  StaggeredTile.count(2, 2),
-                  StaggeredTile.count(2, 2),
-
-                  // StaggeredTile.count(2, 2),
-                ],
-                children: <Widget>[
-                  Container(
-                    child: DateView(
-                      date: data['date'],
+            if (snapshot.data['date'] != null) {
+              return Container(
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: StaggeredGridView.count(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                  staggeredTiles: [
+                    StaggeredTile.count(4, 1),
+                    StaggeredTile.count(4, 4),
+                    StaggeredTile.count(2, 2),
+                    StaggeredTile.count(2, 2),
+                    StaggeredTile.count(2, 4),
+                    StaggeredTile.count(2, 2),
+                    StaggeredTile.count(2, 2),
+                  ],
+                  children: <Widget>[
+                    Container(
+                      child: DateView(
+                        date: snapshot.data['date'],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: TempsLineChart(
-                      temps: data['tempsChart'],
-                      minTemp: data['minTemp'],
-                      maxTemp: data['maxTemp'],
+                    Container(
+                      child: TempsLineChart(
+                        temps: snapshot.data['tempsChart'],
+                        minTemp: snapshot.data['minTemp'],
+                        maxTemp: snapshot.data['maxTemp'],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: MinTemperature(
-                      date: data['date'],
-                      minTemp: data['minTemp'],
+                    Container(
+                      child: MinTemperature(
+                        date: snapshot.data['date'],
+                        minTemp: snapshot.data['minTemp'],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: MaxTemperature(
-                      date: data['date'],
-                      maxTemp: data['maxTemp'],
+                    Container(
+                      child: MaxTemperature(
+                        date: snapshot.data['date'],
+                        maxTemp: snapshot.data['maxTemp'],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: LatestUpdates(
-                      latestUpdates: data['latestUpdatesReversed'],
+                    Container(
+                      child: LatestUpdates(
+                        latestUpdates: snapshot.data['latestUpdatesReversed'],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: DatePicker(
-                      lastDateTime: data['lastDateTime'],
-                      firstDateTime: data['firstDateTime'],
-                      onDataChange: (Map val) => setState(() {
-                        data = val;
-                        addDataToSF();
-                        didChangeDependencies();
-                      }),
+                    Container(
+                      child: DatePicker(
+                        lastDateTime: snapshot.data['lastDateTime'],
+                        firstDateTime: snapshot.data['firstDateTime'],
+                        onDataChange: (Map val) => setState(() {
+                          data = val;
+                          addDataToSF();
+                          didChangeDependencies();
+                        }),
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: DeviceInfo(),
-                  ),
-                ],
-              ),
-            );
+                    Container(
+                      child: DeviceInfo(),
+                    ),
+                  ],
+                ),
+              );
+            } else {
+              return noData();
+            }
           } else {
             return Container(
               child: Center(

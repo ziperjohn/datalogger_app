@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:datalogger/theme/theme_constants.dart';
+import 'package:datalogger/shared/theme_constants.dart';
 
 class TempsBarChart extends StatefulWidget {
   final List<String> maxTemps;

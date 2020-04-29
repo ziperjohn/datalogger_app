@@ -1,4 +1,4 @@
-import 'package:datalogger/theme/theme_constants.dart';
+import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatefulWidget {
@@ -8,29 +8,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  static String dateFormated;
-  // Map data = {};
-  // @override
-  // void didChangeDependencies() {
-  //   data = ModalRoute.of(context).settings.arguments;
-  //   super.didChangeDependencies();
-  // }
-
-  //? it may be useful
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   selectedRadio = 0;
-  // }
-
-  // setSelectedRadio(int val) {
-  //   setState(() => selectedRadio = val);
-  // }
-
-  // void updateDate(String dateFormated) {
-  //   Navigator.pop(context, dateFormated);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

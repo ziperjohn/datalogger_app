@@ -1,8 +1,7 @@
-import 'package:datalogger/theme/theme_constants.dart';
+import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
-import 'package:datalogger/screens/settings/bluetooth_pages/bluetooth_on_screen.dart';
-import 'package:datalogger/screens/settings/bluetooth_pages/bluetooth_off_screen.dart';
+import 'package:datalogger/screens/settings/bluetooth_pages/searching_screen.dart';
 
 class FindNewDeviceScreen extends StatefulWidget {
   @override
@@ -26,10 +25,44 @@ class _FindNewDeviceScreenState extends State<FindNewDeviceScreen> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           final state = snapshot.data;
           if (state == BluetoothState.on) {
-            return BluetoothOnScreen();
+            return SearchingScreen();
           } else
-            return BluetoothOffScreen();
+            return bluetoothOffScreen();
         },
+      ),
+    );
+  }
+
+  Widget bluetoothOffScreen() {
+    return Container(
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(
+              Icons.bluetooth_disabled,
+              size: 250,
+              color: cyanColor,
+            ),
+            Text(
+              'Bluetooth is disable',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: myFontSizeMedium,
+                color: whiteColor,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Please turn on bluetooth in settings',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: myFontSizeMedium,
+                color: silverColor,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

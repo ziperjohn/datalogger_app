@@ -1,7 +1,8 @@
+import 'package:datalogger/shared/no_data.dart';
 import 'package:datalogger/screens/widgets/date_view_widget.dart';
 import 'package:datalogger/screens/widgets/temps_bar_chart_widget.dart';
 import 'package:datalogger/screens/widgets/temps_line_chart_widget.dart';
-import 'package:datalogger/theme/theme_constants.dart';
+import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -19,7 +20,6 @@ class _ChartsState extends State<Charts> {
 
   @override
   void didChangeDependencies() {
-    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     sharedPrefDone = getDataFromSF();
     super.didChangeDependencies();
   }
@@ -50,40 +50,44 @@ class _ChartsState extends State<Charts> {
         future: sharedPrefDone,
         builder: (contex, snapshot) {
           if (snapshot.data != null) {
-            return Container(
-              margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: StaggeredGridView.count(
-                crossAxisCount: 4,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                staggeredTiles: [
-                  StaggeredTile.count(4, 1),
-                  StaggeredTile.count(4, 4),
-                  StaggeredTile.count(4, 4),
-                ],
-                children: <Widget>[
-                  Container(
-                    child: DateView(
-                      date: data['date'],
+            if (snapshot.data['date'] != null) {
+              return Container(
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: StaggeredGridView.count(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 5,
+                  crossAxisSpacing: 5,
+                  staggeredTiles: [
+                    StaggeredTile.count(4, 1),
+                    StaggeredTile.count(4, 4),
+                    StaggeredTile.count(4, 4),
+                  ],
+                  children: <Widget>[
+                    Container(
+                      child: DateView(
+                        date: snapshot.data['date'],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: TempsLineChart(
-                      temps: data['tempsChart'],
-                      minTemp: data['minTemp'],
-                      maxTemp: data['maxTemp'],
+                    Container(
+                      child: TempsLineChart(
+                        temps: snapshot.data['tempsChart'],
+                        minTemp: snapshot.data['minTemp'],
+                        maxTemp: snapshot.data['maxTemp'],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: TempsBarChart(
-                      maxTemps: data['fiveMaxTemps'],
-                      minTemps: data['fiveMinTemps'],
-                      dates: data['fiveDates'],
+                    Container(
+                      child: TempsBarChart(
+                        maxTemps: snapshot.data['fiveMaxTemps'],
+                        minTemps: snapshot.data['fiveMinTemps'],
+                        dates: snapshot.data['fiveDates'],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
+                  ],
+                ),
+              );
+            } else {
+              return noData();
+            }
           } else {
             return Container(
               child: Center(

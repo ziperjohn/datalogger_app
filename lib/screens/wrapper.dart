@@ -1,6 +1,6 @@
 import 'package:datalogger/screens/charts/charts.dart';
 import 'package:datalogger/screens/settings/settings.dart';
-import 'package:datalogger/theme/theme_constants.dart';
+import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'dashboard/dashboard.dart';
 
