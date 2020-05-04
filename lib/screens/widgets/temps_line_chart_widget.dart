@@ -17,7 +17,6 @@ class TempsLineChart extends StatefulWidget {
 class _TempsLineChartState extends State<TempsLineChart> {
   bool showAverage = false;
   bool showPoint = false;
-  double averageTemp;
 
   @override
   Widget build(BuildContext context) {
@@ -370,8 +369,8 @@ class _TempsLineChartState extends State<TempsLineChart> {
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
       maxX: 24,
-      minY: averageTemp - 10,
-      maxY: averageTemp + 10,
+      minY: 0,
+      maxY: 100,
       lineBarsData: [
         LineChartBarData(
           spots: createAverageData(),
@@ -436,7 +435,6 @@ class _TempsLineChartState extends State<TempsLineChart> {
     }
 
     average = sum / widget.temps.length;
-    averageTemp = average;
 
     average = roundDouble(average, 1);
     // create a X axis data

@@ -206,7 +206,11 @@ class _TempsBarChartState extends State<TempsBarChart> {
     return items;
   }
 
-  BarChartGroupData createGroupData(int x, double y1, double y2) {
+  BarChartGroupData createGroupData(
+    int x,
+    double y1,
+    double y2,
+  ) {
     return BarChartGroupData(barsSpace: 5, x: x, barRods: [
       BarChartRodData(
         y: y1,
