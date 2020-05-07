@@ -93,7 +93,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         enabled: showPoint,
-        touchSpotThreshold: 7,
+        touchSpotThreshold: 5,
         touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
@@ -124,7 +124,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
       gridData: FlGridData(
         show: true,
         drawHorizontalLine: true,
-        horizontalInterval: 10,
+        horizontalInterval: 5,
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
@@ -222,14 +222,14 @@ class _TempsLineChartState extends State<TempsLineChart> {
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
       maxX: 24,
-      minY: double.parse(widget.minTemp) - 5,
-      maxY: double.parse(widget.maxTemp) + 1,
+      minY: double.parse(widget.minTemp),
+      maxY: double.parse(widget.maxTemp),
       lineBarsData: [
         LineChartBarData(
           spots: createMainData(),
           isCurved: false,
           colors: gradientColorsChart,
-          barWidth: 0.75,
+          barWidth: 0.9,
           isStrokeCapRound: true,
           dotData: FlDotData(
             dotColor: silverColor,
@@ -239,7 +239,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
           belowBarData: BarAreaData(
             show: true,
             colors: gradientColorsChart
-                .map((color) => color.withOpacity(0.4))
+                .map((color) => color.withOpacity(0.3))
                 .toList(),
           ),
         ),
@@ -270,7 +270,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
       ),
       gridData: FlGridData(
         show: true,
-        horizontalInterval: 10,
+        horizontalInterval: 5,
         drawVerticalLine: true,
         drawHorizontalLine: true,
         getDrawingVerticalLine: (value) {
@@ -376,12 +376,12 @@ class _TempsLineChartState extends State<TempsLineChart> {
           spots: createAverageData(),
           isCurved: false,
           colors: gradientColorsChart,
-          barWidth: 4,
+          barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             dotColor: silverColor,
             show: showPoint,
-            dotSize: 2,
+            dotSize: 1.5,
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -435,8 +435,8 @@ class _TempsLineChartState extends State<TempsLineChart> {
     }
 
     average = sum / widget.temps.length;
-
     average = roundDouble(average, 1);
+
     // create a X axis data
     for (var i = 0; i < widget.temps.length; i++) {
       xAxis[i] = pieceOfAxis * i;

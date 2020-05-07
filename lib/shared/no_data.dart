@@ -8,7 +8,7 @@ Widget noData() {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Icon(
-            Icons.not_interested,
+            Icons.warning,
             size: 200,
             color: cyanColor,
           ),

@@ -175,6 +175,24 @@ class Storage {
     lastDateTime = lastDateTimeString;
   }
 
+  Future deleteData() async {
+    final file = await localFile;
+    if (await file.exists() == true) {
+      file.delete();
+      print('Data removed');
+    }
+  }
+
+  Future<String> sizeOfFile() async {
+    final file = await localFile;
+    if (await file.exists() == true) {
+      int size = await file.length();
+      return size.toString();
+    } else {
+      return '0';
+    }
+  }
+
   // TODO change this method when bluetooth module be ready
   Future<File> saveData() async {
     String jsonString = await _loadData();

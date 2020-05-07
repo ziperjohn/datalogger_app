@@ -27,13 +27,22 @@ class _BluetoothScreenState extends State<BluetoothScreen> {
             margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
             child: ListTile(
               leading: setIcon(),
-              title: Text(data['name'] ?? 'Not connected',
-                  style: TextStyle(color: whiteColor)),
+              title: Text(
+                data['name'] ?? 'No name',
+                style: TextStyle(
+                  color: whiteColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: myFontSizeMedium,
+                ),
+              ),
               // TODO Set status dynamically
               subtitle: Text(
                 '''Status: not connected
 Device addres: ${data['id'] ?? ''}''',
-                style: TextStyle(color: silverColor),
+                style: TextStyle(
+                  color: silverColor,
+                  height: 1.5,
+                ),
               ),
               isThreeLine: true,
             ),

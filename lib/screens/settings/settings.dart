@@ -31,7 +31,9 @@ class _SettingsState extends State<Settings> {
               ),
               title: Text(
                 'Bluetooth',
-                style: TextStyle(color: whiteColor),
+                style: TextStyle(
+                  color: whiteColor,
+                ),
               ),
               subtitle: Text(
                 'Device info, find new device...',
@@ -53,13 +55,17 @@ class _SettingsState extends State<Settings> {
               ),
               title: Text(
                 'Storage',
-                style: TextStyle(color: whiteColor),
+                style: TextStyle(
+                  color: whiteColor,
+                ),
               ),
               subtitle: Text(
-                'Storage info, delete storage...',
+                'Storage info, remove data...',
                 style: TextStyle(color: silverColor),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, '/storage');
+              },
             ),
           ),
         ],
