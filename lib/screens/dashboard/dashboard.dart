@@ -64,6 +64,9 @@ class _DashboardState extends State<Dashboard> {
     data['fiveMaxTemps'] = prefs.getStringList('fiveMaxTemps');
     data['fiveMinTemps'] = prefs.getStringList('fiveMinTemps');
     data['fiveDates'] = prefs.getStringList('fiveDates');
+    data['deviceName'] = prefs.getString('deviceName');
+    data['deviceAddress'] = prefs.getString('deviceAddress');
+
     return data;
   }
 
@@ -139,7 +142,10 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     Container(
-                      child: DeviceInfo(),
+                      child: DeviceInfo(
+                        name: snapshot.data['deviceName'],
+                        address: snapshot.data['deviceAddress'],
+                      ),
                     ),
                   ],
                 ),

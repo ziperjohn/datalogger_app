@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:datalogger/services/bluetooth_services.dart';
 import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchingScreen extends StatefulWidget {
   @override
@@ -12,6 +13,13 @@ class SearchingScreen extends StatefulWidget {
 class _SearchingScreenState extends State<SearchingScreen> {
   BluetoothServices bluetoothServices = BluetoothServices();
   int index = 0;
+
+  addDataToSF(String name, String address, String status) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('deviceName', name);
+    prefs.setString('deviceAddress', address);
+    prefs.setString('deviceStatus', status);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +52,12 @@ class _SearchingScreenState extends State<SearchingScreen> {
                         style: TextStyle(color: whiteColor),
                       ),
                       color: greyColor,
-                      onPressed: () {
+                      onPressed: () async {
                         // bluetoothServices.connectToDevice();
+                        await addDataToSF(
+                            snapshot.data[index].device.name,
+                            snapshot.data[index].device.id.toString(),
+                            bluetoothServices.deviceState.toString());
                         Navigator.pop(context, {
                           'name': snapshot.data[index].device.name,
                           'id': snapshot.data[index].device.id,

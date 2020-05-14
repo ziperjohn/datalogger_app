@@ -38,7 +38,7 @@ class _BluetoothScreenState extends State<BluetoothScreen> {
               // TODO Set status dynamically
               subtitle: Text(
                 '''Status: not connected
-Device addres: ${data['id'] ?? ''}''',
+Device address: ${data['id'] ?? ''}''',
                 style: TextStyle(
                   color: silverColor,
                   height: 1.5,
@@ -87,7 +87,7 @@ Device addres: ${data['id'] ?? ''}''',
   }
 
   Widget disconnectDeviceCard() {
-    if (data.isNotEmpty) {
+    if (bluetoothServices.flutterBlue.connectedDevices == null) {
       return Card(
         color: bgWidgetColor,
         margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
@@ -114,7 +114,7 @@ Device addres: ${data['id'] ?? ''}''',
   }
 
   Widget downloadDataCard() {
-    if (data.isNotEmpty) {
+    if (bluetoothServices.flutterBlue.connectedDevices == null) {
       return Card(
         color: bgWidgetColor,
         margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
@@ -138,7 +138,7 @@ Device addres: ${data['id'] ?? ''}''',
   }
 
   Widget setIcon() {
-    if (data.isNotEmpty) {
+    if (bluetoothServices.flutterBlue.connectedDevices == null) {
       return Icon(
         Icons.bluetooth_connected,
         color: cyanColor,

@@ -2,7 +2,12 @@ import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter/material.dart';
 
 class DeviceInfo extends StatelessWidget {
+  final String name;
+  final String address;
   final bool connected = false;
+
+  const DeviceInfo({@required this.name, @required this.address});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,7 +27,7 @@ class DeviceInfo extends StatelessWidget {
   }
 
   Widget deviceWiget() {
-    if (connected) {
+    if (name != null) {
       return Column(
         children: <Widget>[
           Text(
@@ -36,7 +41,7 @@ class DeviceInfo extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Text(
-            'Datalogger VUT',
+            name,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: myFontSizeSmall,
@@ -55,7 +60,7 @@ class DeviceInfo extends StatelessWidget {
           ),
           SizedBox(height: 15),
           Text(
-            '00:11:22:33:FF:EE',
+            address,
             style: TextStyle(
               fontSize: myFontSizeSmall,
               fontWeight: FontWeight.bold,
