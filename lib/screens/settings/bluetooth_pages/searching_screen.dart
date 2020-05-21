@@ -35,6 +35,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
               itemBuilder: (BuildContext context, int index) {
                 return Card(
                   color: bgWidgetColor,
+                  margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
                   child: ListTile(
                     leading: Icon(
                       Icons.bluetooth,
@@ -53,7 +54,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
                       ),
                       color: greyColor,
                       onPressed: () async {
-                        // bluetoothServices.connectToDevice();
+                        bluetoothServices.connectToDevice();
                         await addDataToSF(
                             snapshot.data[index].device.name,
                             snapshot.data[index].device.id.toString(),
