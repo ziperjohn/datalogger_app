@@ -16,8 +16,9 @@ class BluetoothServices {
     flutterBlue.stopScan();
   }
 
-  void connectToDevice() async {
+  connectToDevice() async {
     await device.connect();
+    print('connected BLE');
     discoverServices();
   }
 
