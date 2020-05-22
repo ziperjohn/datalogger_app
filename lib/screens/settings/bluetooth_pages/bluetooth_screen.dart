@@ -87,7 +87,7 @@ Device address: ${data['id'] ?? ''}''',
   }
 
   Widget disconnectDeviceCard() {
-    if (bluetoothServices.flutterBlue.connectedDevices == null) {
+    if (bluetoothServices.connectedDevice != null) {
       return Card(
         color: bgWidgetColor,
         margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
@@ -104,6 +104,7 @@ Device address: ${data['id'] ?? ''}''',
           // TODO Create a method for disconnect device
           onTap: () {
             data.clear();
+            bluetoothServices.disconnectDevice();
             setState(() {});
           },
         ),
@@ -114,7 +115,7 @@ Device address: ${data['id'] ?? ''}''',
   }
 
   Widget downloadDataCard() {
-    if (bluetoothServices.flutterBlue.connectedDevices == null) {
+    if (bluetoothServices.connectedDevice != null) {
       return Card(
         color: bgWidgetColor,
         margin: EdgeInsets.fromLTRB(5, 10, 5, 0),

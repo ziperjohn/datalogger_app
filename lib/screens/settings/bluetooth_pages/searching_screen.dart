@@ -14,12 +14,12 @@ class _SearchingScreenState extends State<SearchingScreen> {
   BluetoothServices bluetoothServices = BluetoothServices();
   int index = 0;
 
-  addDataToSF(String name, String address, String status) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('deviceName', name);
-    prefs.setString('deviceAddress', address);
-    prefs.setString('deviceStatus', status);
-  }
+  // addDataToSF(String name, String address, String status) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('deviceName', name);
+  //   prefs.setString('deviceAddress', address);
+  //   prefs.setString('deviceStatus', status);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +54,16 @@ class _SearchingScreenState extends State<SearchingScreen> {
                       ),
                       color: greyColor,
                       onPressed: () async {
-                        bluetoothServices.connectToDevice();
-                        await addDataToSF(
-                            snapshot.data[index].device.name,
-                            snapshot.data[index].device.id.toString(),
-                            bluetoothServices.deviceState.toString());
+                        bluetoothServices
+                            .connectToDevice(snapshot.data[index].device);
+                        // await addDataToSF(
+                        //     snapshot.data[index].device.name,
+                        //     snapshot.data[index].device.id.toString(),
+                        //     bluetoothServices.deviceState.toString());
                         Navigator.pop(context, {
                           'name': snapshot.data[index].device.name,
                           'id': snapshot.data[index].device.id,
+                          'device': snapshot.data[index].device,
                         });
                       },
                     ),
@@ -88,7 +90,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
             return FloatingActionButton(
               child: Icon(Icons.search),
               backgroundColor: cyanColor,
-              onPressed: () => bluetoothServices.scanForDevices(),
+              onPressed: () => bluetoothServices.startScaning(),
             );
           }
         },
