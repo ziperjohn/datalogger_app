@@ -42,6 +42,8 @@ class _DatePickerState extends State<DatePicker> {
       'maxTemp': storage.maxTemp,
       'minTemp': storage.minTemp,
       'tempsChart': storage.tempsChart,
+      'pHChart': storage.pHChart,
+      'alcoholChart': storage.alcoholChart,
       'date': storage.date,
       'firstDateTime': storage.firstDateTime,
       'lastDateTime': storage.lastDateTime,
@@ -72,8 +74,11 @@ class _DatePickerState extends State<DatePicker> {
                 data: ThemeData.dark().copyWith(
                   primaryColor: cyanColor,
                   accentColor: cyanColor,
-                  colorScheme: ColorScheme.light(primary: cyanColor),
-                  dialogBackgroundColor: bgWidgetColor,
+                  colorScheme: ColorScheme.dark(
+                    primary: cyanColor,
+                    surface: bgWidgetColor,
+                  ),
+                  dialogBackgroundColor: bgColor,
                   buttonTheme:
                       ButtonThemeData(textTheme: ButtonTextTheme.primary),
                 ),

@@ -25,7 +25,7 @@ class _SettingsState extends State<Settings> {
             margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
             child: ListTile(
               leading: Icon(
-                Icons.settings_bluetooth,
+                Icons.bluetooth,
                 size: 35,
                 color: cyanColor,
               ),
@@ -36,7 +36,7 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
               subtitle: Text(
-                'Device info, find new device...',
+                'Find new device, device info...',
                 style: TextStyle(color: silverColor),
               ),
               onTap: () {
@@ -65,6 +65,30 @@ class _SettingsState extends State<Settings> {
               ),
               onTap: () {
                 Navigator.pushNamed(context, '/storage');
+              },
+            ),
+          ),
+          Card(
+            color: bgWidgetColor,
+            margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
+            child: ListTile(
+              leading: Icon(
+                Icons.access_time,
+                size: 35,
+                color: cyanColor,
+              ),
+              title: Text(
+                'Time',
+                style: TextStyle(
+                  color: whiteColor,
+                ),
+              ),
+              subtitle: Text(
+                'Set time',
+                style: TextStyle(color: silverColor),
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, '/time');
               },
             ),
           ),

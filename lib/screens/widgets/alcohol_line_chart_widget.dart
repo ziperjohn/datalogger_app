@@ -3,18 +3,15 @@ import 'package:datalogger/shared/theme_constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class TempsLineChart extends StatefulWidget {
-  final List<String> temps;
-  final String minTemp;
-  final String maxTemp;
+class AlcoholLineChart extends StatefulWidget {
+  final List<String> alcohol;
 
-  const TempsLineChart(
-      {@required this.temps, @required this.minTemp, @required this.maxTemp});
+  const AlcoholLineChart({@required this.alcohol});
   @override
-  _TempsLineChartState createState() => _TempsLineChartState();
+  _AlcoholLineChartState createState() => _AlcoholLineChartState();
 }
 
-class _TempsLineChartState extends State<TempsLineChart> {
+class _AlcoholLineChartState extends State<AlcoholLineChart> {
   bool showAverage = false;
   bool showPoint = false;
 
@@ -93,7 +90,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         enabled: showPoint,
-        touchSpotThreshold: 5,
+        touchSpotThreshold: 1,
         touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
@@ -112,7 +109,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
                   mm = split[0];
                 }
                 return LineTooltipItem(
-                  '$hh:$mm \n${flSpot.y} °C',
+                  '$hh:$mm \n${flSpot.y} mg/L',
                   const TextStyle(
                     color: cyanColor,
                     fontWeight: FontWeight.bold,
@@ -124,7 +121,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
       gridData: FlGridData(
         show: true,
         drawHorizontalLine: true,
-        horizontalInterval: 5,
+        horizontalInterval: 1,
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
@@ -180,41 +177,29 @@ class _TempsLineChartState extends State<TempsLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0°C';
-              case 10:
-                return '10°C';
-              case 20:
-                return '20°C';
-              case 30:
-                return '30°C';
-              case 40:
-                return '40°C';
-              case 50:
-                return '50°C';
-              case 60:
-                return '60°C';
-              case 70:
-                return '70°C';
-              case 80:
-                return '80°C';
-              case 90:
-                return '90°C';
-              case 100:
-                return '100°C';
-              case 110:
-                return '110°C';
-              case 120:
-                return '120°C';
-              case 130:
-                return '130°C';
-              case 140:
-                return '140°C';
-              case 150:
-                return '150°C';
+                return '0 mg/L';
+              case 1:
+                return '1 mg/L';
+              case 2:
+                return '2 mg/L';
+              case 3:
+                return '3 mg/L';
+              case 4:
+                return '4 mg/L';
+              case 5:
+                return '5 mg/L';
+              case 6:
+                return '6 mg/L';
+              case 7:
+                return '7 mg/L';
+              case 8:
+                return '8 mg/L';
+              case 9:
+                return '9 mg/L';
             }
             return '';
           },
-          reservedSize: 30,
+          reservedSize: 35,
           margin: 10,
         ),
       ),
@@ -222,13 +207,13 @@ class _TempsLineChartState extends State<TempsLineChart> {
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
       maxX: 24,
-      minY: double.parse(widget.minTemp),
-      maxY: double.parse(widget.maxTemp),
+      minY: 0,
+      maxY: 10,
       lineBarsData: [
         LineChartBarData(
           spots: createMainData(),
           isCurved: false,
-          colors: cyanGradientColorsChart,
+          colors: redGradientColorsChart,
           barWidth: 0.9,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -238,7 +223,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            colors: cyanGradientColorsChart
+            colors: redGradientColorsChart
                 .map((color) => color.withOpacity(0.3))
                 .toList(),
           ),
@@ -259,7 +244,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
               return touchedBarSpots.map((barSpot) {
                 final flSpot = barSpot;
                 return LineTooltipItem(
-                  '${flSpot.y} °C',
+                  '${flSpot.y} mg/L',
                   const TextStyle(
                     color: cyanColor,
                     fontWeight: FontWeight.bold,
@@ -270,7 +255,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
       ),
       gridData: FlGridData(
         show: true,
-        horizontalInterval: 5,
+        horizontalInterval: 1,
         drawVerticalLine: true,
         drawHorizontalLine: true,
         getDrawingVerticalLine: (value) {
@@ -327,41 +312,29 @@ class _TempsLineChartState extends State<TempsLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0°C';
-              case 10:
-                return '10°C';
-              case 20:
-                return '20°C';
-              case 30:
-                return '30°C';
-              case 40:
-                return '40°C';
-              case 50:
-                return '50°C';
-              case 60:
-                return '60°C';
-              case 70:
-                return '70°C';
-              case 80:
-                return '80°C';
-              case 90:
-                return '90°C';
-              case 100:
-                return '100°C';
-              case 110:
-                return '110°C';
-              case 120:
-                return '120°C';
-              case 130:
-                return '130°C';
-              case 140:
-                return '140°C';
-              case 150:
-                return '150°C';
+                return '0 mg/L';
+              case 1:
+                return '1 mg/L';
+              case 2:
+                return '2 mg/L';
+              case 3:
+                return '3 mg/L';
+              case 4:
+                return '4 mg/L';
+              case 5:
+                return '5 mg/L';
+              case 6:
+                return '6 mg/L';
+              case 7:
+                return '7 mg/L';
+              case 8:
+                return '8 mg/L';
+              case 9:
+                return '9 mg/L';
             }
             return '';
           },
-          reservedSize: 30,
+          reservedSize: 35,
           margin: 10,
         ),
       ),
@@ -370,12 +343,12 @@ class _TempsLineChartState extends State<TempsLineChart> {
       minX: 0,
       maxX: 24,
       minY: 0,
-      maxY: 100,
+      maxY: 10,
       lineBarsData: [
         LineChartBarData(
           spots: createAverageData(),
           isCurved: false,
-          colors: cyanGradientColorsChart,
+          colors: redGradientColorsChart,
           barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -385,7 +358,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            colors: cyanGradientColorsChart
+            colors: redGradientColorsChart
                 .map((color) => color.withOpacity(0.4))
                 .toList(),
           ),
@@ -401,22 +374,22 @@ class _TempsLineChartState extends State<TempsLineChart> {
 
   List<double> parseStringtoDouble() {
     List<String> listString = List();
-    listString.addAll(widget.temps);
+    listString.addAll(widget.alcohol);
     List<double> listDouble = listString.map(double.parse).toList();
     return listDouble;
   }
 
   List<FlSpot> createMainData() {
     List<double> temps = parseStringtoDouble();
-    List<FlSpot> chartMainData = List(widget.temps.length);
-    List<double> xAxis = List(widget.temps.length);
-    double pieceOfAxis = 24 / widget.temps.length;
+    List<FlSpot> chartMainData = List(widget.alcohol.length);
+    List<double> xAxis = List(widget.alcohol.length);
+    double pieceOfAxis = 24 / widget.alcohol.length;
     // create a X axis data
-    for (var i = 0; i < widget.temps.length; i++) {
+    for (var i = 0; i < widget.alcohol.length; i++) {
       xAxis[i] = pieceOfAxis * i;
     }
     //add data to chart
-    for (var i = 0; i < widget.temps.length; i++) {
+    for (var i = 0; i < widget.alcohol.length; i++) {
       chartMainData[i] = FlSpot(xAxis[i], temps[i]);
     }
     return chartMainData;
@@ -424,25 +397,25 @@ class _TempsLineChartState extends State<TempsLineChart> {
 
   List<FlSpot> createAverageData() {
     List<double> temps = parseStringtoDouble();
-    List<FlSpot> chartAverageData = List(widget.temps.length);
-    List<double> xAxis = List(widget.temps.length);
-    double pieceOfAxis = 24 / widget.temps.length;
+    List<FlSpot> chartAverageData = List(widget.alcohol.length);
+    List<double> xAxis = List(widget.alcohol.length);
+    double pieceOfAxis = 24 / widget.alcohol.length;
     double average = 0;
     double sum = 0;
     // sum temperatures
-    for (var i = 0; i < widget.temps.length; i++) {
+    for (var i = 0; i < widget.alcohol.length; i++) {
       sum = sum + temps[i];
     }
 
-    average = sum / widget.temps.length;
+    average = sum / widget.alcohol.length;
     average = roundDouble(average, 1);
 
     // create a X axis data
-    for (var i = 0; i < widget.temps.length; i++) {
+    for (var i = 0; i < widget.alcohol.length; i++) {
       xAxis[i] = pieceOfAxis * i;
     }
     //add data to chart
-    for (var i = 0; i < widget.temps.length; i++) {
+    for (var i = 0; i < widget.alcohol.length; i++) {
       chartAverageData[i] = FlSpot(xAxis[i], average);
     }
     return chartAverageData;

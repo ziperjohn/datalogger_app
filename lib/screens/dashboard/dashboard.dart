@@ -1,7 +1,7 @@
+import 'package:datalogger/services/storage.dart';
 import 'package:datalogger/shared/no_data.dart';
 import 'package:datalogger/screens/widgets/date_picker_widget.dart';
 import 'package:datalogger/screens/widgets/date_view_widget.dart';
-import 'package:datalogger/screens/widgets/device_info_widget.dart';
 import 'package:datalogger/screens/widgets/latest_update_widget.dart';
 import 'package:datalogger/screens/widgets/max_temp_widget.dart';
 import 'package:datalogger/screens/widgets/min_temp_widget.dart';
@@ -19,6 +19,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  Storage instance = Storage();
   Map data = {};
   Future sharedPrefDone;
 
@@ -29,12 +30,32 @@ class _DashboardState extends State<Dashboard> {
   }
 
   @override
-  void didChangeDependencies() {
+  void didChangeDependencies() async {
+    await setupData();
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     addDataToSF();
-
     sharedPrefDone = getDataFromSF();
+    setState(() {});
     super.didChangeDependencies();
+  }
+
+  Future setupData() async {
+    await instance.loadData();
+    print('loading method RUN');
+    data = {
+      'maxTemp': instance.maxTemp,
+      'minTemp': instance.minTemp,
+      'tempsChart': instance.tempsChart,
+      'pHChart': instance.pHChart,
+      'alcoholChart': instance.alcoholChart,
+      'date': instance.date,
+      'firstDateTime': instance.firstDateTime,
+      'lastDateTime': instance.lastDateTime,
+      'latestUpdatesReversed': instance.latestUpdatesReversed,
+      'fiveMaxTemps': instance.maxTemps,
+      'fiveMinTemps': instance.minTemps,
+      'fiveDates': instance.fiveDates
+    };
   }
 
   addDataToSF() async {
@@ -49,6 +70,8 @@ class _DashboardState extends State<Dashboard> {
     prefs.setStringList('fiveMaxTemps', data['fiveMaxTemps']);
     prefs.setStringList('fiveMinTemps', data['fiveMinTemps']);
     prefs.setStringList('fiveDates', data['fiveDates']);
+    prefs.setStringList('pHChart', data['pHChart']);
+    prefs.setStringList('alcoholChart', data['alcoholChart']);
   }
 
   getDataFromSF() async {
@@ -64,8 +87,8 @@ class _DashboardState extends State<Dashboard> {
     data['fiveMaxTemps'] = prefs.getStringList('fiveMaxTemps');
     data['fiveMinTemps'] = prefs.getStringList('fiveMinTemps');
     data['fiveDates'] = prefs.getStringList('fiveDates');
-    data['deviceName'] = prefs.getString('deviceName');
-    data['deviceAddress'] = prefs.getString('deviceAddress');
+    data['pHChart'] = prefs.getStringList('pHChart');
+    data['alcoholChart'] = prefs.getStringList('alcoholChart');
 
     return data;
   }
@@ -142,11 +165,8 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     ),
                     Container(
-                      child: DeviceInfo(
-                        name: snapshot.data['deviceName'],
-                        address: snapshot.data['deviceAddress'],
-                      ),
-                    ),
+                        //   child: TestWidget(),
+                        ),
                   ],
                 ),
               );

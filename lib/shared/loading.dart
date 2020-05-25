@@ -11,13 +11,14 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   Storage instance = Storage();
   void setupData() async {
-    // await instance.saveData();
     await instance.loadData();
     print('loading method RUN');
     Navigator.pushReplacementNamed(context, '/wrapper', arguments: {
       'maxTemp': instance.maxTemp,
       'minTemp': instance.minTemp,
       'tempsChart': instance.tempsChart,
+      'pHChart': instance.pHChart,
+      'alcoholChart': instance.alcoholChart,
       'date': instance.date,
       'firstDateTime': instance.firstDateTime,
       'lastDateTime': instance.lastDateTime,

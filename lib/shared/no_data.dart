@@ -8,7 +8,7 @@ Widget noData() {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Icon(
-            Icons.warning,
+            Icons.insert_drive_file,
             size: 200,
             color: cyanColor,
           ),

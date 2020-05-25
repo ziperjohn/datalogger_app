@@ -1,13 +1,12 @@
-import 'package:datalogger/models/temperature.dart';
 import 'package:datalogger/screens/settings/settings.dart';
-import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'package:datalogger/models/data.dart';
 
 class Storage {
-  TemperaturesList temperaturesList = TemperaturesList();
+  Settings settings = Settings();
+  List<Data> data;
   String firstDateTime;
   String lastDateTime;
   String date;
@@ -15,11 +14,17 @@ class Storage {
   String minTemp;
   List<String> latestUpdatesReversed = List();
   List<String> tempsChart = List();
+  List<String> pHChart = List();
+  List<String> alcoholChart = List();
   List<String> maxTemps = List();
   List<String> minTemps = List();
   List<String> fiveDates = List();
 
-  Settings settings = Settings();
+  Future<File> saveData(String datafromdatalogger) async {
+    String jsonString = datafromdatalogger;
+    final file = await localFile;
+    return file.writeAsString('$jsonString');
+  }
 
   Future<String> get localPath async {
     final dir = await getApplicationDocumentsDirectory();
@@ -29,28 +34,29 @@ class Storage {
   Future<File> get localFile async {
     final path = await localPath;
 
-    return File('$path/data_storage.json');
+    return File('$path/data.json');
   }
 
   Future<void> loadData() async {
     try {
       final file = await localFile;
       String fileContent = await file.readAsString();
-      final jsonResponse = json.decode(fileContent);
-      temperaturesList = TemperaturesList.fromJson(jsonResponse);
+      final List<Data> data = dataFromJson(fileContent);
 
-      int index = temperaturesList.temperatures.length - 1;
+      int index = data.length - 1;
 
-      getTemperatures(temperaturesList.temperatures.last.temps);
-      getSelectedDate(temperaturesList.temperatures.last.date);
-      getFirstDateTime(temperaturesList.temperatures.first.date);
-      getLastDateTime(temperaturesList.temperatures.last.date);
-      getMaxTemperature(temperaturesList.temperatures.last.temps);
-      getMinTemperature(temperaturesList.temperatures.last.temps);
-      getLatestUpdates(temperaturesList.temperatures);
-      getFiveMaxTemps(temperaturesList.temperatures, index);
-      getFiveMinTemps(temperaturesList.temperatures, index);
-      getFiveDates(temperaturesList.temperatures, index);
+      getTemperatures(data.last.temps);
+      getPh(data.last.ph);
+      getAlcohol(data.last.alcohol);
+      getSelectedDate(data.last.date);
+      getFirstDateTime(data.first.date);
+      getLastDateTime(data.last.date);
+      getMaxTemperature(data.last.temps);
+      getMinTemperature(data.last.temps);
+      getLatestUpdates(data);
+      getFiveMaxTemps(data, index);
+      getFiveMinTemps(data, index);
+      getFiveDates(data, index);
     } catch (e) {
       print(e.toString());
     }
@@ -60,27 +66,30 @@ class Storage {
     try {
       final file = await localFile;
       String fileContent = await file.readAsString();
-      final jsonResponse = json.decode(fileContent);
-      temperaturesList = TemperaturesList.fromJson(jsonResponse);
+      data = dataFromJson(fileContent);
 
       latestUpdatesReversed.clear();
       tempsChart.clear();
+      pHChart.clear();
+      alcoholChart.clear();
       maxTemps.clear();
       minTemps.clear();
       fiveDates.clear();
 
       int index = getIndexOfList(selectedDate);
 
-      getTemperatures(temperaturesList.temperatures[index].temps);
-      getSelectedDate(temperaturesList.temperatures[index].date);
-      getFirstDateTime(temperaturesList.temperatures.first.date);
-      getLastDateTime(temperaturesList.temperatures.last.date);
-      getMaxTemperature(temperaturesList.temperatures[index].temps);
-      getMinTemperature(temperaturesList.temperatures[index].temps);
-      getLatestUpdates(temperaturesList.temperatures);
-      getFiveMaxTemps(temperaturesList.temperatures, index);
-      getFiveMinTemps(temperaturesList.temperatures, index);
-      getFiveDates(temperaturesList.temperatures, index);
+      getTemperatures(data[index].temps);
+      getPh(data[index].ph);
+      getAlcohol(data[index].alcohol);
+      getSelectedDate(data[index].date);
+      getFirstDateTime(data.first.date);
+      getLastDateTime(data.last.date);
+      getMaxTemperature(data[index].temps);
+      getMinTemperature(data[index].temps);
+      getLatestUpdates(data);
+      getFiveMaxTemps(data, index);
+      getFiveMinTemps(data, index);
+      getFiveDates(data, index);
     } catch (e) {
       print(e.toString());
     }
@@ -88,8 +97,8 @@ class Storage {
 
   int getIndexOfList(String selectedDate) {
     int index;
-    for (var i = 0; i < temperaturesList.temperatures.length; i++) {
-      String value = temperaturesList.temperatures[i].date;
+    for (var i = 0; i < data.length; i++) {
+      String value = data[i].date;
       if (value == selectedDate) {
         index = i;
         break;
@@ -98,7 +107,7 @@ class Storage {
     return index;
   }
 
-  void getFiveMaxTemps(List<Temperature> list, int index) {
+  void getFiveMaxTemps(List<Data> list, int index) {
     if (index >= 4) {
       for (var i = index; i > index - 5; i--) {
         list[i].temps.sort();
@@ -112,7 +121,7 @@ class Storage {
     }
   }
 
-  void getFiveMinTemps(List<Temperature> list, int index) {
+  void getFiveMinTemps(List<Data> list, int index) {
     if (index >= 4) {
       for (var i = index; i > index - 5; i--) {
         list[i].temps.sort();
@@ -126,7 +135,7 @@ class Storage {
     }
   }
 
-  void getFiveDates(List<Temperature> list, int index) {
+  void getFiveDates(List<Data> list, int index) {
     if (index >= 4) {
       for (var i = index; i > index - 5; i--) {
         fiveDates.add(list[i].date);
@@ -139,13 +148,25 @@ class Storage {
     fiveDates = new List.from(fiveDates.reversed);
   }
 
+  void getPh(List<double> list) {
+    for (var i = 0; i < list.length; i++) {
+      pHChart.add(list[i].toString());
+    }
+  }
+
+  void getAlcohol(List<double> list) {
+    for (var i = 0; i < list.length; i++) {
+      alcoholChart.add(list[i].toString());
+    }
+  }
+
   void getTemperatures(List<double> list) {
     for (var i = 0; i < list.length; i++) {
       tempsChart.add(list[i].toString());
     }
   }
 
-  void getLatestUpdates(List<Temperature> list) {
+  void getLatestUpdates(List<Data> list) {
     List<String> latestUpdates = List();
     for (var i in list) {
       latestUpdates.add(i.date);
@@ -191,17 +212,5 @@ class Storage {
     } else {
       return '0';
     }
-  }
-
-  // TODO change this method when bluetooth module be ready
-  Future<File> saveData() async {
-    String jsonString = await _loadData();
-    final file = await localFile;
-    return file.writeAsString('$jsonString');
-  }
-
-  // TODO Delete this method, working whit local json file
-  Future<String> _loadData() async {
-    return await rootBundle.loadString('assets/data.json');
   }
 }
