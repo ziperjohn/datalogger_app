@@ -9,23 +9,23 @@ class Loading extends StatefulWidget {
 }
 
 class _LoadingState extends State<Loading> {
-  Storage instance = Storage();
+  Storage storage = Storage();
   void setupData() async {
-    await instance.loadData();
+    await storage.loadData();
     print('loading method RUN');
     Navigator.pushReplacementNamed(context, '/wrapper', arguments: {
-      'maxTemp': instance.maxTemp,
-      'minTemp': instance.minTemp,
-      'tempsChart': instance.tempsChart,
-      'pHChart': instance.pHChart,
-      'alcoholChart': instance.alcoholChart,
-      'date': instance.date,
-      'firstDateTime': instance.firstDateTime,
-      'lastDateTime': instance.lastDateTime,
-      'latestUpdatesReversed': instance.latestUpdatesReversed,
-      'fiveMaxTemps': instance.maxTemps,
-      'fiveMinTemps': instance.minTemps,
-      'fiveDates': instance.fiveDates
+      'maxTemp': storage.maxTemp,
+      'minTemp': storage.minTemp,
+      'tempsChart': storage.tempsChart,
+      'pHChart': storage.pHChart,
+      'alcoholChart': storage.alcoholChart,
+      'date': storage.date,
+      'firstDateTime': storage.firstDateTime,
+      'lastDateTime': storage.lastDateTime,
+      'latestUpdatesReversed': storage.latestUpdatesReversed,
+      'fiveMaxTemps': storage.maxTemps,
+      'fiveMinTemps': storage.minTemps,
+      'fiveDates': storage.fiveDates
     });
   }
 

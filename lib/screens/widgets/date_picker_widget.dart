@@ -101,22 +101,12 @@ class _DatePickerState extends State<DatePicker> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Date picker',
+                  'Select a date',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: myFontSizeMedium,
                     fontWeight: FontWeight.bold,
                     color: cyanColor,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Select a date',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: myFontSizeSmall,
-                    fontWeight: FontWeight.bold,
-                    color: whiteColor,
                   ),
                 ),
                 SizedBox(height: 25),

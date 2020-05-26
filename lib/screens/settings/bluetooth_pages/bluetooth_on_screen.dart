@@ -1,5 +1,6 @@
 import 'dart:convert' show json, utf8;
 import 'package:datalogger/models/data.dart';
+
 import 'package:datalogger/services/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -23,8 +24,8 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
   String messageDecoded;
   List<String> dataList = List();
 
-  Storage instance = Storage();
-  DateTime startDate = DateTime(2020, 4, 29, 7);
+  Storage storage = Storage();
+  DateTime startDate = DateTime.now();
 
   List<String> tempsList = List();
   List<String> phList = List();
@@ -41,6 +42,12 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
   Map<String, dynamic> toJson = Map();
 
   int index = 0;
+
+  @override
+  void initState() {
+    getStartDate();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -259,10 +266,13 @@ Device address: ${connectedDevice.id}''',
                       formatReceivedData();
                       connectedDevice.disconnect();
                       connectedDevice = null;
+                      services = null;
+                      characteristicWrite = null;
+                      characteristicNotify = null;
                       separateDataFromBLE();
                       createJsonData();
-                      instance.saveData(json.encode(jsonData));
-                      instance.loadData();
+                      storage.saveData(json.encode(jsonData));
+                      storage.loadData();
                       setState(() {});
                     }
                   });
@@ -273,6 +283,10 @@ Device address: ${connectedDevice.id}''',
         ],
       ),
     );
+  }
+
+  void getStartDate() async {
+    startDate = await storage.loadDates();
   }
 
   void formatReceivedData() {

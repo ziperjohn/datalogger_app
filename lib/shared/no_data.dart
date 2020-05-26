@@ -13,7 +13,15 @@ Widget noData() {
             color: cyanColor,
           ),
           Text(
-            'No data please connect to device and download data',
+            'NO DATA',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: myFontSizeMedium,
+              color: whiteColor,
+            ),
+          ),
+          Text(
+            'Please connect to device and download data or refresh on dashboar screen',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: myFontSizeMedium,

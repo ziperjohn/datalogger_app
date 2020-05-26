@@ -19,6 +19,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  bool loadData = false;
   Storage instance = Storage();
   Map data = {};
   Future sharedPrefDone;
@@ -31,11 +32,9 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void didChangeDependencies() async {
-    await setupData();
     data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     addDataToSF();
     sharedPrefDone = getDataFromSF();
-    setState(() {});
     super.didChangeDependencies();
   }
 
@@ -89,7 +88,6 @@ class _DashboardState extends State<Dashboard> {
     data['fiveDates'] = prefs.getStringList('fiveDates');
     data['pHChart'] = prefs.getStringList('pHChart');
     data['alcoholChart'] = prefs.getStringList('alcoholChart');
-
     return data;
   }
 
@@ -102,6 +100,9 @@ class _DashboardState extends State<Dashboard> {
         title: Text('Dashboard'),
         backgroundColor: bgBarColor,
         elevation: myElevation,
+        actions: <Widget>[
+          showRefreshButton(),
+        ],
       ),
       body: FutureBuilder(
         future: sharedPrefDone,
@@ -164,9 +165,7 @@ class _DashboardState extends State<Dashboard> {
                         }),
                       ),
                     ),
-                    Container(
-                        //   child: TestWidget(),
-                        ),
+                    Container(),
                   ],
                 ),
               );
@@ -186,5 +185,30 @@ class _DashboardState extends State<Dashboard> {
         },
       ),
     );
+  }
+
+  Widget showRefreshButton() {
+    // if (data['date'] == null) {
+    if (loadData == false) {
+      loadData = true;
+      return Padding(
+        padding: EdgeInsets.only(right: 20.0),
+        child: GestureDetector(
+          onTap: () async {
+            await setupData();
+            didChangeDependencies();
+            setState(() {});
+          },
+          child: Icon(
+            Icons.refresh,
+            size: 30,
+          ),
+        ),
+      );
+    } else {
+      return Padding(
+        padding: EdgeInsets.only(right: 20.0),
+      );
+    }
   }
 }

@@ -6,6 +6,7 @@ import 'package:datalogger/models/data.dart';
 
 class Storage {
   Settings settings = Settings();
+  DateTime time;
   List<Data> data;
   String firstDateTime;
   String lastDateTime;
@@ -20,26 +21,50 @@ class Storage {
   List<String> minTemps = List();
   List<String> fiveDates = List();
 
-  Future<File> saveData(String datafromdatalogger) async {
-    String jsonString = datafromdatalogger;
-    final file = await localFile;
-    return file.writeAsString('$jsonString');
-  }
-
   Future<String> get localPath async {
     final dir = await getApplicationDocumentsDirectory();
     return dir.path;
   }
 
-  Future<File> get localFile async {
+  Future<File> get localFileData async {
     final path = await localPath;
-
     return File('$path/data.json');
+  }
+
+  Future<File> get localFileDates async {
+    final path = await localPath;
+    return File('$path/date.txt');
+  }
+
+  Future<File> saveDates(String dates) async {
+    final file = await localFileDates;
+    print('save');
+    print(dates);
+    return file.writeAsString('$dates');
+  }
+
+  Future<DateTime> loadDates() async {
+    try {
+      final file = await localFileDates;
+      String fileContent = await file.readAsString();
+      print('load');
+      print(fileContent);
+      return time = DateTime.parse(fileContent);
+    } catch (e) {
+      print(e.toString());
+      return time = DateTime.now();
+    }
+  }
+
+  Future<File> saveData(String datafromdatalogger) async {
+    String jsonString = datafromdatalogger;
+    final file = await localFileData;
+    return file.writeAsString('$jsonString', mode: FileMode.append);
   }
 
   Future<void> loadData() async {
     try {
-      final file = await localFile;
+      final file = await localFileData;
       String fileContent = await file.readAsString();
       final List<Data> data = dataFromJson(fileContent);
 
@@ -64,7 +89,7 @@ class Storage {
 
   Future<void> changeData(String selectedDate) async {
     try {
-      final file = await localFile;
+      final file = await localFileData;
       String fileContent = await file.readAsString();
       data = dataFromJson(fileContent);
 
@@ -197,15 +222,23 @@ class Storage {
   }
 
   Future deleteData() async {
-    final file = await localFile;
+    final file = await localFileData;
     if (await file.exists() == true) {
       file.delete();
       print('Data removed');
     }
   }
 
+  Future deleteDates() async {
+    final file = await localFileDates;
+    if (await file.exists() == true) {
+      file.delete();
+      print('Date removed');
+    }
+  }
+
   Future<String> sizeOfFile() async {
-    final file = await localFile;
+    final file = await localFileData;
     if (await file.exists() == true) {
       int size = await file.length();
       return size.toString();
