@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:datalogger/models/data.dart';
+import 'package:datalogger/services/formater.dart';
 import 'package:datalogger/shared/theme_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:datalogger/services/storage.dart';
@@ -16,8 +15,9 @@ class StorageScreen extends StatefulWidget {
 class _StorageScreenState extends State<StorageScreen> {
   String size;
   Storage storage = Storage();
-  DateTime startDate;
 
+//TODO delete
+  DateTime startDate;
   List<String> tempsList = List();
   List<String> phList = List();
   List<String> alcoholList = List();
@@ -33,15 +33,15 @@ class _StorageScreenState extends State<StorageScreen> {
   Map<String, dynamic> toJson = Map();
 
   List<String> dataList = [
-    "1|15.00|13.00|0.83",
-    "2|34.00|1.00|0.83",
-    "3|35.00|1.00|0.83",
-    "4|30.00|2.00|3.30",
-    "5|27.00|7.00|3.30",
-    "6|21.00|3.00|3.30",
-    "7|29.00|1.00|3.30",
-    "8|36.00|6.00|3.30",
-    "9|36.00|9.00|3.30",
+    "1|5.00|5.00|5.00",
+    "2|5.00|5.00|5.00",
+    "3|5.00|5.00|5.00",
+    "4|5.00|5.00|5.00",
+    "5|5.00|5.00|5.00",
+    "6|5.00|5.00|5.00",
+    "7|5.00|5.00|5.00",
+    "8|5.00|5.00|5.00",
+    "9|5.00|5.00|5.00",
     "10|27.00|8.00|3.30",
     "11|29.00|0.00|3.30",
     "12|26.00|1.00|3.30",
@@ -241,8 +241,9 @@ class _StorageScreenState extends State<StorageScreen> {
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () async {
-                  separateDataFromBLE();
-                  createJsonData();
+                  Formater().createJsonFile(dataList, startDate);
+                  // separateDataFromBLE();
+                  // createJsonData();
                 },
                 child: Icon(
                   Icons.add,
@@ -300,66 +301,6 @@ class _StorageScreenState extends State<StorageScreen> {
               },
             ),
           ),
-          Card(
-            color: bgWidgetColor,
-            margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
-            child: ListTile(
-              leading: Icon(
-                Icons.delete_forever,
-                size: 30,
-                color: cyanColor,
-              ),
-              title: Text(
-                'Remove time file',
-                style: TextStyle(
-                  color: whiteColor,
-                ),
-              ),
-              onTap: () {
-                storage.deleteDates();
-              },
-            ),
-          ),
-          Card(
-            color: bgWidgetColor,
-            margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
-            child: ListTile(
-              leading: Icon(
-                Icons.file_upload,
-                size: 30,
-                color: cyanColor,
-              ),
-              title: Text(
-                'Save data',
-                style: TextStyle(
-                  color: whiteColor,
-                ),
-              ),
-              onTap: () {
-                storage.saveData(json.encode(jsonData));
-              },
-            ),
-          ),
-          Card(
-            color: bgWidgetColor,
-            margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
-            child: ListTile(
-              leading: Icon(
-                Icons.file_download,
-                size: 30,
-                color: cyanColor,
-              ),
-              title: Text(
-                'Load data',
-                style: TextStyle(
-                  color: whiteColor,
-                ),
-              ),
-              onTap: () {
-                storage.loadData();
-              },
-            ),
-          ),
         ],
       ),
     );
@@ -381,10 +322,6 @@ class _StorageScreenState extends State<StorageScreen> {
               children: <Widget>[
                 Text(
                   'This operation is irreversible !',
-                  style: TextStyle(color: whiteColor),
-                ),
-                Text(
-                  'The data is no longer even on the datalogger',
                   style: TextStyle(color: whiteColor),
                 ),
               ],

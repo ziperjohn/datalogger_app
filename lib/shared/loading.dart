@@ -20,8 +20,6 @@ class _LoadingState extends State<Loading> {
       'pHChart': storage.pHChart,
       'alcoholChart': storage.alcoholChart,
       'date': storage.date,
-      'firstDateTime': storage.firstDateTime,
-      'lastDateTime': storage.lastDateTime,
       'latestUpdatesReversed': storage.latestUpdatesReversed,
       'fiveMaxTemps': storage.maxTemps,
       'fiveMinTemps': storage.minTemps,

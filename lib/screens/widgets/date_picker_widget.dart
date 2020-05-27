@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DatePicker extends StatefulWidget {
-  final String lastDateTime;
-  final String firstDateTime;
+  final List<String> latestUpdates;
   final Function(Map) onDataChange;
 
   DatePicker({
-    @required this.lastDateTime,
-    @required this.firstDateTime,
+    @required this.latestUpdates,
     @required this.onDataChange,
   });
 
@@ -21,19 +19,26 @@ class DatePicker extends StatefulWidget {
 class _DatePickerState extends State<DatePicker> {
   String formatedDate;
   Storage storage = Storage();
+  List<DateTime> listDates = List();
 
-  DateTime getFirstDateTime(String firstDateTimeString) {
-    var day = int.parse(firstDateTimeString.substring(0, 2));
-    var month = int.parse(firstDateTimeString.substring(3, 5));
-    var year = int.parse(firstDateTimeString.substring(6, 10));
-    return DateTime(year, month, day);
+  void parseStringToDateTime() {
+    List<DateTime> list = List();
+    for (var i = 0; i < widget.latestUpdates.length; i++) {
+      var day = int.parse(widget.latestUpdates[i].substring(0, 2));
+      var month = int.parse(widget.latestUpdates[i].substring(3, 5));
+      var year = int.parse(widget.latestUpdates[i].substring(6, 10));
+      list.add(DateTime(year, month, day));
+    }
+    listDates.addAll(list.reversed);
   }
 
-  DateTime getLastDateTime(String lastDateTimeString) {
-    var day = int.parse(lastDateTimeString.substring(0, 2));
-    var month = int.parse(lastDateTimeString.substring(3, 5));
-    var year = int.parse(lastDateTimeString.substring(6, 10));
-    return DateTime(year, month, day);
+  bool predicate(DateTime day) {
+    for (var i = 0; i < listDates.length; i++) {
+      if (day == listDates[i]) {
+        return true;
+      }
+    }
+    return false;
   }
 
   Future<void> updateData(formatedDate) async {
@@ -45,8 +50,6 @@ class _DatePickerState extends State<DatePicker> {
       'pHChart': storage.pHChart,
       'alcoholChart': storage.alcoholChart,
       'date': storage.date,
-      'firstDateTime': storage.firstDateTime,
-      'lastDateTime': storage.lastDateTime,
       'latestUpdatesReversed': storage.latestUpdatesReversed,
       'fiveMaxTemps': storage.maxTemps,
       'fiveMinTemps': storage.minTemps,
@@ -64,11 +67,13 @@ class _DatePickerState extends State<DatePicker> {
       ),
       child: InkWell(
         onTap: () {
+          parseStringToDateTime();
           showDatePicker(
             context: context,
-            initialDate: getLastDateTime(widget.lastDateTime),
-            firstDate: getFirstDateTime(widget.firstDateTime),
-            lastDate: getLastDateTime(widget.lastDateTime),
+            initialDate: listDates.last,
+            firstDate: listDates.first,
+            lastDate: listDates.last,
+            selectableDayPredicate: predicate,
             builder: (BuildContext context, Widget child) {
               return Theme(
                 data: ThemeData.dark().copyWith(
@@ -101,7 +106,7 @@ class _DatePickerState extends State<DatePicker> {
             child: Column(
               children: <Widget>[
                 Text(
-                  'Select a date',
+                  'Select a day',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: myFontSizeMedium,
@@ -112,7 +117,7 @@ class _DatePickerState extends State<DatePicker> {
                 SizedBox(height: 25),
                 Icon(
                   Icons.today,
-                  size: 45,
+                  size: 60,
                   color: silverColor,
                 ),
               ],

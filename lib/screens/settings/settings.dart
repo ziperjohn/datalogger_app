@@ -73,18 +73,18 @@ class _SettingsState extends State<Settings> {
             margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
             child: ListTile(
               leading: Icon(
-                Icons.access_time,
+                Icons.calendar_today,
                 size: 35,
                 color: cyanColor,
               ),
               title: Text(
-                'Time',
+                'Date and time',
                 style: TextStyle(
                   color: whiteColor,
                 ),
               ),
               subtitle: Text(
-                'Set time',
+                'Set start of the measurement...',
                 style: TextStyle(color: silverColor),
               ),
               onTap: () {

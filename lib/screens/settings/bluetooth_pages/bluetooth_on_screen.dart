@@ -1,6 +1,5 @@
-import 'dart:convert' show json, utf8;
-import 'package:datalogger/models/data.dart';
-
+import 'dart:convert' show utf8;
+import 'package:datalogger/services/formater.dart';
 import 'package:datalogger/services/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
@@ -17,29 +16,19 @@ class BluetoothOnScreen extends StatefulWidget {
 }
 
 class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
+  Storage storage = Storage();
+  DateTime date;
+  TimeOfDay time;
+  DateTime startOfMeasurement;
+  String viewDate;
+  DateTime startDate;
+
   BluetoothDevice connectedDevice;
   List<BluetoothService> services;
   BluetoothCharacteristic characteristicWrite;
   BluetoothCharacteristic characteristicNotify;
   String messageDecoded;
   List<String> dataList = List();
-
-  Storage storage = Storage();
-  DateTime startDate = DateTime.now();
-
-  List<String> tempsList = List();
-  List<String> phList = List();
-  List<String> alcoholList = List();
-  List<double> tempsList24 = List();
-  List<double> phList24 = List();
-  List<double> alcoholList24 = List();
-  List<double> tempsListDouble = List();
-  List<double> phListDouble = List();
-  List<double> alcoholListDouble = List();
-
-  List<Map<String, dynamic>> jsonData = List();
-
-  Map<String, dynamic> toJson = Map();
 
   int index = 0;
 
@@ -51,15 +40,15 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return buildPage();
+    return findNewDevice();
   }
 
-  Widget buildPage() {
-    if (connectedDevice != null) {
-      return deviceConnected();
-    } else
-      return findNewDevice();
-  }
+  // Widget buildPage() {
+  //   if (connectedDevice != null) {
+  //     return deviceConnected();
+  //   } else
+  //     return findNewDevice();
+  // }
 
   Widget findNewDevice() {
     return Scaffold(
@@ -120,9 +109,35 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
                             }
                           });
                         }
-                        setState(() {
-                          connectedDevice = snapshot.data[index].device;
+
+                        await characteristicNotify.setNotifyValue(true);
+                        // Future.delayed(const Duration(milliseconds: 200), () async {
+                        //   await characteristicWrite.write(utf8.encode("send"));
+                        //  characteristicNotify.value.toList();
+                        characteristicNotify.value.listen((value) {
+                          messageDecoded = utf8.decode(value);
+                          // print(messageDecoded);
+                          dataList.add(messageDecoded);
+                          if (messageDecoded == '*') {
+                            print("------------------------------");
+                            print(dataList.length);
+                            print("------------------------------");
+                            deleteUnnecessaryThings();
+                            Formater().createJsonFile(dataList, startDate);
+                            snapshot.data[index].device.disconnect();
+
+                            services = null;
+                            characteristicWrite = null;
+                            characteristicNotify = null;
+
+                            setState(() {});
+                          }
                         });
+                        // });
+
+                        // setState(() {
+                        //   connectedDevice = snapshot.data[index].device;
+                        // });
                       },
                     ),
                   ),
@@ -187,7 +202,7 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
       backgroundColor: bgColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Device info'),
+        title: Text('Device Connected'),
         backgroundColor: bgBarColor,
         elevation: myElevation,
       ),
@@ -211,14 +226,91 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
                 ),
               ),
               subtitle: Text(
-                '''Status: Connected
-Device address: ${connectedDevice.id}''',
+                '''Device address: ${connectedDevice.id}
+Start date: $viewDate''',
                 style: TextStyle(
                   color: silverColor,
                   height: 1.5,
                 ),
               ),
               isThreeLine: true,
+            ),
+          ),
+          Card(
+            color: bgWidgetColor,
+            margin: EdgeInsets.fromLTRB(5, 10, 5, 0),
+            child: ListTile(
+              leading: Icon(
+                Icons.access_time,
+                size: 30,
+                color: cyanColor,
+              ),
+              title: Text(
+                'Set start of the measurement',
+                style: TextStyle(color: whiteColor),
+              ),
+              onTap: () {
+                showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay(
+                      hour: DateTime.now().hour, minute: DateTime.now().minute),
+                  builder: (BuildContext context, Widget child) {
+                    return Theme(
+                      data: ThemeData.dark().copyWith(
+                        primaryColor: cyanColor,
+                        accentColor: cyanColor,
+                        colorScheme: ColorScheme.dark(
+                          primary: cyanColor,
+                          surface: bgWidgetColor,
+                        ),
+                        dialogBackgroundColor: bgColor,
+                        buttonTheme:
+                            ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                      ),
+                      child: child,
+                    );
+                  },
+                ).then((selectedTime) {
+                  time = selectedTime;
+                  startOfMeasurement = DateTime(
+                      date.year, date.month, date.day, time.hour, time.minute);
+                  storage.saveDates(startOfMeasurement.toString());
+                  setState(() {
+                    startDate = startOfMeasurement;
+                    viewDate = new DateFormat('d.M.yyyy H:mm')
+                        .format(startOfMeasurement);
+                  });
+                });
+
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2020),
+                  lastDate: DateTime(2100),
+                  builder: (BuildContext context, Widget child) {
+                    return Theme(
+                      data: ThemeData.dark().copyWith(
+                        primaryColor: cyanColor,
+                        accentColor: cyanColor,
+                        colorScheme: ColorScheme.dark(
+                          primary: cyanColor,
+                          surface: bgWidgetColor,
+                        ),
+                        dialogBackgroundColor: bgColor,
+                        buttonTheme:
+                            ButtonThemeData(textTheme: ButtonTextTheme.primary),
+                      ),
+                      child: child,
+                    );
+                  },
+                ).then(
+                  (selectedDate) {
+                    if (selectedDate != null) {
+                      date = selectedDate;
+                    }
+                  },
+                );
+              },
             ),
           ),
           Card(
@@ -237,6 +329,9 @@ Device address: ${connectedDevice.id}''',
               onTap: () {
                 connectedDevice.disconnect();
                 connectedDevice = null;
+                services = null;
+                characteristicWrite = null;
+                characteristicNotify = null;
                 setState(() {});
               },
             ),
@@ -256,27 +351,29 @@ Device address: ${connectedDevice.id}''',
               ),
               onTap: () async {
                 await characteristicNotify.setNotifyValue(true);
-                Future.delayed(const Duration(milliseconds: 200), () async {
-                  await characteristicWrite.write(utf8.encode("send"));
-                  characteristicNotify.value.listen((value) {
-                    messageDecoded = utf8.decode(value);
-                    print(messageDecoded);
-                    dataList.add(messageDecoded);
-                    if (messageDecoded == '*') {
-                      formatReceivedData();
-                      connectedDevice.disconnect();
-                      connectedDevice = null;
-                      services = null;
-                      characteristicWrite = null;
-                      characteristicNotify = null;
-                      separateDataFromBLE();
-                      createJsonData();
-                      storage.saveData(json.encode(jsonData));
-                      storage.loadData();
-                      setState(() {});
-                    }
-                  });
+                // Future.delayed(const Duration(milliseconds: 200), () async {
+                //   await characteristicWrite.write(utf8.encode("send"));
+                //  characteristicNotify.value.toList();
+                characteristicNotify.value.listen((value) {
+                  messageDecoded = utf8.decode(value);
+                  // print(messageDecoded);
+                  dataList.add(messageDecoded);
+                  if (messageDecoded == '*') {
+                    // if (dataList.length == 500) {
+                    print("------------------------------");
+                    print(dataList.length);
+                    print("------------------------------");
+                    //deleteUnnecessaryThings();
+                    //Formater().createJsonFile(dataList, startDate);
+                    connectedDevice.disconnect();
+                    connectedDevice = null;
+                    services = null;
+                    characteristicWrite = null;
+                    characteristicNotify = null;
+                    setState(() {});
+                  }
                 });
+                // });
               },
             ),
           ),
@@ -287,9 +384,10 @@ Device address: ${connectedDevice.id}''',
 
   void getStartDate() async {
     startDate = await storage.loadDates();
+    viewDate = new DateFormat("d.M.yyyy H:mm").format(startDate);
   }
 
-  void formatReceivedData() {
+  void deleteUnnecessaryThings() {
     if (dataList.last == "*") {
       dataList.removeLast();
     }
@@ -299,81 +397,11 @@ Device address: ${connectedDevice.id}''',
     if (dataList[0] == "") {
       dataList.removeAt(0);
     }
-
+// TODO delete
     print('-----------------------------');
     print("length: " + dataList.length.toString());
     for (var i = 0; i < dataList.length; i++) {
       print(dataList[i]);
     }
-  }
-
-  void separateDataFromBLE() {
-    for (var i = 0; i < dataList.length; i++) {
-      String line = dataList[i];
-      tempsList.add(line.split('|')[1]);
-      phList.add(line.split('|')[2]);
-      alcoholList.add(line.split('|')[3]);
-    }
-  }
-
-  void createJsonData() {
-    //add 0 to start
-    int hour = startDate.hour;
-    for (var i = 0; i < hour; i++) {
-      tempsList.insert(i, "0.0");
-      phList.insert(i, "0.0");
-      alcoholList.insert(i, "0.0");
-    }
-    //add 0 to end
-    int numberOfDays = (tempsList.length / 24).ceil();
-    int numberofValues = numberOfDays * 24;
-    int count = numberofValues - tempsList.length;
-    for (var i = 0; i < count; i++) {
-      tempsList.add("0.0");
-      phList.add("0.0");
-      alcoholList.add("0.0");
-    }
-
-    //Convert List of String to List of double
-    tempsListDouble = tempsList.map(double.parse).toList();
-    phListDouble = phList.map(double.parse).toList();
-    alcoholListDouble = alcoholList.map(double.parse).toList();
-
-    //fill Json
-    for (var j = 0; j < numberOfDays; j++) {
-      List<double> helpTemps = List();
-      List<double> helpPh = List();
-      List<double> helpAlcohol = List();
-
-      DateTime datePlusOne = startDate.add(Duration(days: j));
-      var formatter = new DateFormat('dd.MM.yyyy');
-      String dateString = formatter.format(datePlusOne);
-      tempsList24.clear();
-      phList24.clear();
-      alcoholList24.clear();
-
-      helpTemps.addAll(tempsListDouble.getRange(0, 24));
-      helpPh.addAll(phListDouble.getRange(0, 24));
-      helpAlcohol.addAll(alcoholListDouble.getRange(0, 24));
-
-      tempsListDouble.removeRange(0, 24);
-      phListDouble.removeRange(0, 24);
-      alcoholListDouble.removeRange(0, 24);
-
-      for (int i = 0; i < 24; i++) {
-        tempsList24.add(helpTemps[i]);
-        phList24.add(helpPh[i]);
-        alcoholList24.add(helpAlcohol[i]);
-      }
-
-      Data data = new Data(
-          date: dateString,
-          temps: tempsList24,
-          ph: phList24,
-          alcohol: alcoholList24);
-
-      jsonData.add(data.toJson());
-    }
-    print('Json created');
   }
 }

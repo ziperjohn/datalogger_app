@@ -76,18 +76,16 @@ class _ChartsState extends State<Charts> {
                   ],
                   children: <Widget>[
                     Container(
-                      child: DateView(
-                        date: snapshot.data['date'],
+                      child: dateView(
+                        snapshot.data['date'],
                       ),
                     ),
                     Container(
-                      child: TemperatureName(),
+                      child: temperatureName(),
                     ),
                     Container(
                       child: TempsLineChart(
                         temps: snapshot.data['tempsChart'],
-                        minTemp: snapshot.data['minTemp'],
-                        maxTemp: snapshot.data['maxTemp'],
                       ),
                     ),
                     Container(
@@ -98,7 +96,7 @@ class _ChartsState extends State<Charts> {
                       ),
                     ),
                     Container(
-                      child: PHName(),
+                      child: pHName(),
                     ),
                     Container(
                       child: PHLineChart(
@@ -106,7 +104,7 @@ class _ChartsState extends State<Charts> {
                       ),
                     ),
                     Container(
-                      child: AlcoholName(),
+                      child: alcoholName(),
                     ),
                     Container(
                       child: AlcoholLineChart(

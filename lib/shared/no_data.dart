@@ -21,7 +21,7 @@ Widget noData() {
             ),
           ),
           Text(
-            'Please connect to device and download data or refresh on dashboar screen',
+            'Please connect to device and download data or refresh on dashboard screen',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: myFontSizeMedium,

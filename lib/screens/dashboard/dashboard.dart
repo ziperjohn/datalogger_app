@@ -2,7 +2,7 @@ import 'package:datalogger/services/storage.dart';
 import 'package:datalogger/shared/no_data.dart';
 import 'package:datalogger/screens/widgets/date_picker_widget.dart';
 import 'package:datalogger/screens/widgets/date_view_widget.dart';
-import 'package:datalogger/screens/widgets/latest_update_widget.dart';
+import 'package:datalogger/screens/widgets/available_days_widget.dart';
 import 'package:datalogger/screens/widgets/max_temp_widget.dart';
 import 'package:datalogger/screens/widgets/min_temp_widget.dart';
 import 'package:datalogger/screens/widgets/temps_line_chart_widget.dart';
@@ -48,8 +48,6 @@ class _DashboardState extends State<Dashboard> {
       'pHChart': instance.pHChart,
       'alcoholChart': instance.alcoholChart,
       'date': instance.date,
-      'firstDateTime': instance.firstDateTime,
-      'lastDateTime': instance.lastDateTime,
       'latestUpdatesReversed': instance.latestUpdatesReversed,
       'fiveMaxTemps': instance.maxTemps,
       'fiveMinTemps': instance.minTemps,
@@ -59,8 +57,6 @@ class _DashboardState extends State<Dashboard> {
 
   addDataToSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('firstDateTime', data['firstDateTime']);
-    prefs.setString('lastDateTime', data['lastDateTime']);
     prefs.setString('date', data['date']);
     prefs.setStringList('tempsChart', data['tempsChart']);
     prefs.setString('maxTemp', data['maxTemp']);
@@ -75,8 +71,6 @@ class _DashboardState extends State<Dashboard> {
 
   getDataFromSF() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    data['firstDateTime'] = prefs.getString('firstDateTime');
-    data['lastDateTime'] = prefs.getString('lastDateTime');
     data['date'] = prefs.getString('date');
     data['tempsChart'] = prefs.getStringList('tempsChart');
     data['maxTemp'] = prefs.getString('maxTemp');
@@ -126,38 +120,35 @@ class _DashboardState extends State<Dashboard> {
                   ],
                   children: <Widget>[
                     Container(
-                      child: DateView(
-                        date: snapshot.data['date'],
+                      child: dateView(
+                        snapshot.data['date'],
                       ),
                     ),
                     Container(
                       child: TempsLineChart(
                         temps: snapshot.data['tempsChart'],
-                        minTemp: snapshot.data['minTemp'],
-                        maxTemp: snapshot.data['maxTemp'],
                       ),
                     ),
                     Container(
-                      child: MinTemperature(
-                        date: snapshot.data['date'],
-                        minTemp: snapshot.data['minTemp'],
+                      child: minTemperature(
+                        snapshot.data['date'],
+                        snapshot.data['minTemp'],
                       ),
                     ),
                     Container(
-                      child: MaxTemperature(
-                        date: snapshot.data['date'],
-                        maxTemp: snapshot.data['maxTemp'],
+                      child: maxTemperature(
+                        snapshot.data['date'],
+                        snapshot.data['maxTemp'],
                       ),
                     ),
                     Container(
-                      child: LatestUpdates(
-                        latestUpdates: snapshot.data['latestUpdatesReversed'],
+                      child: availableDays(
+                        snapshot.data['latestUpdatesReversed'],
                       ),
                     ),
                     Container(
                       child: DatePicker(
-                        lastDateTime: snapshot.data['lastDateTime'],
-                        firstDateTime: snapshot.data['firstDateTime'],
+                        latestUpdates: snapshot.data['latestUpdatesReversed'],
                         onDataChange: (Map val) => setState(() {
                           data = val;
                           addDataToSF();

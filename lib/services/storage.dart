@@ -8,8 +8,6 @@ class Storage {
   Settings settings = Settings();
   DateTime time;
   List<Data> data;
-  String firstDateTime;
-  String lastDateTime;
   String date;
   String maxTemp;
   String minTemp;
@@ -59,7 +57,16 @@ class Storage {
   Future<File> saveData(String datafromdatalogger) async {
     String jsonString = datafromdatalogger;
     final file = await localFileData;
-    return file.writeAsString('$jsonString', mode: FileMode.append);
+    // if (await file.exists() == true) {
+    //   String fileContent = await file.readAsString();
+    //   fileContent = fileContent.substring(0, fileContent.length - 1);
+    //   fileContent += ",";
+    //   jsonString = jsonString.substring(1);
+    //   String newJsonString = fileContent + jsonString;
+    //   return file.writeAsString('$newJsonString');
+    // } else {
+    return file.writeAsString('$jsonString');
+    // }
   }
 
   Future<void> loadData() async {
@@ -74,8 +81,6 @@ class Storage {
       getPh(data.last.ph);
       getAlcohol(data.last.alcohol);
       getSelectedDate(data.last.date);
-      getFirstDateTime(data.first.date);
-      getLastDateTime(data.last.date);
       getMaxTemperature(data.last.temps);
       getMinTemperature(data.last.temps);
       getLatestUpdates(data);
@@ -107,8 +112,6 @@ class Storage {
       getPh(data[index].ph);
       getAlcohol(data[index].alcohol);
       getSelectedDate(data[index].date);
-      getFirstDateTime(data.first.date);
-      getLastDateTime(data.last.date);
       getMaxTemperature(data[index].temps);
       getMinTemperature(data[index].temps);
       getLatestUpdates(data);
@@ -211,14 +214,6 @@ class Storage {
 
   void getSelectedDate(String selectedDateString) {
     date = selectedDateString;
-  }
-
-  void getFirstDateTime(String firstDateTimeString) {
-    firstDateTime = firstDateTimeString;
-  }
-
-  void getLastDateTime(String lastDateTimeString) {
-    lastDateTime = lastDateTimeString;
   }
 
   Future deleteData() async {

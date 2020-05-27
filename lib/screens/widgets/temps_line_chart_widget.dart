@@ -5,11 +5,8 @@ import 'package:flutter/material.dart';
 
 class TempsLineChart extends StatefulWidget {
   final List<String> temps;
-  final String minTemp;
-  final String maxTemp;
 
-  const TempsLineChart(
-      {@required this.temps, @required this.minTemp, @required this.maxTemp});
+  const TempsLineChart({@required this.temps});
   @override
   _TempsLineChartState createState() => _TempsLineChartState();
 }
@@ -201,16 +198,6 @@ class _TempsLineChartState extends State<TempsLineChart> {
                 return '90°C';
               case 100:
                 return '100°C';
-              case 110:
-                return '110°C';
-              case 120:
-                return '120°C';
-              case 130:
-                return '130°C';
-              case 140:
-                return '140°C';
-              case 150:
-                return '150°C';
             }
             return '';
           },
@@ -222,8 +209,8 @@ class _TempsLineChartState extends State<TempsLineChart> {
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
       maxX: 24,
-      minY: double.parse(widget.minTemp),
-      maxY: double.parse(widget.maxTemp),
+      minY: 0,
+      maxY: 60,
       lineBarsData: [
         LineChartBarData(
           spots: createMainData(),
