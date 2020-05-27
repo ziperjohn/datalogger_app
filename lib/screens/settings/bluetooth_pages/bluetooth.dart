@@ -57,7 +57,6 @@ class _BluetoothState extends State<Bluetooth> {
                 ),
               ),
               subtitle: Text(
-                // TODO add message data been download
                 '''Data will be downloaded automatically
 Start date: $viewDate''',
                 style: TextStyle(

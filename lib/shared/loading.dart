@@ -12,7 +12,6 @@ class _LoadingState extends State<Loading> {
   Storage storage = Storage();
   void setupData() async {
     await storage.loadData();
-    print('loading method RUN');
     Navigator.pushReplacementNamed(context, '/wrapper', arguments: {
       'maxTemp': storage.maxTemp,
       'minTemp': storage.minTemp,

@@ -86,7 +86,6 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
                                 } finally {
                                   services = await snapshot.data[index].device
                                       .discoverServices();
-
                                   services.forEach((service) {
                                     for (BluetoothCharacteristic characteristic
                                         in service.characteristics) {
@@ -107,16 +106,9 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
                                   messageDecoded = utf8.decode(value);
                                   dataList.add(messageDecoded);
                                   if (messageDecoded == '*') {
-                                    print("------------------------------");
-                                    print(dataList.length);
-                                    print("------------------------------");
                                     deleteUnnecessaryThings();
                                     Formater()
                                         .createJsonFile(dataList, startDate);
-                                    snapshot.data[index].device.disconnect();
-                                    services = null;
-                                    characteristicWrite = null;
-                                    characteristicNotify = null;
                                     setState(() {
                                       snapshot.data[index].device.disconnect();
                                       services = null;
@@ -214,7 +206,6 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
     );
   }
 
-//
   void getStartDate() async {
     startDate = await storage.loadDates();
   }
@@ -228,12 +219,6 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
     }
     if (dataList[0] == "") {
       dataList.removeAt(0);
-    }
-// TODO delete
-    print('-----------------------------');
-    print("length: " + dataList.length.toString());
-    for (var i = 0; i < dataList.length; i++) {
-      print(dataList[i]);
     }
   }
 }

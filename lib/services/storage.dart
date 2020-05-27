@@ -57,6 +57,7 @@ class Storage {
   Future<File> saveData(String datafromdatalogger) async {
     String jsonString = datafromdatalogger;
     final file = await localFileData;
+    // add data to file
     // if (await file.exists() == true) {
     //   String fileContent = await file.readAsString();
     //   fileContent = fileContent.substring(0, fileContent.length - 1);
@@ -220,15 +221,6 @@ class Storage {
     final file = await localFileData;
     if (await file.exists() == true) {
       file.delete();
-      print('Data removed');
-    }
-  }
-
-  Future deleteDates() async {
-    final file = await localFileDates;
-    if (await file.exists() == true) {
-      file.delete();
-      print('Date removed');
     }
   }
 

@@ -40,7 +40,6 @@ class _DashboardState extends State<Dashboard> {
 
   Future setupData() async {
     await instance.loadData();
-    print('loading method RUN');
     data = {
       'maxTemp': instance.maxTemp,
       'minTemp': instance.minTemp,
