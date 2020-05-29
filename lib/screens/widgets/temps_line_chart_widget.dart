@@ -90,7 +90,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         enabled: showPoint,
-        touchSpotThreshold: 5,
+        touchSpotThreshold: 10,
         touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
@@ -238,7 +238,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         enabled: showPoint,
-        touchSpotThreshold: 7,
+        touchSpotThreshold: 10,
         touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,

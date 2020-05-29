@@ -58,7 +58,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
                     'Average',
                     style: TextStyle(
                         fontSize: 12,
-                        color: showAverage ? cyanColor : silverColor),
+                        color: showAverage ? redColor : silverColor),
                   ),
                 ),
               ),
@@ -75,7 +75,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
                     'Show point',
                     style: TextStyle(
                         fontSize: 12,
-                        color: showPoint ? cyanColor : silverColor),
+                        color: showPoint ? redColor : silverColor),
                   ),
                 ),
               ),
@@ -90,7 +90,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         enabled: showPoint,
-        touchSpotThreshold: 1,
+        touchSpotThreshold: 10,
         touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
@@ -111,7 +111,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
                 return LineTooltipItem(
                   '$hh:$mm \n${flSpot.y} mg/L',
                   const TextStyle(
-                    color: cyanColor,
+                    color: redColor,
                     fontWeight: FontWeight.bold,
                   ),
                 );
@@ -236,7 +236,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         enabled: showPoint,
-        touchSpotThreshold: 7,
+        touchSpotThreshold: 10,
         touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
@@ -246,7 +246,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
                 return LineTooltipItem(
                   '${flSpot.y} mg/L',
                   const TextStyle(
-                    color: cyanColor,
+                    color: redColor,
                     fontWeight: FontWeight.bold,
                   ),
                 );

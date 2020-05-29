@@ -102,19 +102,23 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
                                 setState(() {
                                   state = true;
                                 });
-                                characteristicNotify.value.listen((value) {
+                                characteristicNotify.value
+                                    .listen((value) async {
                                   messageDecoded = utf8.decode(value);
                                   dataList.add(messageDecoded);
                                   if (messageDecoded == '*') {
+                                    await snapshot.data[index].device
+                                        .disconnect();
+                                    services = null;
+                                    characteristicWrite = null;
+                                    characteristicNotify = null;
+                                    downloading = false;
+
                                     deleteUnnecessaryThings();
                                     Formater()
                                         .createJsonFile(dataList, startDate);
                                     setState(() {
-                                      snapshot.data[index].device.disconnect();
-                                      services = null;
-                                      characteristicWrite = null;
-                                      characteristicNotify = null;
-                                      downloading = false;
+                                      snapshot.data.clear();
                                     });
                                   }
                                 });

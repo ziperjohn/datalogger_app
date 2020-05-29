@@ -57,7 +57,7 @@ class Storage {
   Future<File> saveData(String datafromdatalogger) async {
     String jsonString = datafromdatalogger;
     final file = await localFileData;
-    // add data to file
+
     // if (await file.exists() == true) {
     //   String fileContent = await file.readAsString();
     //   fileContent = fileContent.substring(0, fileContent.length - 1);
@@ -98,7 +98,6 @@ class Storage {
       final file = await localFileData;
       String fileContent = await file.readAsString();
       data = dataFromJson(fileContent);
-
       latestUpdatesReversed.clear();
       tempsChart.clear();
       pHChart.clear();
@@ -106,9 +105,7 @@ class Storage {
       maxTemps.clear();
       minTemps.clear();
       fiveDates.clear();
-
       int index = getIndexOfList(selectedDate);
-
       getTemperatures(data[index].temps);
       getPh(data[index].ph);
       getAlcohol(data[index].alcohol);

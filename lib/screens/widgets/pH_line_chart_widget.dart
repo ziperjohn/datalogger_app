@@ -58,7 +58,7 @@ class _PHLineChartState extends State<PHLineChart> {
                     'Average',
                     style: TextStyle(
                         fontSize: 12,
-                        color: showAverage ? cyanColor : silverColor),
+                        color: showAverage ? yellowColor : silverColor),
                   ),
                 ),
               ),
@@ -75,7 +75,7 @@ class _PHLineChartState extends State<PHLineChart> {
                     'Show point',
                     style: TextStyle(
                         fontSize: 12,
-                        color: showPoint ? cyanColor : silverColor),
+                        color: showPoint ? yellowColor : silverColor),
                   ),
                 ),
               ),
@@ -90,7 +90,7 @@ class _PHLineChartState extends State<PHLineChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         enabled: showPoint,
-        touchSpotThreshold: 5,
+        touchSpotThreshold: 10,
         touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
@@ -111,7 +111,7 @@ class _PHLineChartState extends State<PHLineChart> {
                 return LineTooltipItem(
                   '$hh:$mm \n${flSpot.y} pH',
                   const TextStyle(
-                    color: cyanColor,
+                    color: yellowColor,
                     fontWeight: FontWeight.bold,
                   ),
                 );
@@ -246,7 +246,7 @@ class _PHLineChartState extends State<PHLineChart> {
     return LineChartData(
       lineTouchData: LineTouchData(
         enabled: showPoint,
-        touchSpotThreshold: 7,
+        touchSpotThreshold: 10,
         touchTooltipData: LineTouchTooltipData(
             tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
@@ -256,7 +256,7 @@ class _PHLineChartState extends State<PHLineChart> {
                 return LineTooltipItem(
                   '${flSpot.y} pH',
                   const TextStyle(
-                    color: cyanColor,
+                    color: yellowColor,
                     fontWeight: FontWeight.bold,
                   ),
                 );
