@@ -109,7 +109,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
                   mm = split[0];
                 }
                 return LineTooltipItem(
-                  '$hh:$mm \n${flSpot.y}/40.95',
+                  '$hh:$mm \n${flSpot.y}/40.9',
                   const TextStyle(
                     color: redColor,
                     fontWeight: FontWeight.bold,
@@ -232,7 +232,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
               return touchedBarSpots.map((barSpot) {
                 final flSpot = barSpot;
                 return LineTooltipItem(
-                  '${flSpot.y}/40.95',
+                  '${flSpot.y}/40.9',
                   const TextStyle(
                     color: redColor,
                     fontWeight: FontWeight.bold,
