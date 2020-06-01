@@ -113,7 +113,6 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
                                     characteristicWrite = null;
                                     characteristicNotify = null;
                                     downloading = false;
-
                                     deleteUnnecessaryThings();
                                     Formater()
                                         .createJsonFile(dataList, startDate);

@@ -150,18 +150,14 @@ class _TempsLineChartState extends State<TempsLineChart> {
             switch (value.toInt()) {
               case 0:
                 return '0:00';
-              case 4:
-                return '4:00';
-              case 8:
-                return '8:00';
+              case 6:
+                return '6:00';
               case 12:
                 return '12:00';
-              case 16:
-                return '16:00';
-              case 20:
-                return '20:00';
-              case 24:
-                return '23:59';
+              case 18:
+                return '18:00';
+              case 23:
+                return '23:00';
             }
             return '';
           },
@@ -208,7 +204,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
       borderData: FlBorderData(
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
-      maxX: 24,
+      maxX: 23,
       minY: 0,
       maxY: 60,
       lineBarsData: [
@@ -287,18 +283,14 @@ class _TempsLineChartState extends State<TempsLineChart> {
             switch (value.toInt()) {
               case 0:
                 return '0:00';
-              case 4:
-                return '4:00';
-              case 8:
-                return '8:00';
+              case 6:
+                return '6:00';
               case 12:
                 return '12:00';
-              case 16:
-                return '16:00';
-              case 20:
-                return '20:00';
-              case 24:
-                return '23:59';
+              case 18:
+                return '18:00';
+              case 23:
+                return '23:00';
             }
             return '';
           },
@@ -335,16 +327,6 @@ class _TempsLineChartState extends State<TempsLineChart> {
                 return '90°C';
               case 100:
                 return '100°C';
-              case 110:
-                return '110°C';
-              case 120:
-                return '120°C';
-              case 130:
-                return '130°C';
-              case 140:
-                return '140°C';
-              case 150:
-                return '150°C';
             }
             return '';
           },
@@ -355,9 +337,9 @@ class _TempsLineChartState extends State<TempsLineChart> {
       borderData: FlBorderData(
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
-      maxX: 24,
+      maxX: 23,
       minY: 0,
-      maxY: 100,
+      maxY: 60,
       lineBarsData: [
         LineChartBarData(
           spots: createAverageData(),

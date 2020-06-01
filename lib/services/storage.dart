@@ -36,8 +36,6 @@ class Storage {
 
   Future<File> saveDates(String dates) async {
     final file = await localFileDates;
-    print('save');
-    print(dates);
     return file.writeAsString('$dates');
   }
 
@@ -45,8 +43,6 @@ class Storage {
     try {
       final file = await localFileDates;
       String fileContent = await file.readAsString();
-      print('load');
-      print(fileContent);
       return time = DateTime.parse(fileContent);
     } catch (e) {
       print(e.toString());
@@ -75,9 +71,7 @@ class Storage {
       final file = await localFileData;
       String fileContent = await file.readAsString();
       final List<Data> data = dataFromJson(fileContent);
-
       int index = data.length - 1;
-
       getTemperatures(data.last.temps);
       getPh(data.last.ph);
       getAlcohol(data.last.alcohol);

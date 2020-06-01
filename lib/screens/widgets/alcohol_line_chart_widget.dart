@@ -109,7 +109,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
                   mm = split[0];
                 }
                 return LineTooltipItem(
-                  '$hh:$mm \n${flSpot.y} mg/L',
+                  '$hh:$mm \n${flSpot.y}/40.95',
                   const TextStyle(
                     color: redColor,
                     fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
       gridData: FlGridData(
         show: true,
         drawHorizontalLine: true,
-        horizontalInterval: 1,
+        horizontalInterval: 5,
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
@@ -150,18 +150,14 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
             switch (value.toInt()) {
               case 0:
                 return '0:00';
-              case 4:
-                return '4:00';
-              case 8:
-                return '8:00';
+              case 6:
+                return '6:00';
               case 12:
                 return '12:00';
-              case 16:
-                return '16:00';
-              case 20:
-                return '20:00';
-              case 24:
-                return '23:59';
+              case 18:
+                return '18:00';
+              case 23:
+                return '23:00';
             }
             return '';
           },
@@ -177,38 +173,30 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0 mg/L';
-              case 1:
-                return '1 mg/L';
-              case 2:
-                return '2 mg/L';
-              case 3:
-                return '3 mg/L';
-              case 4:
-                return '4 mg/L';
-              case 5:
-                return '5 mg/L';
-              case 6:
-                return '6 mg/L';
-              case 7:
-                return '7 mg/L';
-              case 8:
-                return '8 mg/L';
-              case 9:
-                return '9 mg/L';
+                return '0';
+              case 10:
+                return '10';
+              case 20:
+                return '20';
+              case 30:
+                return '30';
+              case 40:
+                return '40';
+              case 50:
+                return '50';
             }
             return '';
           },
-          reservedSize: 35,
+          reservedSize: 20,
           margin: 10,
         ),
       ),
       borderData: FlBorderData(
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
-      maxX: 24,
+      maxX: 23,
       minY: 0,
-      maxY: 10,
+      maxY: 50,
       lineBarsData: [
         LineChartBarData(
           spots: createMainData(),
@@ -244,7 +232,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
               return touchedBarSpots.map((barSpot) {
                 final flSpot = barSpot;
                 return LineTooltipItem(
-                  '${flSpot.y} mg/L',
+                  '${flSpot.y}/40.95',
                   const TextStyle(
                     color: redColor,
                     fontWeight: FontWeight.bold,
@@ -255,7 +243,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
       ),
       gridData: FlGridData(
         show: true,
-        horizontalInterval: 1,
+        horizontalInterval: 5,
         drawVerticalLine: true,
         drawHorizontalLine: true,
         getDrawingVerticalLine: (value) {
@@ -285,18 +273,14 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
             switch (value.toInt()) {
               case 0:
                 return '0:00';
-              case 4:
-                return '4:00';
-              case 8:
-                return '8:00';
+              case 6:
+                return '6:00';
               case 12:
                 return '12:00';
-              case 16:
-                return '16:00';
-              case 20:
-                return '20:00';
-              case 24:
-                return '23:59';
+              case 18:
+                return '18:00';
+              case 23:
+                return '23:00';
             }
             return '';
           },
@@ -312,38 +296,30 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0 mg/L';
-              case 1:
-                return '1 mg/L';
-              case 2:
-                return '2 mg/L';
-              case 3:
-                return '3 mg/L';
-              case 4:
-                return '4 mg/L';
-              case 5:
-                return '5 mg/L';
-              case 6:
-                return '6 mg/L';
-              case 7:
-                return '7 mg/L';
-              case 8:
-                return '8 mg/L';
-              case 9:
-                return '9 mg/L';
+                return '0';
+              case 10:
+                return '10';
+              case 20:
+                return '20';
+              case 30:
+                return '30';
+              case 40:
+                return '40';
+              case 50:
+                return '50';
             }
             return '';
           },
-          reservedSize: 35,
+          reservedSize: 20,
           margin: 10,
         ),
       ),
       borderData: FlBorderData(
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
-      maxX: 24,
+      maxX: 23,
       minY: 0,
-      maxY: 10,
+      maxY: 50,
       lineBarsData: [
         LineChartBarData(
           spots: createAverageData(),
