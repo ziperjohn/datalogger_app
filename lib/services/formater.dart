@@ -91,11 +91,12 @@ class Formater {
       DateTime datePlusOne = startDate.add(Duration(days: j));
       var formatter = new DateFormat('dd.MM.yyyy');
       String dateString = formatter.format(datePlusOne);
-      tempsList24.clear();
+
       phList24.clear();
       alcoholList24.clear();
       tempsOutList24.clear();
       pressureList24.clear();
+      tempsList24.clear();
 
       helpTemps.addAll(tempsListDouble.getRange(0, 24));
       helpPh.addAll(phListDouble.getRange(0, 24));

@@ -3,15 +3,15 @@ import 'package:datalogger/shared/theme_constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-class PHLineChart extends StatefulWidget {
-  final List<String> pH;
+class PressureLineChart extends StatefulWidget {
+  final List<String> pressure;
 
-  const PHLineChart({@required this.pH});
+  const PressureLineChart({@required this.pressure});
   @override
-  _PHLineChartState createState() => _PHLineChartState();
+  _PressureLineChartState createState() => _PressureLineChartState();
 }
 
-class _PHLineChartState extends State<PHLineChart> {
+class _PressureLineChartState extends State<PressureLineChart> {
   bool showAverage = false;
   bool showPoint = false;
 
@@ -58,7 +58,7 @@ class _PHLineChartState extends State<PHLineChart> {
                     'Average',
                     style: TextStyle(
                         fontSize: 12,
-                        color: showAverage ? yellowColor : silverColor),
+                        color: showAverage ? greenColor : silverColor),
                   ),
                 ),
               ),
@@ -75,7 +75,7 @@ class _PHLineChartState extends State<PHLineChart> {
                     'Show point',
                     style: TextStyle(
                         fontSize: 12,
-                        color: showPoint ? yellowColor : silverColor),
+                        color: showPoint ? greenColor : silverColor),
                   ),
                 ),
               ),
@@ -109,7 +109,7 @@ class _PHLineChartState extends State<PHLineChart> {
                   mm = split[0];
                 }
                 return LineTooltipItem(
-                  '$hh:$mm \n${flSpot.y} pH',
+                  '$hh:$mm \n${flSpot.y} hPa',
                   const TextStyle(
                     color: silverColor,
                     fontWeight: FontWeight.bold,
@@ -121,7 +121,7 @@ class _PHLineChartState extends State<PHLineChart> {
       gridData: FlGridData(
         show: true,
         drawHorizontalLine: true,
-        horizontalInterval: 1,
+        horizontalInterval: 50,
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
@@ -173,39 +173,33 @@ class _PHLineChartState extends State<PHLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0 pH';
-              case 1:
-                return '1 pH';
-              case 2:
-                return '2 pH';
-              case 3:
-                return '3 pH';
-              case 4:
-                return '4 pH';
-              case 5:
-                return '5 pH';
-              case 6:
-                return '6 pH';
-              case 7:
-                return '7 pH';
-              case 8:
-                return '8 pH';
-              case 9:
-                return '9 pH';
-              case 10:
-                return '10 pH';
-              case 11:
-                return '11 pH';
-              case 12:
-                return '12 pH';
-              case 13:
-                return '13 pH';
-              case 14:
-                return '14 pH';
+                return '0 hPa';
+              case 100:
+                return '100 hPa';
+              case 200:
+                return '200 hPa';
+              case 300:
+                return '300 hPa';
+              case 400:
+                return '400 hPa';
+              case 500:
+                return '500 hPa';
+              case 600:
+                return '600 hPa';
+              case 700:
+                return '700 hPa';
+              case 800:
+                return '800 hPa';
+              case 900:
+                return '900 hPa';
+              case 1000:
+                return '1000 hPa';
+              case 1100:
+                return '1100 hPa';
             }
             return '';
           },
-          reservedSize: 30,
+          reservedSize: 45,
           margin: 10,
         ),
       ),
@@ -214,12 +208,12 @@ class _PHLineChartState extends State<PHLineChart> {
       minX: 0,
       maxX: 23,
       minY: 0,
-      maxY: 14,
+      maxY: 1100,
       lineBarsData: [
         LineChartBarData(
-          spots: createMainData(widget.pH),
+          spots: createMainData(widget.pressure),
           isCurved: false,
-          colors: yellowGradientColorsChart,
+          colors: greenGradientColorsChart,
           barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -229,7 +223,7 @@ class _PHLineChartState extends State<PHLineChart> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            colors: yellowGradientColorsChart
+            colors: greenGradientColorsChart
                 .map((color) => color.withOpacity(0.3))
                 .toList(),
           ),
@@ -250,7 +244,7 @@ class _PHLineChartState extends State<PHLineChart> {
               return touchedBarSpots.map((barSpot) {
                 final flSpot = barSpot;
                 return LineTooltipItem(
-                  '${flSpot.y} pH',
+                  '${flSpot.y} hPa',
                   const TextStyle(
                     color: silverColor,
                     fontWeight: FontWeight.bold,
@@ -261,7 +255,7 @@ class _PHLineChartState extends State<PHLineChart> {
       ),
       gridData: FlGridData(
         show: true,
-        horizontalInterval: 1,
+        horizontalInterval: 50,
         drawVerticalLine: true,
         drawHorizontalLine: true,
         getDrawingVerticalLine: (value) {
@@ -314,39 +308,33 @@ class _PHLineChartState extends State<PHLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0 pH';
-              case 1:
-                return '1 pH';
-              case 2:
-                return '2 pH';
-              case 3:
-                return '3 pH';
-              case 4:
-                return '4 pH';
-              case 5:
-                return '5 pH';
-              case 6:
-                return '6 pH';
-              case 7:
-                return '7 pH';
-              case 8:
-                return '8 pH';
-              case 9:
-                return '9 pH';
-              case 10:
-                return '10 pH';
-              case 11:
-                return '11 pH';
-              case 12:
-                return '12 pH';
-              case 13:
-                return '13 pH';
-              case 14:
-                return '14 pH';
+                return '0 hPa';
+              case 100:
+                return '100 hPa';
+              case 200:
+                return '200 hPa';
+              case 300:
+                return '300 hPa';
+              case 400:
+                return '400 hPa';
+              case 500:
+                return '500 hPa';
+              case 600:
+                return '600 hPa';
+              case 700:
+                return '700 hPa';
+              case 800:
+                return '800 hPa';
+              case 900:
+                return '900 hPa';
+              case 1000:
+                return '1000 hPa';
+              case 1100:
+                return '1100 hPa';
             }
             return '';
           },
-          reservedSize: 30,
+          reservedSize: 45,
           margin: 10,
         ),
       ),
@@ -355,12 +343,12 @@ class _PHLineChartState extends State<PHLineChart> {
       minX: 0,
       maxX: 23,
       minY: 0,
-      maxY: 14,
+      maxY: 1100,
       lineBarsData: [
         LineChartBarData(
-          spots: createAverageData(widget.pH),
+          spots: createAverageData(widget.pressure),
           isCurved: false,
-          colors: yellowGradientColorsChart,
+          colors: greenGradientColorsChart,
           barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
@@ -370,7 +358,7 @@ class _PHLineChartState extends State<PHLineChart> {
           ),
           belowBarData: BarAreaData(
             show: true,
-            colors: yellowGradientColorsChart
+            colors: greenGradientColorsChart
                 .map((color) => color.withOpacity(0.4))
                 .toList(),
           ),
@@ -390,40 +378,40 @@ class _PHLineChartState extends State<PHLineChart> {
   }
 
   List<FlSpot> createMainData(List<String> list) {
-    List<double> phData = parseStringtoDouble(list);
-    List<FlSpot> chartMainData = List(phData.length);
-    List<double> xAxis = List(phData.length);
-    double pieceOfAxis = 24 / phData.length;
+    List<double> pressureData = parseStringtoDouble(list);
+    List<FlSpot> chartMainData = List(pressureData.length);
+    List<double> xAxis = List(pressureData.length);
+    double pieceOfAxis = 24 / pressureData.length;
     // create a X axis data
-    for (var i = 0; i < phData.length; i++) {
+    for (var i = 0; i < pressureData.length; i++) {
       xAxis[i] = pieceOfAxis * i;
     }
     //add data to chart
-    for (var i = 0; i < phData.length; i++) {
-      chartMainData[i] = FlSpot(xAxis[i], phData[i]);
+    for (var i = 0; i < pressureData.length; i++) {
+      chartMainData[i] = FlSpot(xAxis[i], pressureData[i]);
     }
     return chartMainData;
   }
 
   List<FlSpot> createAverageData(List<String> list) {
-    List<double> phData = parseStringtoDouble(list);
-    List<FlSpot> chartAverageData = List(phData.length);
-    List<double> xAxis = List(phData.length);
-    double pieceOfAxis = 24 / phData.length;
+    List<double> pressureData = parseStringtoDouble(list);
+    List<FlSpot> chartAverageData = List(pressureData.length);
+    List<double> xAxis = List(pressureData.length);
+    double pieceOfAxis = 24 / pressureData.length;
     double average = 0;
     double sum = 0;
     // sum temperatures
-    for (var i = 0; i < phData.length; i++) {
-      sum = sum + phData[i];
+    for (var i = 0; i < pressureData.length; i++) {
+      sum = sum + pressureData[i];
     }
-    average = sum / phData.length;
+    average = sum / pressureData.length;
     average = roundDouble(average, 1);
     // create a X axis data
-    for (var i = 0; i < phData.length; i++) {
+    for (var i = 0; i < pressureData.length; i++) {
       xAxis[i] = pieceOfAxis * i;
     }
     //add data to chart
-    for (var i = 0; i < phData.length; i++) {
+    for (var i = 0; i < pressureData.length; i++) {
       chartAverageData[i] = FlSpot(xAxis[i], average);
     }
     return chartAverageData;

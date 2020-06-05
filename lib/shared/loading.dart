@@ -16,13 +16,21 @@ class _LoadingState extends State<Loading> {
       'maxTemp': storage.maxTemp,
       'minTemp': storage.minTemp,
       'tempsChart': storage.tempsChart,
+      'pressureChart': storage.pressureChart,
+      'tempsOutChart': storage.tempsOutChart,
       'pHChart': storage.pHChart,
       'alcoholChart': storage.alcoholChart,
       'date': storage.date,
       'latestUpdatesReversed': storage.latestUpdatesReversed,
       'fiveMaxTemps': storage.maxTemps,
       'fiveMinTemps': storage.minTemps,
-      'fiveDates': storage.fiveDates
+      'fiveDates': storage.fiveDates,
+      'weekDates': storage.weekDates,
+      'weekAlcoholChart': storage.weekAlcoholChart,
+      'weekpHChart': storage.weekpHChart,
+      'weekPressureChart': storage.weekPressureChart,
+      'weekTempsChart': storage.weekTempsChart,
+      'weekTempsOutChart': storage.weekTempsOutChart,
     });
   }
 

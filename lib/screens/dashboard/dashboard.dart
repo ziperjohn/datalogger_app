@@ -45,12 +45,20 @@ class _DashboardState extends State<Dashboard> {
       'minTemp': instance.minTemp,
       'tempsChart': instance.tempsChart,
       'pHChart': instance.pHChart,
+      'pressureChart': instance.pressureChart,
+      'tempsOutChart': instance.tempsOutChart,
       'alcoholChart': instance.alcoholChart,
       'date': instance.date,
       'latestUpdatesReversed': instance.latestUpdatesReversed,
       'fiveMaxTemps': instance.maxTemps,
       'fiveMinTemps': instance.minTemps,
-      'fiveDates': instance.fiveDates
+      'fiveDates': instance.fiveDates,
+      'weekDates': instance.weekDates,
+      'weekAlcoholChart': instance.weekAlcoholChart,
+      'weekpHChart': instance.weekpHChart,
+      'weekPressureChart': instance.weekPressureChart,
+      'weekTempsChart': instance.weekTempsChart,
+      'weekTempsOutChart': instance.weekTempsOutChart,
     };
   }
 
@@ -66,6 +74,14 @@ class _DashboardState extends State<Dashboard> {
     prefs.setStringList('fiveDates', data['fiveDates']);
     prefs.setStringList('pHChart', data['pHChart']);
     prefs.setStringList('alcoholChart', data['alcoholChart']);
+    prefs.setStringList('pressureChart', data['pressureChart']);
+    prefs.setStringList('tempsOutChart', data['tempsOutChart']);
+    prefs.setStringList('weekDates', data['weekDates']);
+    prefs.setStringList('weekAlcoholChart', data['weekAlcoholChart']);
+    prefs.setStringList('weekpHChart', data['weekpHChart']);
+    prefs.setStringList('weekPressureChart', data['weekPressureChart']);
+    prefs.setStringList('weekTempsOutChart', data['weekTempsOutChart']);
+    prefs.setStringList('weekTempsChart', data['weekTempsChart']);
   }
 
   getDataFromSF() async {
@@ -81,6 +97,15 @@ class _DashboardState extends State<Dashboard> {
     data['fiveDates'] = prefs.getStringList('fiveDates');
     data['pHChart'] = prefs.getStringList('pHChart');
     data['alcoholChart'] = prefs.getStringList('alcoholChart');
+    data['pressureChart'] = prefs.getStringList('pressureChart');
+    data['tempsOutChart'] = prefs.getStringList('tempsOutChart');
+    data['weekDates'] = prefs.getStringList('weekDates');
+    data['weekAlcoholChart'] = prefs.getStringList('weekAlcoholChart');
+    data['weekpHChart'] = prefs.getStringList('weekpHChart');
+    data['weekPressureChart'] = prefs.getStringList('weekPressureChart');
+    data['weekTempsOutChart'] = prefs.getStringList('weekTempsOutChart');
+    data['weekTempsChart'] = prefs.getStringList('weekTempsChart');
+
     return data;
   }
 
@@ -126,6 +151,7 @@ class _DashboardState extends State<Dashboard> {
                     Container(
                       child: TempsLineChart(
                         temps: snapshot.data['tempsChart'],
+                        tempsOut: snapshot.data['tempsOutChart'],
                       ),
                     ),
                     Container(

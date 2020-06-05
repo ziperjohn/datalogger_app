@@ -111,7 +111,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
                 return LineTooltipItem(
                   '$hh:$mm \n${flSpot.y}/40.9',
                   const TextStyle(
-                    color: redColor,
+                    color: silverColor,
                     fontWeight: FontWeight.bold,
                   ),
                 );
@@ -199,10 +199,10 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
       maxY: 50,
       lineBarsData: [
         LineChartBarData(
-          spots: createMainData(),
+          spots: createMainData(widget.alcohol),
           isCurved: false,
           colors: redGradientColorsChart,
-          barWidth: 0.9,
+          barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             dotColor: silverColor,
@@ -234,7 +234,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
                 return LineTooltipItem(
                   '${flSpot.y}/40.9',
                   const TextStyle(
-                    color: redColor,
+                    color: silverColor,
                     fontWeight: FontWeight.bold,
                   ),
                 );
@@ -322,7 +322,7 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
       maxY: 50,
       lineBarsData: [
         LineChartBarData(
-          spots: createAverageData(),
+          spots: createAverageData(widget.alcohol),
           isCurved: false,
           colors: redGradientColorsChart,
           barWidth: 2,
@@ -348,50 +348,46 @@ class _AlcoholLineChartState extends State<AlcoholLineChart> {
     return ((value * mod).round().toDouble() / mod);
   }
 
-  List<double> parseStringtoDouble() {
-    List<String> listString = List();
-    listString.addAll(widget.alcohol);
-    List<double> listDouble = listString.map(double.parse).toList();
+  List<double> parseStringtoDouble(List<String> list) {
+    List<double> listDouble = list.map(double.parse).toList();
     return listDouble;
   }
 
-  List<FlSpot> createMainData() {
-    List<double> temps = parseStringtoDouble();
-    List<FlSpot> chartMainData = List(widget.alcohol.length);
-    List<double> xAxis = List(widget.alcohol.length);
-    double pieceOfAxis = 24 / widget.alcohol.length;
+  List<FlSpot> createMainData(List<String> list) {
+    List<double> alcoholData = parseStringtoDouble(list);
+    List<FlSpot> chartMainData = List(alcoholData.length);
+    List<double> xAxis = List(alcoholData.length);
+    double pieceOfAxis = 24 / alcoholData.length;
     // create a X axis data
-    for (var i = 0; i < widget.alcohol.length; i++) {
+    for (var i = 0; i < alcoholData.length; i++) {
       xAxis[i] = pieceOfAxis * i;
     }
     //add data to chart
-    for (var i = 0; i < widget.alcohol.length; i++) {
-      chartMainData[i] = FlSpot(xAxis[i], temps[i]);
+    for (var i = 0; i < alcoholData.length; i++) {
+      chartMainData[i] = FlSpot(xAxis[i], alcoholData[i]);
     }
     return chartMainData;
   }
 
-  List<FlSpot> createAverageData() {
-    List<double> temps = parseStringtoDouble();
-    List<FlSpot> chartAverageData = List(widget.alcohol.length);
-    List<double> xAxis = List(widget.alcohol.length);
-    double pieceOfAxis = 24 / widget.alcohol.length;
+  List<FlSpot> createAverageData(List<String> list) {
+    List<double> alcoholData = parseStringtoDouble(list);
+    List<FlSpot> chartAverageData = List(alcoholData.length);
+    List<double> xAxis = List(alcoholData.length);
+    double pieceOfAxis = 24 / alcoholData.length;
     double average = 0;
     double sum = 0;
     // sum temperatures
-    for (var i = 0; i < widget.alcohol.length; i++) {
-      sum = sum + temps[i];
+    for (var i = 0; i < alcoholData.length; i++) {
+      sum = sum + alcoholData[i];
     }
-
-    average = sum / widget.alcohol.length;
+    average = sum / alcoholData.length;
     average = roundDouble(average, 1);
-
     // create a X axis data
-    for (var i = 0; i < widget.alcohol.length; i++) {
+    for (var i = 0; i < alcoholData.length; i++) {
       xAxis[i] = pieceOfAxis * i;
     }
     //add data to chart
-    for (var i = 0; i < widget.alcohol.length; i++) {
+    for (var i = 0; i < alcoholData.length; i++) {
       chartAverageData[i] = FlSpot(xAxis[i], average);
     }
     return chartAverageData;

@@ -12,6 +12,7 @@ const bgBarColor = const Color(0xFF2D2B35);
 const bgWidgetColor = const Color(0xFF383740);
 const greyColor = const Color(0xFF4E4C54);
 const silverColor = const Color(0xFFC1C1C1);
+
 const List<Color> cyanGradientColorsChart = [
   const Color(0xFF23CFE6),
   const Color(0xFF21E6C1),
@@ -27,6 +28,12 @@ const List<Color> yellowGradientColorsChart = [
   const Color(0xFFEBD615),
   const Color(0xFFF9FF21),
   const Color(0xFFCDEB15),
+];
+
+const List<Color> greenGradientColorsChart = [
+  const Color(0xFF15EB2B),
+  const Color(0xFF59EB15),
+  const Color(0xFFA7EB15),
 ];
 
 // Elevation const
