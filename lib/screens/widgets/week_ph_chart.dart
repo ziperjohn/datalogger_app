@@ -2,18 +2,47 @@ import 'dart:math';
 import 'package:datalogger/shared/theme_constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class PHLineChart extends StatefulWidget {
-  final List<String> pH;
+class WeekPh extends StatefulWidget {
+  final List<String> weekPh;
+  final List<String> weekDate;
 
-  const PHLineChart({@required this.pH});
+  const WeekPh({
+    @required this.weekPh,
+    @required this.weekDate,
+  });
   @override
-  _PHLineChartState createState() => _PHLineChartState();
+  _WeekPhState createState() => _WeekPhState();
 }
 
-class _PHLineChartState extends State<PHLineChart> {
+class _WeekPhState extends State<WeekPh> {
   bool showAverage = false;
   bool showPoint = false;
+
+  List<String> formateDateTime(List<String> list) {
+    List<DateTime> listDateTime = List();
+    for (var i = 0; i < list.length; i++) {
+      var day = int.parse(list[i].substring(0, 2));
+      var month = int.parse(list[i].substring(3, 5));
+      var year = int.parse(list[i].substring(6, 10));
+      listDateTime.add(DateTime(year, month, day));
+    }
+    List<String> listString = List();
+    for (var i = 0; i < listDateTime.length; i++) {
+      String string = new DateFormat('d.M.').format(listDateTime[i]);
+      listString.add(string);
+    }
+    return listString;
+  }
+
+  DateTime getFristDate(List<String> list) {
+    var day = int.parse(list[0].substring(0, 2));
+    var month = int.parse(list[0].substring(3, 5));
+    var year = int.parse(list[0].substring(6, 10));
+    DateTime date = DateTime(year, month, day, 0, 0);
+    return date;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,19 +126,12 @@ class _PHLineChartState extends State<PHLineChart> {
             getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
               return touchedBarSpots.map((barSpot) {
                 final flSpot = barSpot;
-                var splitTime = flSpot.x.toString().split('.');
-                String stringMinute = '0.' + splitTime[1];
-                String hh = splitTime[0];
-                String mm;
-                double doubleMinute = double.parse(stringMinute) * 60;
-                var split = doubleMinute.toString().split('.');
-                if (split[0].length == 1) {
-                  mm = '0' + split[0];
-                } else {
-                  mm = split[0];
-                }
+                DateTime date = getFristDate(widget.weekDate);
+                DateTime viewDate = date.add(Duration(hours: flSpot.x.toInt()));
+                String currentDate =
+                    new DateFormat('d.M. H:mm').format(viewDate);
                 return LineTooltipItem(
-                  '$hh:$mm \n${flSpot.y} pH',
+                  '$currentDate \n${flSpot.y}pH',
                   const TextStyle(
                     color: silverColor,
                     fontWeight: FontWeight.bold,
@@ -123,6 +145,7 @@ class _PHLineChartState extends State<PHLineChart> {
         drawHorizontalLine: true,
         horizontalInterval: 1,
         drawVerticalLine: true,
+        verticalInterval: 24,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
             color: greyColor,
@@ -149,15 +172,21 @@ class _PHLineChartState extends State<PHLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0:00';
-              case 6:
-                return '6:00';
-              case 12:
-                return '12:00';
-              case 18:
-                return '18:00';
+                return formateDateTime(widget.weekDate)[0];
               case 23:
-                return '23:00';
+                return formateDateTime(widget.weekDate)[1];
+              case 47:
+                return formateDateTime(widget.weekDate)[2];
+              case 71:
+                return formateDateTime(widget.weekDate)[3];
+              case 95:
+                return formateDateTime(widget.weekDate)[4];
+              case 119:
+                return formateDateTime(widget.weekDate)[5];
+              case 143:
+                return formateDateTime(widget.weekDate)[6];
+              // case 167:
+              //   return formateDateTime(widget.weekDate)[7];
             }
             return '';
           },
@@ -212,19 +241,19 @@ class _PHLineChartState extends State<PHLineChart> {
       borderData: FlBorderData(
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
-      maxX: 23,
+      maxX: 168,
       minY: 0,
       maxY: 14,
       lineBarsData: [
         LineChartBarData(
-          spots: createMainData(widget.pH),
+          spots: createMainData(widget.weekPh),
           isCurved: false,
           colors: yellowGradientColorsChart,
           barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             dotColor: silverColor,
-            show: showPoint,
+            show: false,
             dotSize: 2,
           ),
           belowBarData: BarAreaData(
@@ -250,7 +279,7 @@ class _PHLineChartState extends State<PHLineChart> {
               return touchedBarSpots.map((barSpot) {
                 final flSpot = barSpot;
                 return LineTooltipItem(
-                  '${flSpot.y} pH',
+                  '${flSpot.y}pH',
                   const TextStyle(
                     color: silverColor,
                     fontWeight: FontWeight.bold,
@@ -264,6 +293,7 @@ class _PHLineChartState extends State<PHLineChart> {
         horizontalInterval: 1,
         drawVerticalLine: true,
         drawHorizontalLine: true,
+        verticalInterval: 24,
         getDrawingVerticalLine: (value) {
           return const FlLine(
             color: greyColor,
@@ -290,15 +320,19 @@ class _PHLineChartState extends State<PHLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0:00';
-              case 6:
-                return '6:00';
-              case 12:
-                return '12:00';
-              case 18:
-                return '18:00';
+                return formateDateTime(widget.weekDate)[0];
               case 23:
-                return '23:00';
+                return formateDateTime(widget.weekDate)[1];
+              case 47:
+                return formateDateTime(widget.weekDate)[2];
+              case 71:
+                return formateDateTime(widget.weekDate)[3];
+              case 95:
+                return formateDateTime(widget.weekDate)[4];
+              case 119:
+                return formateDateTime(widget.weekDate)[5];
+              case 143:
+                return formateDateTime(widget.weekDate)[6];
             }
             return '';
           },
@@ -353,19 +387,19 @@ class _PHLineChartState extends State<PHLineChart> {
       borderData: FlBorderData(
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
-      maxX: 23,
+      maxX: 168,
       minY: 0,
       maxY: 14,
       lineBarsData: [
         LineChartBarData(
-          spots: createAverageData(widget.pH),
+          spots: createAverageData(widget.weekPh),
           isCurved: false,
           colors: yellowGradientColorsChart,
           barWidth: 2,
           isStrokeCapRound: true,
           dotData: FlDotData(
             dotColor: silverColor,
-            show: showPoint,
+            show: false,
             dotSize: 1.5,
           ),
           belowBarData: BarAreaData(
@@ -377,6 +411,11 @@ class _PHLineChartState extends State<PHLineChart> {
         ),
       ],
     );
+  }
+
+  int getNumOfDay(List<String> list) {
+    int numOfDay = (list.length / 24).ceil();
+    return numOfDay;
   }
 
   double roundDouble(double value, int places) {
@@ -393,7 +432,8 @@ class _PHLineChartState extends State<PHLineChart> {
     List<double> phData = parseStringtoDouble(list);
     List<FlSpot> chartMainData = List(phData.length);
     List<double> xAxis = List(phData.length);
-    double pieceOfAxis = 24 / phData.length;
+
+    double pieceOfAxis = 168 / phData.length;
     // create a X axis data
     for (var i = 0; i < phData.length; i++) {
       xAxis[i] = pieceOfAxis * i;
@@ -409,7 +449,7 @@ class _PHLineChartState extends State<PHLineChart> {
     List<double> phData = parseStringtoDouble(list);
     List<FlSpot> chartAverageData = List(phData.length);
     List<double> xAxis = List(phData.length);
-    double pieceOfAxis = 24 / phData.length;
+    double pieceOfAxis = 168 / phData.length;
     double average = 0;
     double sum = 0;
     // sum temperatures

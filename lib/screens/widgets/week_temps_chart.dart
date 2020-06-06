@@ -2,22 +2,49 @@ import 'dart:math';
 import 'package:datalogger/shared/theme_constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class TempsLineChart extends StatefulWidget {
-  final List<String> temps;
-  final List<String> tempsOut;
+class WeekTemps extends StatefulWidget {
+  final List<String> weekTemps;
+  final List<String> weekTempsOut;
+  final List<String> weekDate;
 
-  const TempsLineChart({
-    @required this.temps,
-    @required this.tempsOut,
+  const WeekTemps({
+    @required this.weekTemps,
+    @required this.weekTempsOut,
+    @required this.weekDate,
   });
   @override
-  _TempsLineChartState createState() => _TempsLineChartState();
+  _WeekTempsState createState() => _WeekTempsState();
 }
 
-class _TempsLineChartState extends State<TempsLineChart> {
+class _WeekTempsState extends State<WeekTemps> {
   bool showAverage = false;
   bool showPoint = false;
+
+  List<String> formateDateTime(List<String> list) {
+    List<DateTime> listDateTime = List();
+    for (var i = 0; i < list.length; i++) {
+      var day = int.parse(list[i].substring(0, 2));
+      var month = int.parse(list[i].substring(3, 5));
+      var year = int.parse(list[i].substring(6, 10));
+      listDateTime.add(DateTime(year, month, day));
+    }
+    List<String> listString = List();
+    for (var i = 0; i < listDateTime.length; i++) {
+      String string = new DateFormat('d.M.').format(listDateTime[i]);
+      listString.add(string);
+    }
+    return listString;
+  }
+
+  DateTime getFristDate(List<String> list) {
+    var day = int.parse(list[0].substring(0, 2));
+    var month = int.parse(list[0].substring(3, 5));
+    var year = int.parse(list[0].substring(6, 10));
+    DateTime date = DateTime(year, month, day, 0, 0);
+    return date;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,25 +198,18 @@ class _TempsLineChartState extends State<TempsLineChart> {
         enabled: showPoint,
         touchSpotThreshold: 10,
         touchTooltipData: LineTouchTooltipData(
-            tooltipBgColor: greyColor,
             maxContentWidth: 150,
+            tooltipBgColor: greyColor,
             tooltipRoundedRadius: 8,
             getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
               return touchedBarSpots.map((barSpot) {
                 final flSpot = barSpot;
-                var splitTime = flSpot.x.toString().split('.');
-                String stringMinute = '0.' + splitTime[1];
-                String hh = splitTime[0];
-                String mm;
-                double doubleMinute = double.parse(stringMinute) * 60;
-                var split = doubleMinute.toString().split('.');
-                if (split[0].length == 1) {
-                  mm = '0' + split[0];
-                } else {
-                  mm = split[0];
-                }
+                DateTime date = getFristDate(widget.weekDate);
+                DateTime viewDate = date.add(Duration(hours: flSpot.x.toInt()));
+                String currentDate =
+                    new DateFormat('d.M. H:mm').format(viewDate);
                 return LineTooltipItem(
-                  '$hh:$mm\n${flSpot.y}°C',
+                  '$currentDate \n${flSpot.y}°C',
                   const TextStyle(
                     color: silverColor,
                     fontWeight: FontWeight.bold,
@@ -203,6 +223,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
         drawHorizontalLine: true,
         horizontalInterval: 5,
         drawVerticalLine: true,
+        verticalInterval: 24,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
             color: greyColor,
@@ -229,15 +250,19 @@ class _TempsLineChartState extends State<TempsLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0:00';
-              case 6:
-                return '6:00';
-              case 12:
-                return '12:00';
-              case 18:
-                return '18:00';
+                return formateDateTime(widget.weekDate)[0];
               case 23:
-                return '23:00';
+                return formateDateTime(widget.weekDate)[1];
+              case 47:
+                return formateDateTime(widget.weekDate)[2];
+              case 71:
+                return formateDateTime(widget.weekDate)[3];
+              case 95:
+                return formateDateTime(widget.weekDate)[4];
+              case 119:
+                return formateDateTime(widget.weekDate)[5];
+              case 143:
+                return formateDateTime(widget.weekDate)[6];
             }
             return '';
           },
@@ -274,24 +299,24 @@ class _TempsLineChartState extends State<TempsLineChart> {
       borderData: FlBorderData(
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
-      maxX: 23,
+      maxX: 168,
       minY: 0,
-      maxY: 50,
+      maxY: 60,
       lineBarsData: linesBarDataMain(),
     );
   }
 
   List<LineChartBarData> linesBarDataMain() {
     final LineChartBarData lineChartBarData1 = LineChartBarData(
-      spots: createMainData(widget.temps),
+      spots: createMainData(widget.weekTemps),
       isCurved: false,
       colors: cyanGradientColorsChart,
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
         dotColor: silverColor,
-        show: showPoint,
-        dotSize: 2,
+        show: false,
+        dotSize: 1,
       ),
       belowBarData: BarAreaData(
         show: false,
@@ -301,15 +326,15 @@ class _TempsLineChartState extends State<TempsLineChart> {
       ),
     );
     final LineChartBarData lineChartBarData2 = LineChartBarData(
-      spots: createMainData(widget.tempsOut),
+      spots: createMainData(widget.weekTempsOut),
       isCurved: false,
       colors: redGradientColorsChart,
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
         dotColor: silverColor,
-        show: showPoint,
-        dotSize: 2,
+        show: false,
+        dotSize: 1,
       ),
       belowBarData: BarAreaData(
         show: false,
@@ -319,15 +344,15 @@ class _TempsLineChartState extends State<TempsLineChart> {
       ),
     );
     final LineChartBarData lineChartBarData3 = LineChartBarData(
-      spots: differnceTemps(widget.temps, widget.tempsOut),
+      spots: differnceTemps(widget.weekTemps, widget.weekTempsOut),
       isCurved: false,
       colors: greenGradientColorsChart,
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
         dotColor: silverColor,
-        show: showPoint,
-        dotSize: 2,
+        show: false,
+        dotSize: 1,
       ),
       belowBarData: BarAreaData(
         show: false,
@@ -369,6 +394,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
         horizontalInterval: 5,
         drawVerticalLine: true,
         drawHorizontalLine: true,
+        verticalInterval: 24,
         getDrawingVerticalLine: (value) {
           return const FlLine(
             color: greyColor,
@@ -395,15 +421,19 @@ class _TempsLineChartState extends State<TempsLineChart> {
           getTitles: (value) {
             switch (value.toInt()) {
               case 0:
-                return '0:00';
-              case 6:
-                return '6:00';
-              case 12:
-                return '12:00';
-              case 18:
-                return '18:00';
+                return formateDateTime(widget.weekDate)[0];
               case 23:
-                return '23:00';
+                return formateDateTime(widget.weekDate)[1];
+              case 47:
+                return formateDateTime(widget.weekDate)[2];
+              case 71:
+                return formateDateTime(widget.weekDate)[3];
+              case 95:
+                return formateDateTime(widget.weekDate)[4];
+              case 119:
+                return formateDateTime(widget.weekDate)[5];
+              case 143:
+                return formateDateTime(widget.weekDate)[6];
             }
             return '';
           },
@@ -440,23 +470,23 @@ class _TempsLineChartState extends State<TempsLineChart> {
       borderData: FlBorderData(
           show: true, border: Border.all(color: greyColor, width: 1)),
       minX: 0,
-      maxX: 23,
+      maxX: 168,
       minY: 0,
-      maxY: 50,
+      maxY: 60,
       lineBarsData: linesBarDataAverage(),
     );
   }
 
   List<LineChartBarData> linesBarDataAverage() {
     final LineChartBarData lineChartBarData1 = LineChartBarData(
-      spots: createAverageData(widget.temps),
+      spots: createAverageData(widget.weekTemps),
       isCurved: false,
       colors: cyanGradientColorsChart,
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
         dotColor: silverColor,
-        show: showPoint,
+        show: false,
         dotSize: 2,
       ),
       belowBarData: BarAreaData(
@@ -467,14 +497,14 @@ class _TempsLineChartState extends State<TempsLineChart> {
       ),
     );
     final LineChartBarData lineChartBarData2 = LineChartBarData(
-      spots: createAverageData(widget.tempsOut),
+      spots: createAverageData(widget.weekTempsOut),
       isCurved: false,
       colors: redGradientColorsChart,
       barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(
         dotColor: silverColor,
-        show: showPoint,
+        show: false,
         dotSize: 2,
       ),
       belowBarData: BarAreaData(
@@ -490,12 +520,68 @@ class _TempsLineChartState extends State<TempsLineChart> {
     ];
   }
 
+  int getNumOfDay(List<String> list) {
+    int numOfDay = (list.length / 24).ceil();
+    return numOfDay;
+  }
+
+  double roundDouble(double value, int places) {
+    double mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
+  }
+
+  List<double> parseStringtoDouble(List<String> list) {
+    List<double> listDouble = list.map(double.parse).toList();
+    return listDouble;
+  }
+
+  List<FlSpot> createMainData(List<String> list) {
+    List<double> tempsData = parseStringtoDouble(list);
+    List<FlSpot> chartMainData = List(tempsData.length);
+    List<double> xAxis = List(tempsData.length);
+
+    double pieceOfAxis = 168 / tempsData.length;
+    // create a X axis data
+    for (var i = 0; i < tempsData.length; i++) {
+      xAxis[i] = pieceOfAxis * i;
+    }
+    //add data to chart
+    for (var i = 0; i < tempsData.length; i++) {
+      chartMainData[i] = FlSpot(xAxis[i], tempsData[i]);
+    }
+    return chartMainData;
+  }
+
+  List<FlSpot> createAverageData(List<String> list) {
+    List<double> tempsData = parseStringtoDouble(list);
+    List<FlSpot> chartAverageData = List(tempsData.length);
+    List<double> xAxis = List(tempsData.length);
+    double pieceOfAxis = 168 / tempsData.length;
+    double average = 0;
+    double sum = 0;
+    // sum temperatures
+    for (var i = 0; i < tempsData.length; i++) {
+      sum = sum + tempsData[i];
+    }
+    average = sum / tempsData.length;
+    average = roundDouble(average, 1);
+    // create a X axis data
+    for (var i = 0; i < tempsData.length; i++) {
+      xAxis[i] = pieceOfAxis * i;
+    }
+    //add data to chart
+    for (var i = 0; i < tempsData.length; i++) {
+      chartAverageData[i] = FlSpot(xAxis[i], average);
+    }
+    return chartAverageData;
+  }
+
   List<FlSpot> differnceTemps(List<String> temps, List<String> tempsOut) {
     List<double> tempsData = parseStringtoDouble(temps);
     List<double> tempsOutData = parseStringtoDouble(tempsOut);
     List<FlSpot> chartMainData = List(tempsData.length);
     List<double> xAxis = List(tempsData.length);
-    double pieceOfAxis = 24 / tempsData.length;
+    double pieceOfAxis = 168 / tempsData.length;
     double average = 0;
     double sum = 0;
     double averageOut = 0;
@@ -526,56 +612,7 @@ class _TempsLineChartState extends State<TempsLineChart> {
             FlSpot(xAxis[i], roundDouble(tempsOutData[i] - tempsData[i], 2));
       }
     }
+
     return chartMainData;
-  }
-
-  double roundDouble(double value, int places) {
-    double mod = pow(10.0, places);
-    return ((value * mod).round().toDouble() / mod);
-  }
-
-  List<double> parseStringtoDouble(List<String> list) {
-    List<double> listDouble = list.map(double.parse).toList();
-    return listDouble;
-  }
-
-  List<FlSpot> createMainData(List<String> list) {
-    List<double> tempsData = parseStringtoDouble(list);
-    List<FlSpot> chartMainData = List(tempsData.length);
-    List<double> xAxis = List(tempsData.length);
-    double pieceOfAxis = 24 / tempsData.length;
-    // create a X axis data
-    for (var i = 0; i < tempsData.length; i++) {
-      xAxis[i] = pieceOfAxis * i;
-    }
-    //add data to chart
-    for (var i = 0; i < tempsData.length; i++) {
-      chartMainData[i] = FlSpot(xAxis[i], tempsData[i]);
-    }
-    return chartMainData;
-  }
-
-  List<FlSpot> createAverageData(List<String> list) {
-    List<double> tempsData = parseStringtoDouble(list);
-    List<FlSpot> chartAverageData = List(tempsData.length);
-    List<double> xAxis = List(tempsData.length);
-    double pieceOfAxis = 24 / tempsData.length;
-    double average = 0;
-    double sum = 0;
-    // sum temperatures
-    for (var i = 0; i < tempsData.length; i++) {
-      sum = sum + tempsData[i];
-    }
-    average = sum / tempsData.length;
-    average = roundDouble(average, 2);
-    // create a X axis data
-    for (var i = 0; i < tempsData.length; i++) {
-      xAxis[i] = pieceOfAxis * i;
-    }
-    //add data to chart
-    for (var i = 0; i < tempsData.length; i++) {
-      chartAverageData[i] = FlSpot(xAxis[i], average);
-    }
-    return chartAverageData;
   }
 }

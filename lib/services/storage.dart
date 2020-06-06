@@ -12,12 +12,20 @@ class Storage {
   String maxTemp;
   String minTemp;
   List<String> latestUpdatesReversed = List();
+  List<String> tempsOutChart = List();
   List<String> tempsChart = List();
+  List<String> pressureChart = List();
   List<String> pHChart = List();
   List<String> alcoholChart = List();
   List<String> maxTemps = List();
   List<String> minTemps = List();
   List<String> fiveDates = List();
+  List<String> weekTempsChart = List();
+  List<String> weekTempsOutChart = List();
+  List<String> weekpHChart = List();
+  List<String> weekAlcoholChart = List();
+  List<String> weekPressureChart = List();
+  List<String> weekDates = List();
 
   Future<String> get localPath async {
     final dir = await getApplicationDocumentsDirectory();
@@ -36,8 +44,6 @@ class Storage {
 
   Future<File> saveDates(String dates) async {
     final file = await localFileDates;
-    print('save');
-    print(dates);
     return file.writeAsString('$dates');
   }
 
@@ -45,7 +51,10 @@ class Storage {
     try {
       final file = await localFileDates;
       String fileContent = await file.readAsString();
+<<<<<<< HEAD
       print(fileContent);
+=======
+>>>>>>> 09f465da747d624f73598c05aebc5fdd8fc86398
       return time = DateTime.parse(fileContent);
     } catch (e) {
       print(e.toString());
@@ -74,10 +83,11 @@ class Storage {
       final file = await localFileData;
       String fileContent = await file.readAsString();
       final List<Data> data = dataFromJson(fileContent);
-
       int index = data.length - 1;
-
+      getWeekTemps(data, index);
       getTemperatures(data.last.temps);
+      getTemperaturesOut(data.last.tempsOut);
+      getPressure(data.last.pressure);
       getPh(data.last.ph);
       getAlcohol(data.last.alcohol);
       getSelectedDate(data.last.date);
@@ -87,6 +97,11 @@ class Storage {
       getFiveMaxTemps(data, index);
       getFiveMinTemps(data, index);
       getFiveDates(data, index);
+      getWeekAlcohol(data, index);
+      getWeekPh(data, index);
+      getWeekTempsOut(data, index);
+      getWeekPressure(data, index);
+      getWeekDates(data, index);
     } catch (e) {
       print(e.toString());
     }
@@ -99,13 +114,23 @@ class Storage {
       data = dataFromJson(fileContent);
       latestUpdatesReversed.clear();
       tempsChart.clear();
+      tempsOutChart.clear();
       pHChart.clear();
+      pressureChart.clear();
       alcoholChart.clear();
       maxTemps.clear();
       minTemps.clear();
       fiveDates.clear();
+      weekTempsChart.clear();
+      weekTempsOutChart.clear();
+      weekpHChart.clear();
+      weekAlcoholChart.clear();
+      weekPressureChart.clear();
+      weekDates.clear();
       int index = getIndexOfList(selectedDate);
       getTemperatures(data[index].temps);
+      getTemperaturesOut(data[index].tempsOut);
+      getPressure(data[index].pressure);
       getPh(data[index].ph);
       getAlcohol(data[index].alcohol);
       getSelectedDate(data[index].date);
@@ -115,6 +140,12 @@ class Storage {
       getFiveMaxTemps(data, index);
       getFiveMinTemps(data, index);
       getFiveDates(data, index);
+      getWeekAlcohol(data, index);
+      getWeekPh(data, index);
+      getWeekTemps(data, index);
+      getWeekTempsOut(data, index);
+      getWeekPressure(data, index);
+      getWeekDates(data, index);
     } catch (e) {
       print(e.toString());
     }
@@ -173,9 +204,79 @@ class Storage {
     fiveDates = new List.from(fiveDates.reversed);
   }
 
+  void getWeekDates(List<Data> list, int index) {
+    if (index >= 6) {
+      for (var i = index; i > index - 7; i--) {
+        weekDates.add(list[i].date);
+      }
+    }
+    weekDates = new List.from(weekDates.reversed);
+  }
+
+  void getWeekAlcohol(List<Data> list, int index) {
+    int a = index - 6;
+    if (index >= 6) {
+      for (var i = a; i < index + 1; i++) {
+        for (var j = 0; j < list[i].alcohol.length; j++) {
+          weekAlcoholChart.add(list[i].alcohol[j].toString());
+        }
+      }
+    }
+  }
+
+  void getWeekPressure(List<Data> list, int index) {
+    int a = index - 6;
+    if (index >= 6) {
+      for (var i = a; i < index + 1; i++) {
+        for (var j = 0; j < list[i].pressure.length; j++) {
+          weekPressureChart.add(list[i].pressure[j].toString());
+        }
+      }
+    }
+  }
+
+  void getWeekTemps(List<Data> list, int index) {
+    int a = index - 6;
+    if (index >= 6) {
+      for (var i = a; i < index + 1; i++) {
+        for (var j = 0; j < list[i].temps.length; j++) {
+          weekTempsChart.add(list[i].temps[j].toString());
+        }
+      }
+    }
+  }
+
+  void getWeekTempsOut(List<Data> list, int index) {
+    int a = index - 6;
+    if (index >= 6) {
+      for (var i = a; i < index + 1; i++) {
+        for (var j = 0; j < list[i].tempsOut.length; j++) {
+          weekTempsOutChart.add(list[i].tempsOut[j].toString());
+        }
+      }
+    }
+  }
+
+  void getWeekPh(List<Data> list, int index) {
+    int a = index - 6;
+    if (index >= 6) {
+      for (var i = a; i < index + 1; i++) {
+        for (var j = 0; j < list[i].ph.length; j++) {
+          weekpHChart.add(list[i].ph[j].toString());
+        }
+      }
+    }
+  }
+
   void getPh(List<double> list) {
     for (var i = 0; i < list.length; i++) {
       pHChart.add(list[i].toString());
+    }
+  }
+
+  void getPressure(List<double> list) {
+    for (var i = 0; i < list.length; i++) {
+      pressureChart.add(list[i].toString());
     }
   }
 
@@ -188,6 +289,12 @@ class Storage {
   void getTemperatures(List<double> list) {
     for (var i = 0; i < list.length; i++) {
       tempsChart.add(list[i].toString());
+    }
+  }
+
+  void getTemperaturesOut(List<double> list) {
+    for (var i = 0; i < list.length; i++) {
+      tempsOutChart.add(list[i].toString());
     }
   }
 

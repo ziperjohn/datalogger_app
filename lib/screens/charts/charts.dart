@@ -2,6 +2,8 @@ import 'package:datalogger/screens/widgets/alcohol_line_chart_widget.dart';
 import 'package:datalogger/screens/widgets/alcohol_name_widget.dart';
 import 'package:datalogger/screens/widgets/pH_line_chart_widget.dart';
 import 'package:datalogger/screens/widgets/ph_name_widget.dart';
+import 'package:datalogger/screens/widgets/pressure_line_chart_widget.dart';
+import 'package:datalogger/screens/widgets/pressure_name_widget.dart';
 import 'package:datalogger/screens/widgets/temperature_name_widget.dart';
 import 'package:datalogger/shared/no_data.dart';
 import 'package:datalogger/screens/widgets/date_view_widget.dart';
@@ -40,6 +42,9 @@ class _ChartsState extends State<Charts> {
     data['minTemp'] = prefs.getString('minTemp');
     data['pHChart'] = prefs.getStringList('pHChart');
     data['alcoholChart'] = prefs.getStringList('alcoholChart');
+    data['pressureChart'] = prefs.getStringList('pressureChart');
+    data['tempsOutChart'] = prefs.getStringList('tempsOutChart');
+
     return data;
   }
 
@@ -73,6 +78,8 @@ class _ChartsState extends State<Charts> {
                     StaggeredTile.count(4, 4),
                     StaggeredTile.count(4, 1),
                     StaggeredTile.count(4, 4),
+                    StaggeredTile.count(4, 1),
+                    StaggeredTile.count(4, 4),
                   ],
                   children: <Widget>[
                     Container(
@@ -86,6 +93,7 @@ class _ChartsState extends State<Charts> {
                     Container(
                       child: TempsLineChart(
                         temps: snapshot.data['tempsChart'],
+                        tempsOut: snapshot.data['tempsOutChart'],
                       ),
                     ),
                     Container(
@@ -111,6 +119,13 @@ class _ChartsState extends State<Charts> {
                         alcohol: snapshot.data['alcoholChart'],
                       ),
                     ),
+                    Container(
+                      child: pressureName(),
+                    ),
+                    Container(
+                        child: PressureLineChart(
+                      pressure: snapshot.data['pressureChart'],
+                    )),
                   ],
                 ),
               );
