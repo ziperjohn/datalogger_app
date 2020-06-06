@@ -17,13 +17,12 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
   DateTime startDate;
   BluetoothDevice connectedDevice;
   List<BluetoothService> services;
-  BluetoothCharacteristic characteristicWrite;
+
   BluetoothCharacteristic characteristicNotify;
   String messageDecoded;
   List<String> dataList = List();
   int index = 0;
   bool downloading = false;
-
   bool state = false;
 
   @override
@@ -89,10 +88,7 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
                                   services.forEach((service) {
                                     for (BluetoothCharacteristic characteristic
                                         in service.characteristics) {
-                                      if (characteristic.properties.write) {
-                                        characteristicWrite = characteristic;
-                                      } else if (characteristic
-                                          .properties.notify) {
+                                      if (characteristic.properties.notify) {
                                         characteristicNotify = characteristic;
                                       }
                                     }
@@ -110,10 +106,8 @@ class _BluetoothOnScreenState extends State<BluetoothOnScreen> {
                                     await snapshot.data[index].device
                                         .disconnect();
                                     services = null;
-                                    characteristicWrite = null;
                                     characteristicNotify = null;
                                     downloading = false;
-
                                     deleteUnnecessaryThings();
                                     Formater()
                                         .createJsonFile(dataList, startDate);

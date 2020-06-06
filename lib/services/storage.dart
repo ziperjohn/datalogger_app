@@ -45,7 +45,6 @@ class Storage {
     try {
       final file = await localFileDates;
       String fileContent = await file.readAsString();
-      print('load');
       print(fileContent);
       return time = DateTime.parse(fileContent);
     } catch (e) {

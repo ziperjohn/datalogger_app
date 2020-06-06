@@ -44,8 +44,6 @@ class Formater {
 
   void createJsonData() {
     //add 0 to start
-
-    print('date: ' + startDate.toString());
     int hour = startDate.hour;
     for (var i = 0; i < hour; i++) {
       tempsList.insert(i, "0.0");
